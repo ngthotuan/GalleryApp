@@ -10,4 +10,9 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="album">Album</string>
+    <string name="camera">Camera</string>
+    <string name="hidden">Hidden</string>
+    <string name="locked">Locked</string>
+    <string name="setting">Setting</string>
 </resources>
