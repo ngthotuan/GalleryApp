@@ -1,46 +1,72 @@
 package com.example.galleryapp.adapter;
 
+import static androidx.core.view.ViewCompat.setTransitionName;
+
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.Context;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.galleryapp.R;
 import com.example.galleryapp.model.Picture;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class PictureAdapter extends ArrayAdapter<Picture> {
-    private Activity context;
+public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureHolder> {
     private List<Picture> pictures;
     private int resource;
 
-    public PictureAdapter(@NonNull Activity context, int resource, @NonNull List<Picture> pictures) {
-        super(context, resource, pictures);
-        this.context = context;
+    public PictureAdapter(int resource, @NonNull List<Picture> pictures) {
         this.resource = resource;
         this.pictures = pictures;
     }
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        Picture picture = pictures.get(position);
+    public PictureHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View cell = inflater.inflate(resource, parent, false);
+        return new PictureHolder(cell);
+    }
 
-        @SuppressLint("ViewHolder")
-        View view = this.context.getLayoutInflater().inflate(this.resource, null);
-        ImageView img = (ImageView) view.findViewById(R.id.picture);
-        Bitmap myBitmap = BitmapFactory.decodeFile(picture.getPath());
-        img.setImageBitmap(myBitmap);
+    @Override
+    public void onBindViewHolder(@NonNull PictureHolder holder, @SuppressLint("RecyclerView") int position) {
+        final Picture picture = pictures.get(position);
+        Log.d("TAG", "onBindViewHolder: " + picture);
+        Picasso.get()
+                .load(picture.getUri())
+                .into(holder.picture);
 
-        return view;
+        setTransitionName(holder.picture, position + "_image");
 
+//        holder.picture.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                picListerner.onPicClicked(holder,position, pictureList);
+//            }
+//        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return pictures.size();
+    }
+
+    static class PictureHolder extends RecyclerView.ViewHolder {
+
+        public ImageView picture;
+
+        PictureHolder(@NonNull View itemView) {
+            super(itemView);
+            picture = itemView.findViewById(R.id.picture);
+        }
     }
 }

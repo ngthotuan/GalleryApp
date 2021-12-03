@@ -5,9 +5,12 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 
+import androidx.core.content.FileProvider;
+
 import com.example.galleryapp.model.Picture;
 import com.example.galleryapp.model.PictureFolder;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -35,6 +38,8 @@ public class PictureUtil {
                 picture.setName(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)));
                 picture.setPath(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)));
                 picture.setSize(cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE)));
+                picture.setUri(FileProvider.getUriForFile(activity,
+                        activity.getApplicationContext().getPackageName() + ".provider", new File(picture.getPath())));
                 pictures.add(picture);
             } while (cursor.moveToNext());
             cursor.close();

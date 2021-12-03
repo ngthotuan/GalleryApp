@@ -1,10 +1,12 @@
 package com.example.galleryapp.model;
 
+import android.net.Uri;
+
 public class Picture {
     private String name;
     private String path;
     private long size;
-    private String uri;
+    private Uri uri;
     private boolean selected;
 
     public String getName() {
@@ -31,11 +33,11 @@ public class Picture {
         this.size = size;
     }
 
-    public String getUri() {
+    public Uri getUri() {
         return uri;
     }
 
-    public void setUri(String uri) {
+    public void setUri(Uri uri) {
         this.uri = uri;
     }
 

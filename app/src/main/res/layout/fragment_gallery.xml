@@ -1,19 +1,26 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context=".ui.gallery.GalleryFragment">
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/displayContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.gallery.GalleryFragment">
 
-    <GridView
-            android:id="@+id/galleryGridView"
-            android:layout_width="match_parent"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-            android:horizontalSpacing="2dp"
-            android:numColumns="2"
-            android:padding="2dp"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="2dp">
-    </GridView>
+        android:background="@color/white"
+        android:columnWidth="90dp">
 
-</RelativeLayout>
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <ProgressBar
+        android:id="@+id/loader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        tools:visibility="visible" />
+
+</LinearLayout>
