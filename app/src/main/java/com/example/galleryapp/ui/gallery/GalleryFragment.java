@@ -1,5 +1,6 @@
 package com.example.galleryapp.ui.gallery;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,16 +22,18 @@ import com.example.galleryapp.listener.PictureListener;
 import com.example.galleryapp.model.Picture;
 import com.example.galleryapp.utils.PictureUtil;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class GalleryFragment extends Fragment {
     private FragmentGalleryBinding binding;
     private RecyclerView rvPictures;
     private List<Picture> pictures;
-    private Button btnChangeView;
+    private Button btnChangeView, btnSort;
     private RecyclerView.LayoutManager layoutManager;
     private PictureAdapter adapter;
     private boolean isGridView = true;
+    private boolean sortDecreasing = true;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -40,6 +43,7 @@ public class GalleryFragment extends Fragment {
 
         rvPictures = binding.rvPictures;
         btnChangeView = binding.btnChangeView;
+        btnSort = binding.btnSort;
 
         pictures = PictureUtil.getPictures(activity, null);
         adapter = getPictureAdapter(isGridView);
@@ -57,6 +61,19 @@ public class GalleryFragment extends Fragment {
                 adapter = getPictureAdapter(isGridView);
                 rvPictures.setAdapter(adapter);
                 rvPictures.setLayoutManager(layoutManager);
+            }
+        });
+
+        btnSort.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onClick(View view) {
+                Comparator<Picture> comparator = (p1, p2) -> sortDecreasing
+                        ? (int) (p1.getCreatedDate() - p2.getCreatedDate())
+                        : (int) -(p1.getCreatedDate() - p2.getCreatedDate());
+                pictures.sort(comparator);
+                adapter.notifyDataSetChanged();
+                sortDecreasing = !sortDecreasing;
             }
         });
 

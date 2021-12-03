@@ -100,4 +100,8 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
     public void setListener(PictureListener listener) {
         this.listener = listener;
     }
+
+    public void setPictures(List<Picture> pictures) {
+        this.pictures = pictures;
+    }
 }
