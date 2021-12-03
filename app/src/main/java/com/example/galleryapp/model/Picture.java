@@ -4,8 +4,6 @@ import android.net.Uri;
 
 import com.example.galleryapp.utils.DateUtil;
 
-import java.util.Date;
-
 public class Picture {
     private String name;
     private String path;
@@ -13,8 +11,8 @@ public class Picture {
     private String type;
     private Uri uri;
     private boolean selected;
-    private Date createdDate;
-    private Date modifiedDate;
+    private long createdDate;
+    private long modifiedDate;
 
     public String getType() {
         return type;
@@ -64,19 +62,19 @@ public class Picture {
         this.selected = selected;
     }
 
-    public Date getCreatedDate() {
+    public long getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(long createdDate) {
         this.createdDate = createdDate;
     }
 
-    public Date getModifiedDate() {
+    public long getModifiedDate() {
         return modifiedDate;
     }
 
-    public void setModifiedDate(Date modifiedDate) {
+    public void setModifiedDate(long modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
 
@@ -89,8 +87,8 @@ public class Picture {
                 ", type='" + type + '\'' +
                 ", uri=" + uri +
                 ", selected=" + selected +
-                ", createdDate=" + DateUtil.getDate(createdDate.getTime()) +
-                ", modifiedDate=" + DateUtil.getDate(modifiedDate.getTime()) +
+                ", createdDate=" + DateUtil.getDate(createdDate) +
+                ", modifiedDate=" + DateUtil.getDate(modifiedDate) +
                 '}';
     }
 }

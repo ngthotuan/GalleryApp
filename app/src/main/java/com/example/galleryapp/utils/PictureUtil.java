@@ -13,7 +13,6 @@ import com.example.galleryapp.model.PictureFolder;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 
 public class PictureUtil {
 
@@ -43,8 +42,8 @@ public class PictureUtil {
                 picture.setName(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)));
                 picture.setPath(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)));
                 picture.setSize(cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE)));
-                picture.setCreatedDate(new Date(cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_ADDED))));
-                picture.setModifiedDate(new Date(cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_MODIFIED))));
+                picture.setCreatedDate(cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_ADDED)));
+                picture.setModifiedDate(cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_MODIFIED)));
                 picture.setUri(FileProvider.getUriForFile(activity,
                         activity.getApplicationContext().getPackageName() + ".provider", new File(picture.getPath())));
                 picture.setType("jpg png".contains(picture.getPath().substring(picture.getPath().lastIndexOf("."))) ? "image" : "video");

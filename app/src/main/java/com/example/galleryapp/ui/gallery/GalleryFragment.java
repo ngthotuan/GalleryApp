@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.galleryapp.R;
@@ -25,6 +27,10 @@ public class GalleryFragment extends Fragment {
     private FragmentGalleryBinding binding;
     private RecyclerView rvPictures;
     private List<Picture> pictures;
+    private Button btnChangeView;
+    private RecyclerView.LayoutManager layoutManager;
+    private PictureAdapter adapter;
+    private boolean isGridView = true;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -32,21 +38,47 @@ public class GalleryFragment extends Fragment {
         View root = binding.getRoot();
         Activity activity = getActivity();
 
-        pictures = PictureUtil.getPictures(activity, null);
         rvPictures = binding.rvPictures;
+        btnChangeView = binding.btnChangeView;
+
+        pictures = PictureUtil.getPictures(activity, null);
+        adapter = getPictureAdapter(isGridView);
+        layoutManager = getLayoutManger(isGridView);
+
         rvPictures.hasFixedSize();
-        PictureAdapter adapter = new PictureAdapter(R.layout.picture_item, pictures);
+        rvPictures.setAdapter(adapter);
+        rvPictures.setLayoutManager(layoutManager);
+
+        btnChangeView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isGridView = !isGridView;
+                layoutManager = getLayoutManger(isGridView);
+                adapter = getPictureAdapter(isGridView);
+                rvPictures.setAdapter(adapter);
+                rvPictures.setLayoutManager(layoutManager);
+            }
+        });
+
+        return root;
+    }
+
+    @NonNull
+    private PictureAdapter getPictureAdapter(boolean isGridView) {
+        int resource = isGridView ? R.layout.picture_item_gird : R.layout.picture_item_list;
+        PictureAdapter adapter = new PictureAdapter(resource, pictures);
         adapter.setListener(new PictureListener() {
             @Override
             public void onClick(Picture picture, int pos) {
                 Toast.makeText(getContext(), picture.toString(), Toast.LENGTH_SHORT).show();
             }
         });
-        rvPictures.setAdapter(adapter);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 4);
-        rvPictures.setLayoutManager(layoutManager);
+        return adapter;
+    }
 
-        return root;
+    private RecyclerView.LayoutManager getLayoutManger(boolean isGridView) {
+        return isGridView ? new GridLayoutManager(getContext(), 4)
+                : new LinearLayoutManager(getContext());
     }
 
     @Override
