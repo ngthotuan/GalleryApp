@@ -1,5 +1,6 @@
 package com.example.galleryapp.model;
 
+import android.annotation.SuppressLint;
 import android.net.Uri;
 
 import com.example.galleryapp.utils.DateUtil;
@@ -77,6 +78,32 @@ public class Picture {
     public void setModifiedDate(long modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
+
+    @SuppressLint("DefaultLocale")
+    public String getSizeStr() {
+        long kilo = 1024;
+        long mega = kilo * kilo;
+        long giga = mega * kilo;
+        long tera = giga * kilo;
+        String s = "";
+        double kb = (double) size / kilo;
+        double mb = kb / kilo;
+        double gb = mb / kilo;
+        double tb = gb / kilo;
+        if (size < kilo) {
+            s = size + " Bytes";
+        } else if (size < mega) {
+            s = String.format("%.2f", kb) + " KB";
+        } else if (size < giga) {
+            s = String.format("%.2f", mb) + " MB";
+        } else if (size < tera) {
+            s = String.format("%.2f", gb) + " GB";
+        } else {
+            s = String.format("%.2f", tb) + " TB";
+        }
+        return s;
+    }
+
 
     @Override
     public String toString() {
