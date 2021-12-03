@@ -43,6 +43,8 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
         Log.d("TAG", "onBindViewHolder: " + picture);
         Picasso.get()
                 .load(picture.getUri())
+                .resize(200, 200)
+                .centerCrop()
                 .into(holder.picture);
 
         setTransitionName(holder.picture, position + "_image");
