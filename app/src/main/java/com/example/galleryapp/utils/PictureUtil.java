@@ -22,11 +22,15 @@ public class PictureUtil {
         Uri uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
         String[] projection = {MediaStore.Images.ImageColumns.DATA,
                 MediaStore.Images.Media.DISPLAY_NAME,
-                MediaStore.Images.Media.SIZE};
-        Cursor cursor = null;
+                MediaStore.Images.Media.SIZE,
+                MediaStore.Images.Media.DATE_ADDED,
+                MediaStore.Images.Media.DATE_MODIFIED,
+        };
+        Cursor cursor;
         if (path != null) {
             cursor = activity.getContentResolver().query(uri, projection,
-                    MediaStore.Images.Media.DATA + " like ? ", new String[]{"%" + path + "%"}, null);
+                    MediaStore.Images.Media.DATA + " like ? ",
+                    new String[]{"%" + path + "%"}, null);
         } else {
             cursor = activity.getContentResolver().query(uri, projection,
                     null, null, null);
@@ -38,9 +42,11 @@ public class PictureUtil {
                 picture.setName(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)));
                 picture.setPath(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)));
                 picture.setSize(cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE)));
+                picture.setCreatedDate(cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_ADDED)));
+                picture.setModifiedDate(cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_MODIFIED)));
                 picture.setUri(FileProvider.getUriForFile(activity,
                         activity.getApplicationContext().getPackageName() + ".provider", new File(picture.getPath())));
-                picture.setType("jpg png".contains( picture.getPath().substring(picture.getPath().lastIndexOf(".")))?"image":"video");
+                picture.setType("jpg png".contains(picture.getPath().substring(picture.getPath().lastIndexOf("."))) ? "image" : "video");
                 pictures.add(picture);
             } while (cursor.moveToNext());
             cursor.close();
