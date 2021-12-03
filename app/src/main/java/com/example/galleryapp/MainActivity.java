@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -11,6 +12,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
 import com.example.galleryapp.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
 
@@ -26,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        if (!checkPermissionForReadExternalStorage()) {
+            requestPermissionForReadExternalStorage();
+        }
+
         setSupportActionBar(binding.appBarMain.toolbar);
 
         DrawerLayout drawer = binding.drawerLayout;
@@ -33,16 +39,14 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery)
+                R.id.nav_gallery, R.id.nav_album, R.id.nav_camera,
+                R.id.nav_favourites, R.id.nav_hidden, R.id.nav_locked, R.id.nav_setting)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        if (!checkPermissionForReadExternalStorage()) {
-            requestPermissionForReadExternalStorage();
-        }
     }
 
     @Override

@@ -5,37 +5,37 @@
 
     <group android:checkableBehavior="single">
         <item
-                android:id="@+id/nav_gallery"
-                android:icon="@drawable/pictures"
-                android:title="@string/menu_gallery"/>
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/pictures"
+            android:title="@string/gallery" />
         <item
-                android:id="@+id/album"
-                android:icon="@drawable/album"
+            android:id="@+id/nav_album"
+            android:icon="@drawable/album"
                 android:title="@string/album"/>
 
         <item
-                android:id="@+id/camera"
-                android:icon="@drawable/camera"
+            android:id="@+id/nav_camera"
+            android:icon="@drawable/camera"
                 android:title="@string/camera"/>
 
         <item
-                android:id="@+id/favourites"
-                android:icon="@drawable/favourite"
-                android:title="@string/menu_gallery"/>
+            android:id="@+id/nav_favourites"
+            android:icon="@drawable/favourite"
+            android:title="@string/favourites" />
 
         <item
-                android:id="@+id/hidden"
-                android:icon="@drawable/hidden"
+            android:id="@+id/nav_hidden"
+            android:icon="@drawable/hidden"
                 android:title="@string/hidden"/>
 
         <item
-                android:id="@+id/locked"
-                android:icon="@drawable/locked"
+            android:id="@+id/nav_locked"
+            android:icon="@drawable/locked"
                 android:title="@string/locked"/>
 
         <item
-                android:id="@+id/setting"
-                android:icon="@drawable/setting"
+            android:id="@+id/nav_setting"
+            android:icon="@drawable/setting"
                 android:title="@string/setting"/>
     </group>
 </menu>

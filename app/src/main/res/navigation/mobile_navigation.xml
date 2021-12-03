@@ -6,14 +6,42 @@
     app:startDestination="@+id/nav_gallery">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.example.galleryapp.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
-
-    <fragment
         android:id="@+id/nav_gallery"
         android:name="com.example.galleryapp.ui.gallery.GalleryFragment"
-            android:label="@string/menu_gallery"
-            tools:layout="@layout/fragment_gallery"/>
+        android:label="@string/gallery"
+        tools:layout="@layout/fragment_gallery" />
+
+    <fragment
+        android:id="@+id/nav_album"
+        android:name="com.example.galleryapp.ui.album.AlbumFragment"
+        android:label="@string/album"
+        tools:layout="@layout/fragment_album" />
+
+    <fragment
+        android:id="@+id/nav_camera"
+        android:name="com.example.galleryapp.ui.camera.CameraFragment"
+        android:label="@string/camera"
+        tools:layout="@layout/fragment_camera" />
+
+    <fragment
+        android:id="@+id/nav_favourites"
+        android:name="com.example.galleryapp.ui.favorites.FavoritesFragment"
+        android:label="@string/favourites"
+        tools:layout="@layout/fragment_favorites" />
+    <fragment
+        android:id="@+id/nav_hidden"
+        android:name="com.example.galleryapp.ui.hidden.HiddenFragment"
+        android:label="@string/hidden"
+        tools:layout="@layout/fragment_hidden" />
+    <fragment
+        android:id="@+id/nav_locked"
+        android:name="com.example.galleryapp.ui.locked.LockedFragment"
+        android:label="@string/locked"
+        tools:layout="@layout/fragment_locked" />
+    <fragment
+        android:id="@+id/nav_setting"
+        android:name="com.example.galleryapp.ui.setting.SettingFragment"
+        android:label="@string/setting"
+        tools:layout="@layout/fragment_setting" />
+
 </navigation>
