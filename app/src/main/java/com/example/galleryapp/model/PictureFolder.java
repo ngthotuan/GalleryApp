@@ -1,10 +1,14 @@
 package com.example.galleryapp.model;
 
-public class PictureFolder {
+import android.net.Uri;
+
+import java.io.Serializable;
+
+public class PictureFolder implements Serializable {
     private String path;
     private String name;
     private long totalPicture = 0;
-    private String firstPicture;
+    private Uri firstPicture;
 
     public String getPath() {
         return path;
@@ -34,11 +38,11 @@ public class PictureFolder {
         totalPicture++;
     }
 
-    public String getFirstPicture() {
+    public Uri getFirstPicture() {
         return firstPicture;
     }
 
-    public void setFirstPicture(String firstPicture) {
+    public void setFirstPicture(Uri firstPicture) {
         this.firstPicture = firstPicture;
     }
 

@@ -1,11 +1,5 @@
 <resources>
     <string name="app_name">GalleryApp</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
 
     <string name="gallery">Gallery</string>
     <string name="album">Album</string>
@@ -21,4 +15,8 @@
     <string name="preparing_card">preparing card</string>
     <string name="no_storage_card">No SD Card</string>
     <string name="not_enough_space">Not enough space</string>
+    <string name="name">Name:</string>
+    <string name="created_date">Created Date:</string>
+    <string name="modified_date">Modified Date:</string>
+    <string name="size">Size:</string>
 </resources>
