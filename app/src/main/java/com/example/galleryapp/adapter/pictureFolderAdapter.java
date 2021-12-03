@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.galleryapp.R;
+import com.example.galleryapp.click.ItemClickListener;
 import com.example.galleryapp.model.Picture;
 import com.example.galleryapp.model.PictureFolder;
 import com.squareup.picasso.Picasso;
@@ -26,8 +28,8 @@ import java.util.List;
 public class pictureFolderAdapter extends RecyclerView.Adapter<pictureFolderAdapter.FolderHolder>{
 
     private List<PictureFolder> folders;
-    private Context folderContx;
     private int resource;
+    private ItemClickListener itemClickListener;
 //    private itemClickListener listenToClick;
 
     /**
@@ -36,10 +38,10 @@ public class pictureFolderAdapter extends RecyclerView.Adapter<pictureFolderAdap
      * @param folderContx The Activity or fragment Context
 //     * @param listen interFace for communication between adapter and fragment or activity
      */
-    public pictureFolderAdapter(List<PictureFolder> folders, Context folderContx, int resource) {
+    public pictureFolderAdapter(List<PictureFolder> folders, Context folderContx, int resource, ItemClickListener itemClickListener) {
         this.folders = folders;
-        this.folderContx = folderContx;
         this.resource = resource;
+        this.itemClickListener = itemClickListener;
 //        this.listenToClick = listen;
     }
 
@@ -68,6 +70,13 @@ public class pictureFolderAdapter extends RecyclerView.Adapter<pictureFolderAdap
         String folderSizeString=""+folder.getTotalPicture()+" Media";
         holder.folderSize.setText(folderSizeString);
         holder.folderName.setText(text);
+        holder.folderItemLayoutId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                itemClickListener.folderImageClick(folder);
+                Log.e("TAG", "onClick: "+folder );
+            }
+        });
 
 //        holder.folderPic.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -87,10 +96,9 @@ public class pictureFolderAdapter extends RecyclerView.Adapter<pictureFolderAdap
     public class FolderHolder extends RecyclerView.ViewHolder{
         ImageView folderPic;
         TextView folderName;
-        //set textview for foldersize
         TextView folderSize;
-
         CardView folderCard;
+        RelativeLayout folderItemLayoutId;
 
         public FolderHolder(@NonNull View itemView) {
             super(itemView);
@@ -98,6 +106,7 @@ public class pictureFolderAdapter extends RecyclerView.Adapter<pictureFolderAdap
             folderName = itemView.findViewById(R.id.folderName);
             folderSize=itemView.findViewById(R.id.folderSize);
             folderCard = itemView.findViewById(R.id.folderCard);
+            folderItemLayoutId = itemView.findViewById(R.id.folderItemLayoutId);
         }
     }
 
