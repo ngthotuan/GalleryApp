@@ -29,12 +29,19 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/providers_paths" />
         </provider>
-        <activity android:name=".utils.cropImage.CropImageTest">
+
+        // For CropImage and Rotate Test
+        <activity
+            android:name=".utils.cropImage.CropImageTest">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <provider
+            android:authorities="com.example.galleryapp.utils.cropImage"
+            android:name=".utils.cropImage.InternalStorageContentProvider"
+            android:exported="true"/>
     </application>
 
 
@@ -44,5 +51,7 @@
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:required="true" />
-
+    <uses-permission
+        android:name="android.permission.CAMERA"
+        android:required="true"/>
 </manifest>

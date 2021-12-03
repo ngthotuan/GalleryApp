@@ -6,9 +6,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -19,10 +21,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.example.galleryapp.R;
 
 public class CropImageTest extends Activity {
-    public static final String TAG = "MainActivity";
+    public static final String TAG = "CropImageActivity";
 
     public static final String TEMP_PHOTO_FILE_NAME = "temp_photo.jpg";
 
@@ -41,7 +46,6 @@ public class CropImageTest extends Activity {
         findViewById(R.id.gallery).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 openGallery();
             }
         });
@@ -49,7 +53,6 @@ public class CropImageTest extends Activity {
         findViewById(R.id.take_picture).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 takePicture();
             }
         });
