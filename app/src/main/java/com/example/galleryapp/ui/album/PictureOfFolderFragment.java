@@ -2,24 +2,22 @@ package com.example.galleryapp.ui.album;
 
 import android.app.Activity;
 import android.os.Bundle;
-
-import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.galleryapp.R;
 import com.example.galleryapp.adapter.PictureAdapter;
-import com.example.galleryapp.databinding.FragmentAlbumBinding;
-import com.example.galleryapp.databinding.FragmentGalleryBinding;
 import com.example.galleryapp.databinding.FragmentPictureOfFolderBinding;
+import com.example.galleryapp.listener.OnItemClick;
 import com.example.galleryapp.model.Picture;
 import com.example.galleryapp.model.PictureFolder;
 import com.example.galleryapp.utils.PictureUtil;
@@ -30,7 +28,7 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  * create an instance of this fragment.
  */
-public class PictureOfFolderFragment extends Fragment {
+public class PictureOfFolderFragment extends Fragment implements OnItemClick<Picture> {
 
     private FragmentPictureOfFolderBinding binding;
 
@@ -60,7 +58,7 @@ public class PictureOfFolderFragment extends Fragment {
         imageRecycler.hasFixedSize();
         load.setVisibility(View.VISIBLE);
         List<Picture> pictures = PictureUtil.getPictures(activity, pictureFolder.getPath());
-        imageRecycler.setAdapter(new PictureAdapter(R.layout.picture_item_gird, pictures));
+        imageRecycler.setAdapter(new PictureAdapter(R.layout.picture_item_gird, pictures, this));
         imageRecycler.setLayoutManager(new GridLayoutManager(getContext(), 4));
         load.setVisibility(View.GONE);
 
@@ -73,4 +71,8 @@ public class PictureOfFolderFragment extends Fragment {
         binding = null;
     }
 
+    @Override
+    public void onClick(Picture item, int pos) {
+        Toast.makeText(getContext(), item.toString(), Toast.LENGTH_SHORT).show();
+    }
 }

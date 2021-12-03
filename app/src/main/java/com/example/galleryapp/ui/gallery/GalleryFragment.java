@@ -18,14 +18,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.galleryapp.R;
 import com.example.galleryapp.adapter.PictureAdapter;
 import com.example.galleryapp.databinding.FragmentGalleryBinding;
-import com.example.galleryapp.listener.PictureListener;
+import com.example.galleryapp.listener.OnItemClick;
 import com.example.galleryapp.model.Picture;
 import com.example.galleryapp.utils.PictureUtil;
 
 import java.util.Comparator;
 import java.util.List;
 
-public class GalleryFragment extends Fragment {
+public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
     private FragmentGalleryBinding binding;
     private RecyclerView rvPictures;
     private List<Picture> pictures;
@@ -83,14 +83,7 @@ public class GalleryFragment extends Fragment {
     @NonNull
     private PictureAdapter getPictureAdapter(boolean isGridView) {
         int resource = isGridView ? R.layout.picture_item_gird : R.layout.picture_item_list;
-        PictureAdapter adapter = new PictureAdapter(resource, pictures);
-        adapter.setListener(new PictureListener() {
-            @Override
-            public void onClick(Picture picture, int pos) {
-                Toast.makeText(getContext(), picture.toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
-        return adapter;
+        return new PictureAdapter(resource, pictures, this);
     }
 
     private RecyclerView.LayoutManager getLayoutManger(boolean isGridView) {
@@ -104,4 +97,8 @@ public class GalleryFragment extends Fragment {
         binding = null;
     }
 
+    @Override
+    public void onClick(Picture item, int pos) {
+        Toast.makeText(getContext(), item.toString(), Toast.LENGTH_SHORT).show();
+    }
 }

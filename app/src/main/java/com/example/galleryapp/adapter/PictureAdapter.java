@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.galleryapp.R;
-import com.example.galleryapp.listener.PictureListener;
+import com.example.galleryapp.listener.OnItemClick;
 import com.example.galleryapp.model.Picture;
 import com.example.galleryapp.utils.DateUtil;
 import com.squareup.picasso.Picasso;
@@ -24,11 +24,12 @@ import java.util.List;
 public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureHolder> {
     private List<Picture> pictures;
     private int resource;
-    private PictureListener listener;
+    private OnItemClick<Picture> listener;
 
-    public PictureAdapter(int resource, @NonNull List<Picture> pictures) {
+    public PictureAdapter(int resource, @NonNull List<Picture> pictures, OnItemClick<Picture> listener) {
         this.resource = resource;
         this.pictures = pictures;
+        this.listener = listener;
     }
 
     @NonNull
@@ -95,13 +96,5 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
             picCreatedDate = itemView.findViewById(R.id.picCreatedDate);
             picModifiedDate = itemView.findViewById(R.id.picModifiedDate);
         }
-    }
-
-    public void setListener(PictureListener listener) {
-        this.listener = listener;
-    }
-
-    public void setPictures(List<Picture> pictures) {
-        this.pictures = pictures;
     }
 }

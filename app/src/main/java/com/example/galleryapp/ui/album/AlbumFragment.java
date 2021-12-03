@@ -1,37 +1,30 @@
 package com.example.galleryapp.ui.album;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.galleryapp.R;
-import com.example.galleryapp.adapter.PictureAdapter;
-import com.example.galleryapp.adapter.pictureFolderAdapter;
-import com.example.galleryapp.click.ItemClickListener;
+import com.example.galleryapp.adapter.PictureFolderAdapter;
 import com.example.galleryapp.databinding.FragmentAlbumBinding;
-import com.example.galleryapp.model.Picture;
+import com.example.galleryapp.listener.OnItemClick;
 import com.example.galleryapp.model.PictureFolder;
-import com.example.galleryapp.ui.gallery.GalleryFragment;
 import com.example.galleryapp.utils.PictureUtil;
 
 import java.util.List;
 
-public class AlbumFragment extends Fragment implements ItemClickListener {
+public class AlbumFragment extends Fragment implements OnItemClick<PictureFolder> {
     FragmentAlbumBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -49,7 +42,7 @@ public class AlbumFragment extends Fragment implements ItemClickListener {
         imageRecycler.hasFixedSize();
         load.setVisibility(View.VISIBLE);
         List<PictureFolder> pictures = PictureUtil.getPictureFolders(activity);
-        imageRecycler.setAdapter(new pictureFolderAdapter(pictures,this.getContext(),R.layout.folder_item,this));
+        imageRecycler.setAdapter(new PictureFolderAdapter(pictures, R.layout.folder_item, this));
         imageRecycler.setLayoutManager(new GridLayoutManager(getContext(), 4));
         load.setVisibility(View.GONE);
 
@@ -65,9 +58,8 @@ public class AlbumFragment extends Fragment implements ItemClickListener {
         binding = null;
     }
 
-//    @SuppressLint("ResourceType")
     @Override
-    public void folderImageClick(PictureFolder pictureFolder) {
+    public void onClick(PictureFolder pictureFolder, int pos) {
         FragmentManager fm = this.getActivity().getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         PictureOfFolderFragment llf = new PictureOfFolderFragment();

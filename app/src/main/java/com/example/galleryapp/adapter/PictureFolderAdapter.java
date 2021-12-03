@@ -1,10 +1,6 @@
 package com.example.galleryapp.adapter;
 
-import static androidx.core.view.ViewCompat.setTransitionName;
-
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,32 +13,22 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.galleryapp.R;
-import com.example.galleryapp.click.ItemClickListener;
-import com.example.galleryapp.model.Picture;
+import com.example.galleryapp.listener.OnItemClick;
 import com.example.galleryapp.model.PictureFolder;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class pictureFolderAdapter extends RecyclerView.Adapter<pictureFolderAdapter.FolderHolder>{
+public class PictureFolderAdapter extends RecyclerView.Adapter<PictureFolderAdapter.FolderHolder> {
 
     private List<PictureFolder> folders;
     private int resource;
-    private ItemClickListener itemClickListener;
-//    private itemClickListener listenToClick;
+    private OnItemClick<PictureFolder> itemClickListener;
 
-    /**
-     *
-     * @param folders An ArrayList of String that represents paths to folders on the external storage that contain pictures
-     * @param folderContx The Activity or fragment Context
-//     * @param listen interFace for communication between adapter and fragment or activity
-     */
-    public pictureFolderAdapter(List<PictureFolder> folders, Context folderContx, int resource, ItemClickListener itemClickListener) {
+    public PictureFolderAdapter(List<PictureFolder> folders, int resource, OnItemClick<PictureFolder> itemClickListener) {
         this.folders = folders;
         this.resource = resource;
         this.itemClickListener = itemClickListener;
-//        this.listenToClick = listen;
     }
 
     @NonNull
@@ -55,10 +41,9 @@ public class pictureFolderAdapter extends RecyclerView.Adapter<pictureFolderAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FolderHolder holder, int position) {
+    public void onBindViewHolder(@NonNull FolderHolder holder, @SuppressLint("RecyclerView") int position) {
         final PictureFolder folder = folders.get(position);
 
-//        Log.e("TAG", folder.getFirstPicture() );
         Picasso.get()
                 .load(folder.getFirstPicture())
                 .resize(200, 200)
@@ -66,24 +51,16 @@ public class pictureFolderAdapter extends RecyclerView.Adapter<pictureFolderAdap
                 .into(holder.folderPic);
 
         //setting the number of images
-        String text = ""+folder.getName();
+        String text = "" + folder.getName();
         String folderSizeString=""+folder.getTotalPicture()+" Media";
         holder.folderSize.setText(folderSizeString);
         holder.folderName.setText(text);
         holder.folderItemLayoutId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                itemClickListener.folderImageClick(folder);
-                Log.e("TAG", "onClick: "+folder );
+                itemClickListener.onClick(folder, position);
             }
         });
-
-//        holder.folderPic.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                listenToClick.onPicClicked(folder.getPath(),folder.getFolderName());
-//            }
-//        });
 
     }
 
@@ -93,7 +70,7 @@ public class pictureFolderAdapter extends RecyclerView.Adapter<pictureFolderAdap
     }
 
 
-    public class FolderHolder extends RecyclerView.ViewHolder{
+    public static class FolderHolder extends RecyclerView.ViewHolder {
         ImageView folderPic;
         TextView folderName;
         TextView folderSize;
