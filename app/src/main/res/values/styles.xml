@@ -12,17 +12,4 @@
         <item name="android:background">@drawable/selector_crop_button</item>
     </style>
 
-    <style name="Widget.Material.">
-        <item name="background">?attr/actionBarItemBackground</item>
-        <item name="paddingStart">12dp</item>
-        <item name="paddingEnd">12dp</item>
-        <item name="minWidth">@dimen/action_button_min_width_material</item>
-        <item name="minHeight">@dimen/action_button_min_height_material</item>
-        <item name="gravity">center</item>
-        <item name="scaleType">center</item>
-        <item name="maxLines">2</item>
-    </style>
-    <dimen name="action_button_min_width_material">48dp</dimen>
-    <dimen name="action_button_min_height_material">48dp</dimen>
-
 </resources>
