@@ -8,6 +8,13 @@
     <string name="locked">Locked</string>
     <string name="setting">Setting</string>
     <string name="favourites">Favourites</string>
+
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="saving_image">saving images</string>
+    <string name="preparing_card">preparing card</string>
+    <string name="no_storage_card">No SD Card</string>
+    <string name="not_enough_space">Not enough space</string>
     <string name="name">Name:</string>
     <string name="created_date">Created Date:</string>
     <string name="modified_date">Modified Date:</string>

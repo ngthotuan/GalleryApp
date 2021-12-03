@@ -29,6 +29,12 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/providers_paths" />
         </provider>
+        <activity android:name=".utils.cropImage.CropImageTest">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
     </application>
 
 
