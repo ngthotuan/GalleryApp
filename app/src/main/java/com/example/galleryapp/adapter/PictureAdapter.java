@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.galleryapp.R;
+import com.example.galleryapp.listener.PictureListener;
 import com.example.galleryapp.model.Picture;
 import com.squareup.picasso.Picasso;
 
@@ -21,6 +22,7 @@ import java.util.List;
 public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureHolder> {
     private List<Picture> pictures;
     private int resource;
+    private PictureListener listener;
 
     public PictureAdapter(int resource, @NonNull List<Picture> pictures) {
         this.resource = resource;
@@ -47,12 +49,12 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
 
         setTransitionName(holder.picture, position + "_image");
 
-//        holder.picture.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                picListerner.onPicClicked(holder,position, pictureList);
-//            }
-//        });
+        holder.picture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClick(picture, position);
+            }
+        });
     }
 
     @Override
@@ -68,5 +70,9 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
             super(itemView);
             picture = itemView.findViewById(R.id.picture);
         }
+    }
+
+    public void setListener(PictureListener listener) {
+        this.listener = listener;
     }
 }

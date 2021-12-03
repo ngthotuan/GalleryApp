@@ -2,6 +2,8 @@ package com.example.galleryapp.model;
 
 import android.net.Uri;
 
+import com.example.galleryapp.utils.DateUtil;
+
 import java.util.Date;
 
 public class Picture {
@@ -84,8 +86,11 @@ public class Picture {
                 "name='" + name + '\'' +
                 ", path='" + path + '\'' +
                 ", size=" + size +
-                ", uri='" + uri + '\'' +
+                ", type='" + type + '\'' +
+                ", uri=" + uri +
                 ", selected=" + selected +
+                ", createdDate=" + DateUtil.getDate(createdDate.getTime()) +
+                ", modifiedDate=" + DateUtil.getDate(modifiedDate.getTime()) +
                 '}';
     }
 }
