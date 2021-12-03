@@ -6,8 +6,17 @@ public class Picture {
     private String name;
     private String path;
     private long size;
+    private String type;
     private Uri uri;
     private boolean selected;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getName() {
         return name;

@@ -40,6 +40,7 @@ public class PictureUtil {
                 picture.setSize(cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE)));
                 picture.setUri(FileProvider.getUriForFile(activity,
                         activity.getApplicationContext().getPackageName() + ".provider", new File(picture.getPath())));
+                picture.setType("jpg png".contains( picture.getPath().substring(picture.getPath().lastIndexOf(".")))?"image":"video");
                 pictures.add(picture);
             } while (cursor.moveToNext());
             cursor.close();
@@ -69,13 +70,15 @@ public class PictureUtil {
                     pictureFolderPaths.add(folderPath);
                     pictureFolder.setPath(folderPath);
                     pictureFolder.setName(folder);
-                    pictureFolder.setFirstPicture(dataPath);
+                    pictureFolder.setFirstPicture(FileProvider.getUriForFile(activity,
+                            activity.getApplicationContext().getPackageName() + ".provider", new File(dataPath)));
                     pictureFolder.increaseTotalPicture();
                     pictureFolders.add(pictureFolder);
                 } else {
                     for (PictureFolder pic : pictureFolders) {
                         if (pic.getPath().equals(folderPath)) {
-                            pic.setFirstPicture(dataPath);
+                            pic.setFirstPicture(FileProvider.getUriForFile(activity,
+                                    activity.getApplicationContext().getPackageName() + ".provider", new File(dataPath)));
                             pic.increaseTotalPicture();
                             break;
                         }
