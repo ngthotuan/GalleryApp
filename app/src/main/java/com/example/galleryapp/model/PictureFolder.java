@@ -2,7 +2,9 @@ package com.example.galleryapp.model;
 
 import android.net.Uri;
 
-public class PictureFolder {
+import java.io.Serializable;
+
+public class PictureFolder implements Serializable {
     private String path;
     private String name;
     private long totalPicture = 0;

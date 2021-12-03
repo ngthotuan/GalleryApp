@@ -1,66 +1,76 @@
 package com.example.galleryapp.ui.album;
 
+import android.app.Activity;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.galleryapp.R;
+import com.example.galleryapp.adapter.PictureAdapter;
+import com.example.galleryapp.databinding.FragmentAlbumBinding;
+import com.example.galleryapp.databinding.FragmentGalleryBinding;
+import com.example.galleryapp.databinding.FragmentPictureOfFolderBinding;
+import com.example.galleryapp.model.Picture;
+import com.example.galleryapp.model.PictureFolder;
+import com.example.galleryapp.utils.PictureUtil;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link PictureOfFolderFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class PictureOfFolderFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private FragmentPictureOfFolderBinding binding;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
-    public PictureOfFolderFragment() {
-        // Required empty public constructor
-    }
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentPictureOfFolderBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
+        Activity activity = getActivity();
+        PictureFolder pictureFolder = (PictureFolder) getArguments().getSerializable("pictureFolder");
+        this.getActivity().setTitle(pictureFolder.getName());
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PictureOfFolderFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PictureOfFolderFragment newInstance(String param1, String param2) {
-        PictureOfFolderFragment fragment = new PictureOfFolderFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+//        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+//            @Override
+//            public void handleOnBackPressed() {
+//                // Handle the back button event
+//            }
+//        };
+//        requireActivity().getOnBackPressedDispatcher().addCallback(this.getActivity(), callback);
+        RecyclerView imageRecycler;
+        TextView txtTitle;
+        ProgressBar load;
+        imageRecycler = binding.recycler;
+//        txtTitle = binding.txtTitle;
+//        txtTitle.setText(pictureFolder.getName());
+        load = binding.loader;
+        imageRecycler.hasFixedSize();
+        load.setVisibility(View.VISIBLE);
+        List<Picture> pictures = PictureUtil.getPictures(activity, pictureFolder.getPath());
+        imageRecycler.setAdapter(new PictureAdapter(R.layout.picture_item_gird, pictures));
+        imageRecycler.setLayoutManager(new GridLayoutManager(getContext(), 4));
+        load.setVisibility(View.GONE);
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        return root;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_picture_of_folder, container, false);
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
+
 }
