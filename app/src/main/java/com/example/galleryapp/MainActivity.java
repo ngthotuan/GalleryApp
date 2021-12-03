@@ -43,15 +43,18 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nav_favourites, R.id.nav_hidden, R.id.nav_locked, R.id.nav_setting)
                 .setDrawerLayout(drawer)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        NavController navController = Navigation.findNavController(this,
+                R.id.nav_host_fragment_content_main);
+        NavigationUI.setupActionBarWithNavController(this, navController,
+                mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
     }
 
     @Override
     public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        NavController navController = Navigation.findNavController(this,
+                R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
@@ -65,7 +68,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void requestPermissionForReadExternalStorage() {
         try {
-            ActivityCompat.requestPermissions((Activity) this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
+            ActivityCompat.requestPermissions((Activity) this,
+                    new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
                     READ_STORAGE_PERMISSION_REQUEST_CODE);
         } catch (Exception e) {
             e.printStackTrace();

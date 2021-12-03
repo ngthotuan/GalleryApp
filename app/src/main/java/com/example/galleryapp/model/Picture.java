@@ -2,6 +2,8 @@ package com.example.galleryapp.model;
 
 import android.net.Uri;
 
+import java.util.Date;
+
 public class Picture {
     private String name;
     private String path;
@@ -9,6 +11,8 @@ public class Picture {
     private String type;
     private Uri uri;
     private boolean selected;
+    private Date createdDate;
+    private Date modifiedDate;
 
     public String getType() {
         return type;
@@ -56,6 +60,22 @@ public class Picture {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Date getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(Date modifiedDate) {
+        this.modifiedDate = modifiedDate;
     }
 
     @Override

@@ -4,7 +4,6 @@ import static androidx.core.view.ViewCompat.setTransitionName;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +39,6 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
     @Override
     public void onBindViewHolder(@NonNull PictureHolder holder, @SuppressLint("RecyclerView") int position) {
         final Picture picture = pictures.get(position);
-        Log.d("TAG", "onBindViewHolder: " + picture);
         Picasso.get()
                 .load(picture.getUri())
                 .resize(200, 200)
