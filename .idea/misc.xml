@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2203125" />
+        <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/drawable-v24/selector_crop_button.xml" value="0.11770833333333333" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2203125" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/drawable/ic_menu_camera.xml" value="0.2203125" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/drawable/ic_menu_gallery.xml" value="0.2203125" />
@@ -11,7 +12,9 @@
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/drawable/side_nav_bar.xml" value="0.2203125" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/activity_main.xml" value="0.17844202898550723" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/app_bar_main.xml" value="0.17844202898550723" />
-        <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/content_main.xml" value="0.17844202898550723" />
+        <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/content_main.xml" value="0.2" />
+        <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/cropimage.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/folder_item.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/fragment_album.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/fragment_camera.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/fragment_favorites.xml" value="0.20416666666666666" />
@@ -21,30 +24,20 @@
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/fragment_hidden.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/fragment_home.xml" value="0.1490036231884058" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/fragment_locked.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/fragment_picture_of_folder.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/fragment_setting.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/header_navigation.xml" value="0.17844202898550723" />
+        <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/image_view.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/picture_item.xml" value="0.18" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/picture_item2.xml" value="0.1490036231884058" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/picture_item_gird.xml" value="0.1933876811594203" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/picture_item_list.xml" value="0.33" />
-        <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/menu/activity_main_drawer.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/test_crop_screen.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/menu/activity_main_drawer.xml" value="0.5" />
+        <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/menu/image_view_option_drawer.xml" value="0.25" />
+        <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.16354166666666667" />
+        <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2203125" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/xml/providers_paths.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/drawable-v24/selector_crop_button.xml" value="0.1" />
-        <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/layout/activity_main.xml" value="0.33" />
-        <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/layout/app_bar_main.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/layout/content_main.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/layout/cropimage.xml" value="0.49768875192604006" />
-        <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/layout/folder_item.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/layout/fragment_album.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/layout/fragment_gallery.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/layout/fragment_setting.xml" value="0.1" />
-        <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/layout/image_view.xml" value="0.25" />
-        <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/layout/picture_item.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/layout/picture_item_gird.xml" value="0.1" />
-        <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/layout/picture_item_list.xml" value="0.1" />
-        <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/layout/test_crop_screen.xml" value="0.22" />
-        <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/menu/activity_main_drawer.xml" value="0.5" />
-        <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/menu/image_view_option_drawer.xml" value="0.33" />
       </map>
     </option>
   </component>

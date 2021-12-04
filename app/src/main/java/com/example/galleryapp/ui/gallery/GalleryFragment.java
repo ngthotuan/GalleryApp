@@ -3,10 +3,13 @@ package com.example.galleryapp.ui.gallery;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,18 +23,21 @@ import com.example.galleryapp.adapter.PictureAdapter;
 import com.example.galleryapp.databinding.FragmentGalleryBinding;
 import com.example.galleryapp.listener.OnItemClick;
 import com.example.galleryapp.model.Picture;
+import com.example.galleryapp.utils.DateUtil;
 import com.example.galleryapp.utils.PictureUtil;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
     private FragmentGalleryBinding binding;
     private RecyclerView rvPictures;
-    private List<Picture> pictures;
-    private Button btnChangeView, btnSort;
     private RecyclerView.LayoutManager layoutManager;
     private PictureAdapter adapter;
+    private List<Picture> pictures;
+    private Button btnChangeView, btnSort;
+    private EditText edtSearch;
     private boolean isGridView = true;
     private boolean sortDecreasing = true;
 
@@ -44,6 +50,7 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
         rvPictures = binding.rvPictures;
         btnChangeView = binding.btnChangeView;
         btnSort = binding.btnSort;
+        edtSearch = binding.edtSearch;
 
         pictures = PictureUtil.getPictures(activity, null);
         adapter = getPictureAdapter(isGridView);
@@ -61,6 +68,7 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
                 adapter = getPictureAdapter(isGridView);
                 rvPictures.setAdapter(adapter);
                 rvPictures.setLayoutManager(layoutManager);
+                adapter.notifyDataSetChanged();
             }
         });
 
@@ -74,6 +82,31 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
                 pictures.sort(comparator);
                 adapter.notifyDataSetChanged();
                 sortDecreasing = !sortDecreasing;
+            }
+        });
+
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence keyword, int i, int i1, int i2) {
+                pictures = PictureUtil.getPictures(activity, null);
+                if (keyword.length() > 0) {
+                    pictures = pictures.stream()
+                            .filter(picture -> picture.getName().toLowerCase()
+                                    .contains(keyword.toString().toLowerCase())
+                                    || DateUtil.getDate(picture.getCreatedDate()).contains(keyword))
+                            .collect(Collectors.toList());
+                }
+                adapter.setPictures(pictures);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
 
