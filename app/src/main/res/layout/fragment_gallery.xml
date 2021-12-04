@@ -7,6 +7,14 @@
     android:orientation="vertical"
     tools:context=".ui.gallery.GalleryFragment">
 
+    <EditText
+        android:id="@+id/edtSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/picture_search_hint" />
+
     <Button
         android:id="@+id/btnChangeView"
         android:layout_width="match_parent"

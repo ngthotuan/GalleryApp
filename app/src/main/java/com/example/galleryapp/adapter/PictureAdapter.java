@@ -98,4 +98,9 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
             picCreatedDate = itemView.findViewById(R.id.picCreatedDate);
         }
     }
+
+    public void setPictures(List<Picture> pictures) {
+        this.pictures = pictures;
+        notifyDataSetChanged();
+    }
 }
