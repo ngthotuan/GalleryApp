@@ -3,13 +3,15 @@
                 android:layout_width="match_parent"
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:orientation="horizontal">
-<view class="com.example.galleryapp.utils.cropImage.CropImageView"
-    android:id="@+id/image"
-    android:background="#55000000"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_x="0dip"
-    android:layout_y="0dip"/>
+
+    <view
+        android:id="@+id/image"
+        class="com.example.galleryapp.utils.cropImage.CropImageView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_x="0dip"
+        android:layout_y="0dip"
+        android:background="#55000000" />
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="50dp"
@@ -21,39 +23,38 @@
 
 
         <Button
-            android:layout_alignParentLeft="true"
-            android:id="@+id/discard"
-            android:layout_width="80dp"
-            android:layout_height="fill_parent"
+            android:id="@+id/save"
             style="@style/CropButton"
-            android:text="@string/cancel"
-            />
+            android:layout_width="120dp"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:text="@string/save" />
 
         <ImageButton
             android:id="@+id/rotateLeft"
+            style="@style/CropButton"
             android:layout_width="50dp"
             android:layout_height="fill_parent"
-            android:layout_toRightOf="@id/discard"
-            style="@style/CropButton"
+            android:layout_toRightOf="@id/save"
             android:src="@drawable/ic_rotate_left"
-            />
+            android:scaleType="fitCenter"/>
 
         <ImageButton
             android:id="@+id/rotateRight"
+            style="@style/CropButton"
             android:layout_width="50dp"
             android:layout_height="fill_parent"
             android:layout_toRightOf="@id/rotateLeft"
-            style="@style/CropButton"
             android:src="@drawable/ic_rotate_right"
-            />
+            android:scaleType="fitCenter"/>
+
         <Button
-            android:id="@+id/save"
-            android:layout_width="80dp"
+            android:id="@+id/discard"
+            style="@style/CropButton"
+            android:layout_width="120dp"
             android:layout_height="fill_parent"
             android:layout_toRightOf="@id/rotateRight"
-            style="@style/CropButton"
-            android:text="@string/save"
-            />
+            android:text="@string/cancel" />
 
     </RelativeLayout>
 </RelativeLayout>
