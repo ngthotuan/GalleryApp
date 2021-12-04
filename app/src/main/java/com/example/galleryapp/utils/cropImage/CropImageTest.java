@@ -102,7 +102,7 @@ public class CropImageTest extends Activity {
             } else {
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                        2);
+                        REQUEST_CODE_GALLERY);
             }
         }
     }
@@ -122,7 +122,27 @@ public class CropImageTest extends Activity {
             } else {
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        2);
+                        REQUEST_CODE_GALLERY);
+            }
+        }
+    }
+
+    private void grantPermissionCAMERA() {
+        int permissionCheckWRITE = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA);
+
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.CAMERA)) {
+
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.CAMERA},
+                        REQUEST_CODE_TAKE_PICTURE);
             }
         }
     }
@@ -142,6 +162,16 @@ public class CropImageTest extends Activity {
             Log.v(TAG, "READ EXTERNAL Permission is granted");
         } else {
             Log.v(TAG, "READ EXTERNAL Permission denied");
+            grantPermissionREAD();
+        }
+        return;
+    }
+
+    private void checkPermissionCAMERA() {
+        if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            Log.v(TAG, "CAMERA Permission is granted");
+        } else {
+            Log.v(TAG, "CAMERA EXTERNAL Permission denied");
             grantPermissionREAD();
         }
         return;
@@ -190,6 +220,7 @@ public class CropImageTest extends Activity {
 
                 break;
             case REQUEST_CODE_TAKE_PICTURE:
+                checkPermissionCAMERA();
                 startCropImage();
                 break;
             case REQUEST_CODE_CROP_IMAGE:
