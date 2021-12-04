@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/image_view_option_drawer"
+        android:checkableBehavior="single">
+        <item android:id="@+id/imgViewSlideshow"
+            android:title="Slideshow"/>
+        <item android:id="@+id/imgViewUseAs"
+            android:title="Use As"/>
+        <item android:id="@+id/imgViewRotate"
+            android:title="Rotate"/>
+        <item android:id="@+id/imgViewDetail"
+            android:title="Detail"/>
+        <item android:id="@+id/imgViewHide"
+            android:title="Hide"/>
+        <item android:id="@+id/imgViewLock"
+            android:title="Lock"/>
+    </group>
+</menu>

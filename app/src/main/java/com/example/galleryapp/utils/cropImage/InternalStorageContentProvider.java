@@ -11,7 +11,7 @@ import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 
 public class InternalStorageContentProvider extends ContentProvider{
-    public static final Uri CONTENT_URI = Uri.parse("content://eu.janmuller.android.simplecropimage.example/");
+    public static final Uri CONTENT_URI = Uri.parse("content://com.example.galleryapp.utils.cropImage/");
     private static final HashMap<String, String> MIME_TYPES = new HashMap<String, String>();
 
     static {

@@ -54,16 +54,18 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
 
         }
         if (holder.picName != null) {
-            holder.picName.setText(picture.getName());
+            String name = picture.getName();
+            if (name.length() > 22) {
+                name = name.substring(0, 22);
+                name += "...";
+            }
+            holder.picName.setText(name);
         }
         if (holder.picSize != null) {
-            holder.picSize.setText(picture.getSize() + "");
+            holder.picSize.setText(picture.getSizeStr());
         }
         if (holder.picCreatedDate != null) {
             holder.picCreatedDate.setText(DateUtil.getDate(picture.getCreatedDate()));
-        }
-        if (holder.picModifiedDate != null) {
-            holder.picModifiedDate.setText(DateUtil.getDate(picture.getModifiedDate()));
         }
 
         holder.picLayout.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +87,7 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
 
         public View picLayout;
         public ImageView picture;
-        public TextView picName, picSize, picCreatedDate, picModifiedDate;
+        public TextView picName, picSize, picCreatedDate;
 
         PictureHolder(@NonNull View itemView) {
             super(itemView);
@@ -94,7 +96,6 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
             picName = itemView.findViewById(R.id.picName);
             picSize = itemView.findViewById(R.id.picSize);
             picCreatedDate = itemView.findViewById(R.id.picCreatedDate);
-            picModifiedDate = itemView.findViewById(R.id.picModifiedDate);
         }
     }
 }
