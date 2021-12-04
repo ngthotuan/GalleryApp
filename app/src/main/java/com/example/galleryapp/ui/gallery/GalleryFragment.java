@@ -2,14 +2,20 @@ package com.example.galleryapp.ui.gallery;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.transition.Fade;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,6 +24,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.galleryapp.PictureBrowserFragment;
 import com.example.galleryapp.R;
 import com.example.galleryapp.adapter.PictureAdapter;
 import com.example.galleryapp.databinding.FragmentGalleryBinding;
@@ -26,6 +33,7 @@ import com.example.galleryapp.model.Picture;
 import com.example.galleryapp.utils.DateUtil;
 import com.example.galleryapp.utils.PictureUtil;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,8 +46,12 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
     private List<Picture> pictures;
     private Button btnChangeView, btnSort;
     private EditText edtSearch;
+    private Spinner spSort;
     private boolean isGridView = true;
-    private boolean sortDecreasing = true;
+    private final boolean sortDecreasing = true;
+    private List<String> sortFields;
+    private String sortField = "";
+    private String sortType = "desc";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -51,6 +63,7 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
         btnChangeView = binding.btnChangeView;
         btnSort = binding.btnSort;
         edtSearch = binding.edtSearch;
+        spSort = binding.spSort;
 
         pictures = PictureUtil.getPictures(activity, null);
         adapter = getPictureAdapter(isGridView);
@@ -76,12 +89,11 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onClick(View view) {
-                Comparator<Picture> comparator = (p1, p2) -> sortDecreasing
-                        ? (int) (p1.getCreatedDate() - p2.getCreatedDate())
-                        : (int) -(p1.getCreatedDate() - p2.getCreatedDate());
+                Log.d("TAG", "sortField= " + sortField + " sortType= " + sortType);
+                Comparator<Picture> comparator = getComparator();
                 pictures.sort(comparator);
+                reversedSortType();
                 adapter.notifyDataSetChanged();
-                sortDecreasing = !sortDecreasing;
             }
         });
 
@@ -110,6 +122,22 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
             }
         });
 
+        sortFields = getSortFields();
+        spSort.setAdapter(new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_spinner_dropdown_item, sortFields));
+
+        spSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                sortField = sortFields.get(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         return root;
     }
 
@@ -124,6 +152,39 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
                 : new LinearLayoutManager(getContext());
     }
 
+    private List<String> getSortFields() {
+        return Arrays.asList(
+                getResources().getString(R.string.name),
+                getResources().getString(R.string.size),
+                getResources().getString(R.string.created_date)
+        );
+    }
+
+    private Comparator<Picture> getComparator() {
+        Comparator<Picture> comparator;
+        if (sortField.equals(getResources().getString(R.string.size))) {
+            comparator = Comparator.comparing(Picture::getSize);
+        } else if (sortField.equals(getResources().getString(R.string.name))) {
+            comparator = Comparator.comparing(Picture::getName);
+        } else {
+            comparator = Comparator.comparing(Picture::getCreatedDate);
+        }
+
+        if (sortType.equals("desc")) {
+            comparator = comparator.reversed();
+        }
+        return comparator;
+    }
+
+    private void reversedSortType() {
+        if (sortType.equals("desc")) {
+            sortType = "asc";
+        } else {
+            sortType = "desc";
+        }
+        btnSort.setText(sortType);
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -134,4 +195,25 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
     public void onClick(Picture item, int pos) {
         Toast.makeText(getContext(), item.toString(), Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onPicClicked(PictureAdapter.PictureHolder holder, int position, List<Picture> pics) {
+        PictureBrowserFragment browser = PictureBrowserFragment.newInstance(pics, position, getContext());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //browser.setEnterTransition(new Slide());
+            //browser.setExitTransition(new Slide()); uncomment this to use slide transition and comment the two lines below
+            browser.setEnterTransition(new Fade());
+            browser.setExitTransition(new Fade());
+        }
+
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .addSharedElement(holder.picture, position + "picture")
+                .add(R.id.nav_host_fragment_content_main, browser)
+                .addToBackStack(null)
+                .commit();
+
+
+    }
+
 }

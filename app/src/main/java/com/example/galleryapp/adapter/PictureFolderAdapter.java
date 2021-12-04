@@ -21,9 +21,9 @@ import java.util.List;
 
 public class PictureFolderAdapter extends RecyclerView.Adapter<PictureFolderAdapter.FolderHolder> {
 
-    private List<PictureFolder> folders;
-    private int resource;
-    private OnItemClick<PictureFolder> itemClickListener;
+    private final List<PictureFolder> folders;
+    private final int resource;
+    private final OnItemClick<PictureFolder> itemClickListener;
 
     public PictureFolderAdapter(List<PictureFolder> folders, int resource, OnItemClick<PictureFolder> itemClickListener) {
         this.folders = folders;
@@ -52,7 +52,7 @@ public class PictureFolderAdapter extends RecyclerView.Adapter<PictureFolderAdap
 
         //setting the number of images
         String text = "" + folder.getName();
-        String folderSizeString=""+folder.getTotalPicture()+" Media";
+        String folderSizeString = "" + folder.getTotalPicture() + " Media";
         holder.folderSize.setText(folderSizeString);
         holder.folderName.setText(text);
         holder.folderItemLayoutId.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +81,7 @@ public class PictureFolderAdapter extends RecyclerView.Adapter<PictureFolderAdap
             super(itemView);
             folderPic = itemView.findViewById(R.id.folderPic);
             folderName = itemView.findViewById(R.id.folderName);
-            folderSize=itemView.findViewById(R.id.folderSize);
+            folderSize = itemView.findViewById(R.id.folderSize);
             folderCard = itemView.findViewById(R.id.folderCard);
             folderItemLayoutId = itemView.findViewById(R.id.folderItemLayoutId);
         }

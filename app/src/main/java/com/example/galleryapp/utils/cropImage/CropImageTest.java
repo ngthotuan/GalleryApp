@@ -31,12 +31,12 @@ public class CropImageTest extends Activity {
 
     public static final String TEMP_PHOTO_FILE_NAME = "temp_photo.jpg";
 
-    public static final int REQUEST_CODE_GALLERY      = 0x1;
+    public static final int REQUEST_CODE_GALLERY = 0x1;
     public static final int REQUEST_CODE_TAKE_PICTURE = 0x2;
-    public static final int REQUEST_CODE_CROP_IMAGE   = 0x3;
+    public static final int REQUEST_CODE_CROP_IMAGE = 0x3;
 
     private ImageView mImageView;
-    private File      mFileTemp;
+    private File mFileTemp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +57,12 @@ public class CropImageTest extends Activity {
             }
         });
 
-        mImageView = (ImageView) findViewById(R.id.image);
+        mImageView = findViewById(R.id.image);
 
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {
             mFileTemp = new File(Environment.getExternalStorageDirectory(), TEMP_PHOTO_FILE_NAME);
-        }
-        else {
+        } else {
             mFileTemp = new File(getFilesDir(), TEMP_PHOTO_FILE_NAME);
         }
 
@@ -77,11 +76,7 @@ public class CropImageTest extends Activity {
             String state = Environment.getExternalStorageState();
             if (Environment.MEDIA_MOUNTED.equals(state)) {
                 mImageCaptureUri = Uri.fromFile(mFileTemp);
-            }
-            else {
-                /*
-                 * The solution is taken from here: http://stackoverflow.com/questions/10042695/how-to-get-camera-result-as-a-uri-in-data-folder
-                 */
+            } else {
                 mImageCaptureUri = InternalStorageContentProvider.CONTENT_URI;
             }
             intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
@@ -90,6 +85,96 @@ public class CropImageTest extends Activity {
         } catch (ActivityNotFoundException e) {
             Log.d(TAG, "cannot take picture", e);
         }
+    }
+
+    private void grantPermissionREAD() {
+        int permissionCheckREAD = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE);
+
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        REQUEST_CODE_GALLERY);
+            }
+        }
+    }
+
+    private void grantPermissionWRITE() {
+        int permissionCheckWRITE = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        REQUEST_CODE_GALLERY);
+            }
+        }
+    }
+
+    private void grantPermissionCAMERA() {
+        int permissionCheckWRITE = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA);
+
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.CAMERA)) {
+
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.CAMERA},
+                        REQUEST_CODE_TAKE_PICTURE);
+            }
+        }
+    }
+
+    private void checkPermissionWRITE() {
+        if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            Log.v(TAG, "WRITE EXTERNAL Permission is granted");
+        } else {
+            Log.v(TAG, "WRITE EXTERNAL Permission denied");
+            grantPermissionWRITE();
+        }
+        return;
+    }
+
+    private void checkPermissionREAD() {
+        if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            Log.v(TAG, "READ EXTERNAL Permission is granted");
+        } else {
+            Log.v(TAG, "READ EXTERNAL Permission denied");
+            grantPermissionREAD();
+        }
+        return;
+    }
+
+    private void checkPermissionCAMERA() {
+        if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            Log.v(TAG, "CAMERA Permission is granted");
+        } else {
+            Log.v(TAG, "CAMERA EXTERNAL Permission denied");
+            grantPermissionREAD();
+        }
+        return;
     }
 
     private void openGallery() {
@@ -120,6 +205,8 @@ public class CropImageTest extends Activity {
         switch (requestCode) {
             case REQUEST_CODE_GALLERY:
                 try {
+                    checkPermissionWRITE();
+                    checkPermissionREAD();
                     InputStream inputStream = getContentResolver().openInputStream(data.getData());
                     FileOutputStream fileOutputStream = new FileOutputStream(mFileTemp);
                     copyStream(inputStream, fileOutputStream);
@@ -133,6 +220,7 @@ public class CropImageTest extends Activity {
 
                 break;
             case REQUEST_CODE_TAKE_PICTURE:
+                checkPermissionCAMERA();
                 startCropImage();
                 break;
             case REQUEST_CODE_CROP_IMAGE:

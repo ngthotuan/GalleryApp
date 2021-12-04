@@ -6,13 +6,14 @@
             android:title="Slideshow"/>
         <item android:id="@+id/imgViewUseAs"
             android:title="Use As"/>
-        <item android:id="@+id/imgViewRotate"
-            android:title="Rotate"/>
         <item android:id="@+id/imgViewDetail"
             android:title="Detail"/>
         <item android:id="@+id/imgViewHide"
             android:title="Hide"/>
         <item android:id="@+id/imgViewLock"
             android:title="Lock"/>
+
     </group>
+    <item android:id="@+id/imgShare"
+        android:title="Share"/>
 </menu>

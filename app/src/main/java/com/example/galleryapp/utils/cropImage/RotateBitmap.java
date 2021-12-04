@@ -6,7 +6,7 @@ import android.graphics.Matrix;
 public class RotateBitmap {
     public static final String TAG = "RotateBitmap";
     private Bitmap mBitmap;
-    private int    mRotation;
+    private int mRotation;
 
     public RotateBitmap(Bitmap bitmap) {
         mBitmap = bitmap;

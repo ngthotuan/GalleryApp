@@ -12,12 +12,12 @@ public class HighlightView {
     private static final String TAG = "HighlightView";
     View mContext;  // The View displaying the image.
 
-    public static final int GROW_NONE        = (1 << 0);
-    public static final int GROW_LEFT_EDGE   = (1 << 1);
-    public static final int GROW_RIGHT_EDGE  = (1 << 2);
-    public static final int GROW_TOP_EDGE    = (1 << 3);
+    public static final int GROW_NONE = (1 << 0);
+    public static final int GROW_LEFT_EDGE = (1 << 1);
+    public static final int GROW_RIGHT_EDGE = (1 << 2);
+    public static final int GROW_TOP_EDGE = (1 << 3);
     public static final int GROW_BOTTOM_EDGE = (1 << 4);
-    public static final int MOVE             = (1 << 5);
+    public static final int MOVE = (1 << 5);
 
     public HighlightView(View ctx) {
 
@@ -27,8 +27,8 @@ public class HighlightView {
     private void init() {
 
         android.content.res.Resources resources = mContext.getResources();
-        mResizeDrawableWidth    =resources.getDrawable(R.drawable.camera_crop_width);
-        mResizeDrawableHeight   = resources.getDrawable(R.drawable.camera_crop_height);
+        mResizeDrawableWidth = resources.getDrawable(R.drawable.camera_crop_width);
+        mResizeDrawableHeight = resources.getDrawable(R.drawable.camera_crop_height);
         mResizeDrawableDiagonal = resources.getDrawable(R.drawable.indicator_autocrop);
     }
 
@@ -76,7 +76,7 @@ public class HighlightView {
 
                 canvas.restore();
             } else {
-                Rect topRect = new Rect(viewDrawingRect.left, viewDrawingRect.top, viewDrawingRect.right, mDrawRect.top );
+                Rect topRect = new Rect(viewDrawingRect.left, viewDrawingRect.top, viewDrawingRect.right, mDrawRect.top);
                 if (topRect.width() > 0 && topRect.height() > 0) {
                     canvas.drawRect(topRect, hasFocus() ? mFocusPaint : mNoFocusPaint);
                 }
@@ -393,7 +393,7 @@ public class HighlightView {
 
     Rect mDrawRect;  // in screen space
     private RectF mImageRect;  // in image space
-    RectF  mCropRect;  // in image space
+    RectF mCropRect;  // in image space
     Matrix mMatrix;
 
     private boolean mMaintainAspectRatio = false;
@@ -404,7 +404,7 @@ public class HighlightView {
     private Drawable mResizeDrawableHeight;
     private Drawable mResizeDrawableDiagonal;
 
-    private final Paint mFocusPaint   = new Paint();
+    private final Paint mFocusPaint = new Paint();
     private final Paint mNoFocusPaint = new Paint();
     private final Paint mOutlinePaint = new Paint();
 }

@@ -32,12 +32,9 @@
                 android:resource="@xml/providers_paths" />
         </provider>
 
-        <activity android:name=".utils.cropImage.CropImageTest">
-            <!--            <intent-filter>-->
-            <!--                <action android:name="android.intent.action.MAIN"/>-->
-            <!--                <category android:name="android.intent.category.LAUNCHER"/>-->
-            <!--            </intent-filter>-->
-        </activity>
+        // For CropImage and Rotate Test
+        <activity android:name=".utils.cropImage.CropImageTest" android:exported="true"/>
+        <activity android:name=".utils.cropImage.CropImage"/>
         <provider
             android:authorities="com.example.galleryapp.utils.cropImage"
             android:name=".utils.cropImage.InternalStorageContentProvider"

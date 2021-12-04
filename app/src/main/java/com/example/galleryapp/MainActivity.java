@@ -1,5 +1,6 @@
 package com.example.galleryapp;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -25,11 +26,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         if (!checkPermissionForReadExternalStorage()) {
             requestPermissionForReadExternalStorage();
+        }
+        if (!checkPermissionForCamera()) {
+            requestPermissionForCamera();
         }
 
         setSupportActionBar(binding.appBarMain.toolbar);
@@ -60,15 +65,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private static final int READ_STORAGE_PERMISSION_REQUEST_CODE = 41;
+    private static final int CAMERA_PERMISSION_REQUEST_CODE = 40;
 
     public boolean checkPermissionForReadExternalStorage() {
         int result = this.checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE);
         return result == PackageManager.PERMISSION_GRANTED;
     }
 
+    public boolean checkPermissionForCamera() {
+        int result = this.checkSelfPermission(Manifest.permission.CAMERA);
+        return result == PackageManager.PERMISSION_GRANTED;
+    }
+
     public void requestPermissionForReadExternalStorage() {
         try {
-            ActivityCompat.requestPermissions((Activity) this,
+            ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
                     READ_STORAGE_PERMISSION_REQUEST_CODE);
         } catch (Exception e) {
@@ -76,11 +87,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void requestPermissionForCamera() {
+        try {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST_CODE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
-            case READ_STORAGE_PERMISSION_REQUEST_CODE: {
+            case READ_STORAGE_PERMISSION_REQUEST_CODE:
+            case CAMERA_PERMISSION_REQUEST_CODE: {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -93,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                     // functionality that depends on this permission.
                     Toast.makeText(MainActivity.this, "Permission denied to read your External storage", Toast.LENGTH_SHORT).show();
                 }
-                return;
+                break;
             }
             // add other cases for more permissions
         }

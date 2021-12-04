@@ -5,7 +5,9 @@ import android.net.Uri;
 
 import com.example.galleryapp.utils.DateUtil;
 
-public class Picture {
+import java.io.Serializable;
+
+public class Picture implements Serializable {
     private String name;
     private String path;
     private long size;

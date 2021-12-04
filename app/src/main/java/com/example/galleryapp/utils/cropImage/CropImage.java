@@ -38,39 +38,39 @@ import com.example.galleryapp.R;
 public class CropImage extends MonitoredActivity {
     final int IMAGE_MAX_SIZE = 1024;
 
-    private static final String TAG                    = "CropImage";
-    public static final  String IMAGE_PATH             = "image-path";
-    public static final  String SCALE                  = "scale";
-    public static final  String ORIENTATION_IN_DEGREES = "orientation_in_degrees";
-    public static final  String ASPECT_X               = "aspectX";
-    public static final  String ASPECT_Y               = "aspectY";
-    public static final  String OUTPUT_X               = "outputX";
-    public static final  String OUTPUT_Y               = "outputY";
-    public static final  String SCALE_UP_IF_NEEDED     = "scaleUpIfNeeded";
-    public static final  String CIRCLE_CROP            = "circleCrop";
-    public static final  String RETURN_DATA            = "return-data";
-    public static final  String RETURN_DATA_AS_BITMAP  = "data";
-    public static final  String ACTION_INLINE_DATA     = "inline-data";
+    private static final String TAG = "CropImage";
+    public static final String IMAGE_PATH = "image-path";
+    public static final String SCALE = "scale";
+    public static final String ORIENTATION_IN_DEGREES = "orientation_in_degrees";
+    public static final String ASPECT_X = "aspectX";
+    public static final String ASPECT_Y = "aspectY";
+    public static final String OUTPUT_X = "outputX";
+    public static final String OUTPUT_Y = "outputY";
+    public static final String SCALE_UP_IF_NEEDED = "scaleUpIfNeeded";
+    public static final String CIRCLE_CROP = "circleCrop";
+    public static final String RETURN_DATA = "return-data";
+    public static final String RETURN_DATA_AS_BITMAP = "data";
+    public static final String ACTION_INLINE_DATA = "inline-data";
 
     // These are various options can be specified in the intent.
-    private       Bitmap.CompressFormat mOutputFormat = Bitmap.CompressFormat.JPEG;
-    private       Uri                   mSaveUri         = null;
-    private       boolean               mDoFaceDetection = true;
-    private       boolean               mCircleCrop      = false;
-    private final Handler               mHandler         = new Handler();
+    private final Bitmap.CompressFormat mOutputFormat = Bitmap.CompressFormat.JPEG;
+    private Uri mSaveUri = null;
+    private final boolean mDoFaceDetection = true;
+    private boolean mCircleCrop = false;
+    private final Handler mHandler = new Handler();
 
-    private int             mAspectX;
-    private int             mAspectY;
-    private int             mOutputX;
-    private int             mOutputY;
-    private boolean         mScale;
-    private CropImageView   mImageView;
+    private int mAspectX;
+    private int mAspectY;
+    private int mOutputX;
+    private int mOutputY;
+    private boolean mScale;
+    private CropImageView mImageView;
     private ContentResolver mContentResolver;
-    private Bitmap          mBitmap;
-    private String          mImagePath;
+    private Bitmap mBitmap;
+    private String mImagePath;
 
-    boolean       mWaitingToPick; // Whether we are wait the user to pick a face.
-    boolean       mSaving;  // Whether the "save" button is already clicked.
+    boolean mWaitingToPick; // Whether we are wait the user to pick a face.
+    boolean mSaving;  // Whether the "save" button is already clicked.
     HighlightView mCrop;
 
     // These options specifiy the output image size and whether we should
@@ -88,7 +88,7 @@ public class CropImage extends MonitoredActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.cropimage);
 
-        mImageView = (CropImageView) findViewById(R.id.image);
+        mImageView = findViewById(R.id.image);
 
         showStorageToast(this);
 
@@ -173,7 +173,7 @@ public class CropImage extends MonitoredActivity {
                         mRunFaceDetection.run();
                     }
                 });
-        //startFaceDetection();
+        startFaceDetection();
     }
 
     private Uri getImageUri(String path) {
@@ -214,44 +214,44 @@ public class CropImage extends MonitoredActivity {
     }
 
 
-//    private void startFaceDetection() {
-//
-//        if (isFinishing()) {
-//            return;
-//        }
-//
-//        mImageView.setImageBitmapResetBase(mBitmap, true);
-//
-//        Util.startBackgroundJob(this, null,
-//                "Please wait\u2026",
-//                new Runnable() {
-//                    public void run() {
-//
-//                        final CountDownLatch latch = new CountDownLatch(1);
-//                        final Bitmap b = mBitmap;
-//                        mHandler.post(new Runnable() {
-//                            public void run() {
-//
-//                                if (b != mBitmap && b != null) {
-//                                    mImageView.setImageBitmapResetBase(b, true);
-//                                    mBitmap.recycle();
-//                                    mBitmap = b;
-//                                }
-//                                if (mImageView.getScale() == 1F) {
-//                                    mImageView.center(true, true);
-//                                }
-//                                latch.countDown();
-//                            }
-//                        });
-//                        try {
-//                            latch.await();
-//                        } catch (InterruptedException e) {
-//                            throw new RuntimeException(e);
-//                        }
-//                        mRunFaceDetection.run();
-//                    }
-//                }, mHandler);
-//    }
+    private void startFaceDetection() {
+
+        if (isFinishing()) {
+            return;
+        }
+
+        mImageView.setImageBitmapResetBase(mBitmap, true);
+
+        cropUtil.startBackgroundJob(this, null,
+                "Please wait\u2026",
+                new Runnable() {
+                    public void run() {
+
+                        final CountDownLatch latch = new CountDownLatch(1);
+                        final Bitmap b = mBitmap;
+                        mHandler.post(new Runnable() {
+                            public void run() {
+
+                                if (b != mBitmap && b != null) {
+                                    mImageView.setImageBitmapResetBase(b, true);
+                                    mBitmap.recycle();
+                                    mBitmap = b;
+                                }
+                                if (mImageView.getScale() == 1F) {
+                                    mImageView.center(true, true);
+                                }
+                                latch.countDown();
+                            }
+                        });
+                        try {
+                            latch.await();
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        mRunFaceDetection.run();
+                    }
+                }, mHandler);
+    }
 
 
     private void onSaveClicked() throws Exception {
@@ -422,7 +422,7 @@ public class CropImage extends MonitoredActivity {
         @SuppressWarnings("hiding")
         float mScale = 1F;
         Matrix mImageMatrix;
-        FaceDetector.Face[] mFaces = new FaceDetector.Face[3];
+        final FaceDetector.Face[] mFaces = new FaceDetector.Face[3];
         int mNumFaces;
 
         // For each face, we create a HightlightView for it.
@@ -564,7 +564,7 @@ public class CropImage extends MonitoredActivity {
         }
     };
 
-    public static final int NO_STORAGE_ERROR  = -1;
+    public static final int NO_STORAGE_ERROR = -1;
     public static final int CANNOT_STAT_ERROR = -2;
 
     public static void showStorageToast(Activity activity) {
@@ -599,8 +599,7 @@ public class CropImage extends MonitoredActivity {
             String state = Environment.getExternalStorageState();
             if (Environment.MEDIA_MOUNTED.equals(state)) {
                 storageDirectory = Environment.getExternalStorageDirectory().toString();
-            }
-            else {
+            } else {
                 storageDirectory = activity.getFilesDir().toString();
             }
             StatFs stat = new StatFs(storageDirectory);
