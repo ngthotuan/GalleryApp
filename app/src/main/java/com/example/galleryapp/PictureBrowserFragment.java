@@ -7,6 +7,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +27,7 @@ import com.example.galleryapp.adapter.PictureAdapter;
 import com.example.galleryapp.adapter.RecyclerViewPagerImageIndicator;
 import com.example.galleryapp.listener.OnItemClick;
 import com.example.galleryapp.model.Picture;
+import com.example.galleryapp.utils.ShareUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -66,7 +70,25 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+
         return inflater.inflate(R.layout.fragment_picture_browser, container, false);
+
+    }
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.image_view_option_drawer,menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.imgShare:{
+                ShareUtils.shareImage(getContext(),allImages.get(position));
+            }
+        }
+        return super.onOptionsItemSelected(item);
 
     }
 
@@ -179,6 +201,7 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
             previousSelected = pos;
         }
 
+        position = pos;
         imagePager.setCurrentItem(pos);
     }
 

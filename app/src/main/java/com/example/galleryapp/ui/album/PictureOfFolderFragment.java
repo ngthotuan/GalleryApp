@@ -55,7 +55,6 @@ public class PictureOfFolderFragment extends Fragment implements OnItemClick<Pic
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
 
         binding = FragmentPictureOfFolderBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -130,22 +129,7 @@ public class PictureOfFolderFragment extends Fragment implements OnItemClick<Pic
     }
 
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.image_view_option_drawer,menu);
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.imgShare:{
-                ShareUtils.shareImage(getContext(),pictures.get(0));
-            }
-        }
-        return super.onOptionsItemSelected(item);
-
-    }
 
     @Override
     public void onDestroyView() {
