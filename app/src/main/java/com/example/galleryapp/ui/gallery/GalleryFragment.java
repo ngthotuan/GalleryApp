@@ -192,4 +192,9 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
     public void onClick(Picture item, int pos) {
         Toast.makeText(getContext(), item.toString(), Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onPicClicked(PictureAdapter.PictureHolder holder, int position, List<Picture> pics) {
+
+    }
 }

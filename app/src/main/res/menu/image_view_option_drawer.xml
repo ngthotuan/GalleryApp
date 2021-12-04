@@ -12,5 +12,8 @@
             android:title="Hide"/>
         <item android:id="@+id/imgViewLock"
             android:title="Lock"/>
+
     </group>
+    <item android:id="@+id/imgShare"
+        android:title="Share"/>
 </menu>

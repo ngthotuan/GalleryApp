@@ -72,6 +72,7 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
             @Override
             public void onClick(View v) {
                 listener.onClick(picture, position);
+                listener.onPicClicked(holder,position,pictures);
             }
         });
 
@@ -83,7 +84,7 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
         return pictures.size();
     }
 
-    static class PictureHolder extends RecyclerView.ViewHolder {
+    static public class PictureHolder extends RecyclerView.ViewHolder {
 
         public View picLayout;
         public ImageView picture;

@@ -2,12 +2,11 @@ package com.example.galleryapp.utils;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 
 import com.example.galleryapp.model.Picture;
 
 public class ShareUtils {
-    public void shareImage(Context context, Picture picture){
+    public static void shareImage(Context context, Picture picture){
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         switch (picture.getType()){
