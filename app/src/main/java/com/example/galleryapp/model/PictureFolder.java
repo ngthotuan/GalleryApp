@@ -8,7 +8,7 @@ public class PictureFolder implements Serializable {
     private String path;
     private String name;
     private long totalPicture = 0;
-    private Uri firstPicture;
+    private transient Uri firstPicture;
 
     public String getPath() {
         return path;
