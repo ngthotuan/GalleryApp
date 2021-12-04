@@ -16,7 +16,7 @@ public class ImageSave {
 
     private String directoryName = "images";
     private String fileName = "image.png";
-    private Context context;
+    private final Context context;
     private boolean external;
 
     public ImageSave(Context context) {
@@ -59,14 +59,13 @@ public class ImageSave {
     @NonNull
     private File createFile() {
         File directory;
-        if(external){
+        if (external) {
             directory = getAlbumStorageDir(directoryName);
-        }
-        else {
+        } else {
             directory = context.getDir(directoryName, Context.MODE_PRIVATE);
         }
-        if(!directory.exists() && !directory.mkdirs()){
-            Log.e("ImageSaver","Error creating directory " + directory);
+        if (!directory.exists() && !directory.mkdirs()) {
+            Log.e("ImageSaver", "Error creating directory " + directory);
         }
 
         return new File(directory, fileName);

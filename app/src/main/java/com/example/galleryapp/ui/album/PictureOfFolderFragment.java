@@ -81,8 +81,6 @@ public class PictureOfFolderFragment extends Fragment implements OnItemClick<Pic
         imageRecycler.setLayoutManager(new GridLayoutManager(getContext(), 4));
 
 
-
-
         btnTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,6 +94,7 @@ public class PictureOfFolderFragment extends Fragment implements OnItemClick<Pic
 
         return root;
     }
+
     ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -106,7 +105,7 @@ public class PictureOfFolderFragment extends Fragment implements OnItemClick<Pic
                         // There are no request codes
                         Intent data = result.getData();
                         Bitmap photo = (Bitmap) data.getExtras().get("data");
-                        Log.e("TAG", "onActivityResult: " );
+                        Log.e("TAG", "onActivityResult: ");
 //                        new ImageSave(getContext()).save(photo);
                         imageView.setImageBitmap(photo);
 
@@ -116,19 +115,16 @@ public class PictureOfFolderFragment extends Fragment implements OnItemClick<Pic
             });
 
 
-
-
-    private void print(String str){
+    private void print(String str) {
         Log.d("TAG", str);
     }
+
     public void openSomeActivityForResult() {
 //
         Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
         startActivity(intent);
 
     }
-
-
 
 
     @Override
@@ -146,7 +142,7 @@ public class PictureOfFolderFragment extends Fragment implements OnItemClick<Pic
 
     @Override
     public void onPicClicked(PictureAdapter.PictureHolder holder, int position, List<Picture> pics) {
-        PictureBrowserFragment browser = PictureBrowserFragment.newInstance(pics,position,getContext());
+        PictureBrowserFragment browser = PictureBrowserFragment.newInstance(pics, position, getContext());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //browser.setEnterTransition(new Slide());
             //browser.setExitTransition(new Slide()); uncomment this to use slide transition and comment the two lines below
@@ -156,7 +152,7 @@ public class PictureOfFolderFragment extends Fragment implements OnItemClick<Pic
 
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .addSharedElement(holder.picture, position+"picture")
+                .addSharedElement(holder.picture, position + "picture")
                 .add(R.id.nav_host_fragment_content_main, browser)
                 .addToBackStack(null)
                 .commit();

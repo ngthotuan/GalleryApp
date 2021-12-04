@@ -76,25 +76,27 @@ public class MainActivity extends AppCompatActivity {
         int result = this.checkSelfPermission(Manifest.permission.CAMERA);
         return result == PackageManager.PERMISSION_GRANTED;
     }
+
     public void requestPermissionForReadExternalStorage() {
         try {
-            ActivityCompat.requestPermissions((Activity) this,
+            ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
                     READ_STORAGE_PERMISSION_REQUEST_CODE);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     public void requestPermissionForCamera() {
         try {
-            ActivityCompat.requestPermissions(this, new String[] {android.Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST_CODE);
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST_CODE);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case READ_STORAGE_PERMISSION_REQUEST_CODE:

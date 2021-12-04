@@ -2,9 +2,11 @@ package com.example.galleryapp.ui.gallery;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.transition.Fade;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +24,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.galleryapp.PictureBrowserFragment;
 import com.example.galleryapp.R;
 import com.example.galleryapp.adapter.PictureAdapter;
 import com.example.galleryapp.databinding.FragmentGalleryBinding;
@@ -45,7 +48,7 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
     private EditText edtSearch;
     private Spinner spSort;
     private boolean isGridView = true;
-    private boolean sortDecreasing = true;
+    private final boolean sortDecreasing = true;
     private List<String> sortFields;
     private String sortField = "";
     private String sortType = "desc";
@@ -195,6 +198,22 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
 
     @Override
     public void onPicClicked(PictureAdapter.PictureHolder holder, int position, List<Picture> pics) {
+        PictureBrowserFragment browser = PictureBrowserFragment.newInstance(pics, position, getContext());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //browser.setEnterTransition(new Slide());
+            //browser.setExitTransition(new Slide()); uncomment this to use slide transition and comment the two lines below
+            browser.setEnterTransition(new Fade());
+            browser.setExitTransition(new Fade());
+        }
+
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .addSharedElement(holder.picture, position + "picture")
+                .add(R.id.nav_host_fragment_content_main, browser)
+                .addToBackStack(null)
+                .commit();
+
 
     }
+
 }

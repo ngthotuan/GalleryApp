@@ -10,7 +10,7 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.widget.ImageView;
 
-public class ImageViewTouchBase extends ImageView{
+public class ImageViewTouchBase extends ImageView {
     @SuppressWarnings("unused")
     private static final String TAG = "ImageViewTouchBase";
 
@@ -55,7 +55,7 @@ public class ImageViewTouchBase extends ImageView{
     // ImageViewTouchBase will pass a Bitmap to the Recycler if it has finished
     // its use of that Bitmap.
     public interface Recycler {
-        public void recycle(Bitmap b);
+        void recycle(Bitmap b);
     }
 
     public void setRecycler(Recycler r) {

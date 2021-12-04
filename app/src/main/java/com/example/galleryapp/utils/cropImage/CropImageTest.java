@@ -31,12 +31,12 @@ public class CropImageTest extends Activity {
 
     public static final String TEMP_PHOTO_FILE_NAME = "temp_photo.jpg";
 
-    public static final int REQUEST_CODE_GALLERY      = 0x1;
+    public static final int REQUEST_CODE_GALLERY = 0x1;
     public static final int REQUEST_CODE_TAKE_PICTURE = 0x2;
-    public static final int REQUEST_CODE_CROP_IMAGE   = 0x3;
+    public static final int REQUEST_CODE_CROP_IMAGE = 0x3;
 
     private ImageView mImageView;
-    private File      mFileTemp;
+    private File mFileTemp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +57,12 @@ public class CropImageTest extends Activity {
             }
         });
 
-        mImageView = (ImageView) findViewById(R.id.image);
+        mImageView = findViewById(R.id.image);
 
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {
             mFileTemp = new File(Environment.getExternalStorageDirectory(), TEMP_PHOTO_FILE_NAME);
-        }
-        else {
+        } else {
             mFileTemp = new File(getFilesDir(), TEMP_PHOTO_FILE_NAME);
         }
 
@@ -77,8 +76,7 @@ public class CropImageTest extends Activity {
             String state = Environment.getExternalStorageState();
             if (Environment.MEDIA_MOUNTED.equals(state)) {
                 mImageCaptureUri = Uri.fromFile(mFileTemp);
-            }
-            else {
+            } else {
                 mImageCaptureUri = InternalStorageContentProvider.CONTENT_URI;
             }
             intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
@@ -89,7 +87,7 @@ public class CropImageTest extends Activity {
         }
     }
 
-    private void grantPermissionREAD(){
+    private void grantPermissionREAD() {
         int permissionCheckREAD = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE);
 
@@ -109,7 +107,7 @@ public class CropImageTest extends Activity {
         }
     }
 
-    private void grantPermissionWRITE(){
+    private void grantPermissionWRITE() {
         int permissionCheckWRITE = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
@@ -129,9 +127,9 @@ public class CropImageTest extends Activity {
         }
     }
 
-    private void checkPermissionWRITE(){
+    private void checkPermissionWRITE() {
         if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            Log.v(TAG,"WRITE EXTERNAL Permission is granted");
+            Log.v(TAG, "WRITE EXTERNAL Permission is granted");
         } else {
             Log.v(TAG, "WRITE EXTERNAL Permission denied");
             grantPermissionWRITE();
@@ -139,9 +137,9 @@ public class CropImageTest extends Activity {
         return;
     }
 
-    private void checkPermissionREAD(){
+    private void checkPermissionREAD() {
         if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            Log.v(TAG,"READ EXTERNAL Permission is granted");
+            Log.v(TAG, "READ EXTERNAL Permission is granted");
         } else {
             Log.v(TAG, "READ EXTERNAL Permission denied");
             grantPermissionREAD();

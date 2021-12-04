@@ -25,9 +25,8 @@ public class RecyclerViewPagerImageIndicator extends RecyclerView.Adapter<Recycl
     private final OnItemClick imageListerner;
 
     /**
-     *
-     * @param pictureList ArrayList of pictureFacer objects
-     * @param pictureContx The Activity of fragment context
+     * @param pictureList    ArrayList of pictureFacer objects
+     * @param pictureContx   The Activity of fragment context
      * @param imageListerner Interface for communication between adapter and fragment
      */
     public RecyclerViewPagerImageIndicator(List<Picture> pictureList, Context pictureContx, OnItemClick imageListerner) {
@@ -44,7 +43,6 @@ public class RecyclerViewPagerImageIndicator extends RecyclerView.Adapter<Recycl
         View cell = inflater.inflate(R.layout.indicator_holder, parent, false);
         return new indicatorHolder(cell);
     }
-
 
 
     @Override
@@ -69,7 +67,7 @@ public class RecyclerViewPagerImageIndicator extends RecyclerView.Adapter<Recycl
                 //holder.card.setCardElevation(5);
                 pic.setSelected(true);
                 notifyDataSetChanged();
-                imageListerner.onClick(pic,position);
+                imageListerner.onClick(pic, position);
             }
         });
 
@@ -80,10 +78,10 @@ public class RecyclerViewPagerImageIndicator extends RecyclerView.Adapter<Recycl
         return pictureList.size();
     }
 
-    static class indicatorHolder extends RecyclerView.ViewHolder{
+    static class indicatorHolder extends RecyclerView.ViewHolder {
 
         public ImageView image;
-        private CardView card;
+        private final CardView card;
         View positionController;
 
         indicatorHolder(@NonNull View itemView) {

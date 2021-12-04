@@ -44,7 +44,7 @@ public class AlbumFragment extends Fragment implements OnItemClick<PictureFolder
         imageRecycler.hasFixedSize();
         load.setVisibility(View.VISIBLE);
         List<PictureFolder> pictures = PictureUtil.getPictureFolders(activity);
-        Log.e("TAG", "onCreateView: "+ pictures.size() );
+        Log.e("TAG", "onCreateView: " + pictures.size());
         imageRecycler.setAdapter(new PictureFolderAdapter(pictures, R.layout.folder_item, this));
         imageRecycler.setLayoutManager(new GridLayoutManager(getContext(), 4));
         load.setVisibility(View.GONE);
@@ -69,7 +69,7 @@ public class AlbumFragment extends Fragment implements OnItemClick<PictureFolder
         Bundle args = new Bundle();
         args.putSerializable("pictureFolder", pictureFolder);
         llf.setArguments(args);
-        ft.replace( R.id.nav_host_fragment_content_main,llf).addToBackStack(null);
+        ft.replace(R.id.nav_host_fragment_content_main, llf).addToBackStack(null);
         Log.e("TAG", "folderImageClick: ");
         ft.commit();
     }

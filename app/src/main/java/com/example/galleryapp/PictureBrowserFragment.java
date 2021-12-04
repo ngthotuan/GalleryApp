@@ -51,7 +51,7 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
     private ImagesPagerAdapter pagingImages;
     private int previousSelected = -1;
 
-    public PictureBrowserFragment(){
+    public PictureBrowserFragment() {
 
     }
 
@@ -62,7 +62,7 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
     }
 
     public static PictureBrowserFragment newInstance(List<Picture> allImages, int imagePosition, Context anim) {
-        PictureBrowserFragment fragment = new PictureBrowserFragment(allImages,imagePosition,anim);
+        PictureBrowserFragment fragment = new PictureBrowserFragment(allImages, imagePosition, anim);
         return fragment;
     }
 
@@ -75,17 +75,18 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
         return inflater.inflate(R.layout.fragment_picture_browser, container, false);
 
     }
+
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.image_view_option_drawer,menu);
+        inflater.inflate(R.menu.image_view_option_drawer, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.imgShare:{
-                ShareUtils.shareImage(getContext(),allImages.get(position));
+        switch (item.getItemId()) {
+            case R.id.imgShare: {
+                ShareUtils.shareImage(getContext(), allImages.get(position));
             }
         }
         return super.onOptionsItemSelected(item);
@@ -118,8 +119,8 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
          */
         indicatorRecycler = view.findViewById(R.id.indicatorRecycler);
         indicatorRecycler.hasFixedSize();
-        indicatorRecycler.setLayoutManager(new GridLayoutManager(getContext(),1,RecyclerView.HORIZONTAL,false));
-        RecyclerView.Adapter indicatorAdapter = new RecyclerViewPagerImageIndicator(allImages,getContext(),this);
+        indicatorRecycler.setLayoutManager(new GridLayoutManager(getContext(), 1, RecyclerView.HORIZONTAL, false));
+        RecyclerView.Adapter indicatorAdapter = new RecyclerViewPagerImageIndicator(allImages, getContext(), this);
         indicatorRecycler.setAdapter(indicatorAdapter);
 
         //adjusting the recyclerView indicator to the current position of the viewPager, also highlights the image in recyclerView with respect to the
@@ -143,13 +144,13 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
             @Override
             public void onPageSelected(int position) {
 
-                if(previousSelected != -1){
+                if (previousSelected != -1) {
                     allImages.get(previousSelected).setSelected(false);
                     previousSelected = position;
                     allImages.get(position).setSelected(true);
                     indicatorRecycler.getAdapter().notifyDataSetChanged();
                     indicatorRecycler.scrollToPosition(position);
-                }else{
+                } else {
                     previousSelected = position;
                     allImages.get(position).setSelected(true);
                     indicatorRecycler.getAdapter().notifyDataSetChanged();
@@ -193,11 +194,11 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
 
     @Override
     public void onClick(Picture item, int pos) {
-        if(previousSelected != -1){
+        if (previousSelected != -1) {
             allImages.get(previousSelected).setSelected(false);
             previousSelected = pos;
             indicatorRecycler.getAdapter().notifyDataSetChanged();
-        }else{
+        } else {
             previousSelected = pos;
         }
 
@@ -222,13 +223,13 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
 
         @NonNull
         @Override
-            public Object instantiateItem(@NonNull ViewGroup containerCollection, int position) {
+        public Object instantiateItem(@NonNull ViewGroup containerCollection, int position) {
             LayoutInflater layoutinflater = (LayoutInflater) containerCollection.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            View view = layoutinflater.inflate(R.layout.picture_browser_pager,null);
+            View view = layoutinflater.inflate(R.layout.picture_browser_pager, null);
             image = view.findViewById(R.id.image);
 
-            setTransitionName(image, String.valueOf(position)+"picture");
+            setTransitionName(image, position + "picture");
 
             Picture pic = allImages.get(position);
             Picasso.get()
@@ -240,9 +241,9 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
                 @Override
                 public void onClick(View v) {
 
-                    if(indicatorRecycler.getVisibility() == View.GONE){
+                    if (indicatorRecycler.getVisibility() == View.GONE) {
                         indicatorRecycler.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         indicatorRecycler.setVisibility(View.GONE);
                     }
 
@@ -261,34 +262,33 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
             });
 
 
-
-            ((ViewPager) containerCollection).addView(view);
+            containerCollection.addView(view);
             return view;
         }
 
         @Override
         public void destroyItem(ViewGroup containerCollection, int position, Object view) {
-            ((ViewPager) containerCollection).removeView((View) view);
+            containerCollection.removeView((View) view);
         }
 
         @Override
         public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-            return view == ((View) object);
+            return view == object;
         }
     }
 
     /**
      * function for controlling the visibility of the recyclerView indicator
      */
-    private void visibiling(){
+    private void visibiling() {
         viewVisibilityController = 1;
         final int checker = viewVisibilitylooper;
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(viewVisibilitylooper > checker){
+                if (viewVisibilitylooper > checker) {
                     visibiling();
-                }else{
+                } else {
                     indicatorRecycler.setVisibility(View.GONE);
                     viewVisibilityController = 0;
 

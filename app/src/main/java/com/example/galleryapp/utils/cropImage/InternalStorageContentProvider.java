@@ -10,7 +10,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 
-public class InternalStorageContentProvider extends ContentProvider{
+public class InternalStorageContentProvider extends ContentProvider {
     public static final Uri CONTENT_URI = Uri.parse("content://com.example.galleryapp.utils.cropImage/");
     private static final HashMap<String, String> MIME_TYPES = new HashMap<String, String>();
 
@@ -23,7 +23,7 @@ public class InternalStorageContentProvider extends ContentProvider{
     public boolean onCreate() {
         try {
             File mFile = new File(getContext().getFilesDir(), CropImageTest.TEMP_PHOTO_FILE_NAME);
-            if(!mFile.exists()) {
+            if (!mFile.exists()) {
                 mFile.createNewFile();
                 getContext().getContentResolver().notifyChange(CONTENT_URI, null);
             }
