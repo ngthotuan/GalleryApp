@@ -15,8 +15,8 @@
     <string name="preparing_card">preparing card</string>
     <string name="no_storage_card">No SD Card</string>
     <string name="not_enough_space">Not enough space</string>
-    <string name="name">Name:</string>
-    <string name="created_date">Created Date:</string>
-    <string name="modified_date">Modified Date:</string>
-    <string name="size">Size:</string>
+    <string name="name">Name</string>
+    <string name="created_date">Created Date</string>
+    <string name="modified_date">Modified Date</string>
+    <string name="size">Size</string>
 </resources>
