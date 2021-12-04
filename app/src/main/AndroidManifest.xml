@@ -4,9 +4,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/gallery"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/gallery"
         android:supportsRtl="true"
         android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.GalleryApp">
@@ -31,13 +31,8 @@
         </provider>
 
         // For CropImage and Rotate Test
-        <activity
-            android:name=".utils.cropImage.CropImageTest">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
+        <activity android:name=".utils.cropImage.CropImageTest" android:exported="true"/>
+        <activity android:name=".utils.cropImage.CropImage"/>
         <provider
             android:authorities="com.example.galleryapp.utils.cropImage"
             android:name=".utils.cropImage.InternalStorageContentProvider"

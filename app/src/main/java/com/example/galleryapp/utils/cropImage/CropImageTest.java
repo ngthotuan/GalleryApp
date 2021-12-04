@@ -79,9 +79,6 @@ public class CropImageTest extends Activity {
                 mImageCaptureUri = Uri.fromFile(mFileTemp);
             }
             else {
-                /*
-                 * The solution is taken from here: http://stackoverflow.com/questions/10042695/how-to-get-camera-result-as-a-uri-in-data-folder
-                 */
                 mImageCaptureUri = InternalStorageContentProvider.CONTENT_URI;
             }
             intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
@@ -90,6 +87,66 @@ public class CropImageTest extends Activity {
         } catch (ActivityNotFoundException e) {
             Log.d(TAG, "cannot take picture", e);
         }
+    }
+
+    private void grantPermissionREAD(){
+        int permissionCheckREAD = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE);
+
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        2);
+            }
+        }
+    }
+
+    private void grantPermissionWRITE(){
+        int permissionCheckWRITE = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        2);
+            }
+        }
+    }
+
+    private void checkPermissionWRITE(){
+        if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            Log.v(TAG,"WRITE EXTERNAL Permission is granted");
+        } else {
+            Log.v(TAG, "WRITE EXTERNAL Permission denied");
+            grantPermissionWRITE();
+        }
+        return;
+    }
+
+    private void checkPermissionREAD(){
+        if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            Log.v(TAG,"READ EXTERNAL Permission is granted");
+        } else {
+            Log.v(TAG, "READ EXTERNAL Permission denied");
+            grantPermissionREAD();
+        }
+        return;
     }
 
     private void openGallery() {
@@ -120,6 +177,8 @@ public class CropImageTest extends Activity {
         switch (requestCode) {
             case REQUEST_CODE_GALLERY:
                 try {
+                    checkPermissionWRITE();
+                    checkPermissionREAD();
                     InputStream inputStream = getContentResolver().openInputStream(data.getData());
                     FileOutputStream fileOutputStream = new FileOutputStream(mFileTemp);
                     copyStream(inputStream, fileOutputStream);

@@ -173,7 +173,7 @@ public class CropImage extends MonitoredActivity {
                         mRunFaceDetection.run();
                     }
                 });
-        //startFaceDetection();
+        startFaceDetection();
     }
 
     private Uri getImageUri(String path) {
@@ -214,44 +214,44 @@ public class CropImage extends MonitoredActivity {
     }
 
 
-//    private void startFaceDetection() {
-//
-//        if (isFinishing()) {
-//            return;
-//        }
-//
-//        mImageView.setImageBitmapResetBase(mBitmap, true);
-//
-//        Util.startBackgroundJob(this, null,
-//                "Please wait\u2026",
-//                new Runnable() {
-//                    public void run() {
-//
-//                        final CountDownLatch latch = new CountDownLatch(1);
-//                        final Bitmap b = mBitmap;
-//                        mHandler.post(new Runnable() {
-//                            public void run() {
-//
-//                                if (b != mBitmap && b != null) {
-//                                    mImageView.setImageBitmapResetBase(b, true);
-//                                    mBitmap.recycle();
-//                                    mBitmap = b;
-//                                }
-//                                if (mImageView.getScale() == 1F) {
-//                                    mImageView.center(true, true);
-//                                }
-//                                latch.countDown();
-//                            }
-//                        });
-//                        try {
-//                            latch.await();
-//                        } catch (InterruptedException e) {
-//                            throw new RuntimeException(e);
-//                        }
-//                        mRunFaceDetection.run();
-//                    }
-//                }, mHandler);
-//    }
+    private void startFaceDetection() {
+
+        if (isFinishing()) {
+            return;
+        }
+
+        mImageView.setImageBitmapResetBase(mBitmap, true);
+
+        cropUtil.startBackgroundJob(this, null,
+                "Please wait\u2026",
+                new Runnable() {
+                    public void run() {
+
+                        final CountDownLatch latch = new CountDownLatch(1);
+                        final Bitmap b = mBitmap;
+                        mHandler.post(new Runnable() {
+                            public void run() {
+
+                                if (b != mBitmap && b != null) {
+                                    mImageView.setImageBitmapResetBase(b, true);
+                                    mBitmap.recycle();
+                                    mBitmap = b;
+                                }
+                                if (mImageView.getScale() == 1F) {
+                                    mImageView.center(true, true);
+                                }
+                                latch.countDown();
+                            }
+                        });
+                        try {
+                            latch.await();
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        mRunFaceDetection.run();
+                    }
+                }, mHandler);
+    }
 
 
     private void onSaveClicked() throws Exception {
