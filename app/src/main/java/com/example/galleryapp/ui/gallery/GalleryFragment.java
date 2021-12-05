@@ -53,7 +53,8 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
     private List<Picture> pictures;
     private Button btnSort;
     private Spinner spSort;
-    private ImageSwitcher imageViewQuick;
+    private ImageSwitcher imgAnimation;
+    private boolean showAnimation = true;
     private boolean isGridView = true;
     private List<String> sortFields;
     private String sortField = "";
@@ -70,7 +71,7 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
         rvPictures = binding.rvPictures;
         btnSort = binding.btnSort;
         spSort = binding.spSort;
-        imageViewQuick = binding.imgViewQuick;
+        imgAnimation = binding.imgAnimation;
 
         pictures = PictureUtil.getPictures(activity, null);
         adapter = getPictureAdapter(isGridView);
@@ -107,7 +108,7 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
             }
         });
 
-        imageViewQuick.setFactory(new ViewSwitcher.ViewFactory() {
+        imgAnimation.setFactory(new ViewSwitcher.ViewFactory() {
 
             public View makeView() {
                 ImageView imageView = new ImageView(getContext());
@@ -119,8 +120,8 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
         });
         Animation in = AnimationUtils.loadAnimation(getContext(), android.R.anim.slide_in_left);
         Animation out = AnimationUtils.loadAnimation(getContext(), android.R.anim.slide_out_right);
-        imageViewQuick.setInAnimation(in);
-        imageViewQuick.setOutAnimation(out);
+        imgAnimation.setInAnimation(in);
+        imgAnimation.setOutAnimation(out);
 
         autoUpdateQuickImage();
 
@@ -174,7 +175,7 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
     private void autoUpdateQuickImage() {
         new Thread() {
             public void run() {
-                while (true) {
+                while (showAnimation) {
                     try {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
@@ -182,11 +183,11 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
                                 Random rand = new Random();
                                 if (pictures.size() > 0) {
                                     Picture picture = pictures.get(rand.nextInt(pictures.size()));
-                                    imageViewQuick.setImageURI(picture.getUri());
+                                    imgAnimation.setImageURI(picture.getUri());
                                 }
                             }
                         });
-                        Thread.sleep(5000);
+                        Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -200,6 +201,7 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        showAnimation = false;
     }
 
     @Override
@@ -261,10 +263,10 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
             case R.id.mnuSwitch:
                 if (isGridView) {
                     item.setIcon(getResources().getDrawable(R.drawable.list));
-                    imageViewQuick.setVisibility(View.GONE);
+                    imgAnimation.setVisibility(View.GONE);
                 } else {
                     item.setIcon(getResources().getDrawable(R.drawable.grid));
-                    imageViewQuick.setVisibility(View.VISIBLE);
+                    imgAnimation.setVisibility(View.VISIBLE);
                 }
                 isGridView = !isGridView;
                 layoutManager = getLayoutManger(isGridView);
