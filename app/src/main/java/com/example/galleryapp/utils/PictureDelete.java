@@ -5,11 +5,35 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class PictureDelete {
+    // delete is perma delete. we cant recover so we move item to a hidden folder
+
+    private void removePic(Context context, File file) {
+        String trashPath = Environment.getExternalStorageDirectory() + "/.trash";
+        File trashDir = new File(trashPath);
+        if(!trashDir.isDirectory()) {
+            //create trash dir if it doesn't exist
+            trashDir.mkdirs();
+        }
+
+        // move item to hidden dir: /.trash
+        String inputPath = file.getPath();
+        String inputFile = file.getName();
+        moveFile(inputPath, inputFile, trashPath);
+
+    }
+
     public static boolean deletePic(final Context context, final File file) {
         final String location = MediaStore.MediaColumns.DATA + "=?";
         final String[] selectionArgs = new String[] {
@@ -47,4 +71,46 @@ public class PictureDelete {
         }
         cursor.close();
     }
+
+    private void moveFile(String inputPath, String inputFile, String outputPath) {
+
+        InputStream fileIn = null;
+        OutputStream fileOut = null;
+        try {
+            File outputDir = new File (outputPath);
+            if (!outputDir.exists()) {
+                // create output dir if it doesn't exist
+                outputDir.mkdirs();
+            }
+
+            fileIn = new FileInputStream(inputPath + inputFile);
+            fileOut = new FileOutputStream(outputPath + inputFile);
+
+            byte[] buffer = new byte[1024];
+            int read;
+
+            while ((read = fileIn.read(buffer)) != -1) {
+                fileOut.write(buffer, 0, read);
+            }
+
+            fileIn.close();
+            fileIn = null;
+
+            // write output file
+            fileOut.flush();
+            fileOut.close();
+            fileOut = null;
+
+            // delete original file
+            new File(inputPath + inputFile).delete();
+        }
+        catch (FileNotFoundException fileNotFoundException) {
+            Log.e("tag", fileNotFoundException.getMessage());
+        }
+        catch (Exception exception) {
+            Log.e("tag", exception.getMessage());
+        }
+
+    }
+
 }
