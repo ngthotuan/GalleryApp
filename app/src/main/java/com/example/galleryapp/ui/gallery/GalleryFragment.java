@@ -51,7 +51,7 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
     private RecyclerView.LayoutManager layoutManager;
     private PictureAdapter adapter;
     private List<Picture> pictures;
-    private Button btnChangeView, btnSort;
+    private Button btnSort;
     private Spinner spSort;
     private ImageSwitcher imageViewQuick;
     private boolean isGridView = true;
@@ -68,7 +68,6 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
         Activity activity = getActivity();
 
         rvPictures = binding.rvPictures;
-        btnChangeView = binding.btnChangeView;
         btnSort = binding.btnSort;
         spSort = binding.spSort;
         imageViewQuick = binding.imgViewQuick;
@@ -80,18 +79,6 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
         rvPictures.hasFixedSize();
         rvPictures.setAdapter(adapter);
         rvPictures.setLayoutManager(layoutManager);
-
-        btnChangeView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                isGridView = !isGridView;
-                layoutManager = getLayoutManger(isGridView);
-                adapter = getPictureAdapter(isGridView);
-                rvPictures.setAdapter(adapter);
-                rvPictures.setLayoutManager(layoutManager);
-                adapter.notifyDataSetChanged();
-            }
-        });
 
         btnSort.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("NotifyDataSetChanged")
@@ -269,10 +256,19 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.mnuSetting:
-                Toast.makeText(getContext(), "R.string.coming_soon", Toast.LENGTH_LONG).show();
+            case R.id.mnuSwitch:
+                if (isGridView) {
+                    item.setIcon(getResources().getDrawable(R.drawable.list));
+                } else {
+                    item.setIcon(getResources().getDrawable(R.drawable.grid));
+                }
+                isGridView = !isGridView;
+                layoutManager = getLayoutManger(isGridView);
+                adapter = getPictureAdapter(isGridView);
+                rvPictures.setAdapter(adapter);
+                rvPictures.setLayoutManager(layoutManager);
+                adapter.notifyDataSetChanged();
                 break;
-
         }
         return super.onOptionsItemSelected(item);
     }

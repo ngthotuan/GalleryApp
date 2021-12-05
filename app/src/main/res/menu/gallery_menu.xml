@@ -3,12 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/mnuSetting"
-        android:title="@string/settings" />
-    <item
         android:id="@+id/mnuSearchPicture"
         android:icon="@drawable/ic_search_black_24dp"
         app:showAsAction="always"
         app:actionViewClass="android.widget.SearchView"
         android:title="@string/search_picture" />
+    <item
+        android:id="@+id/mnuSwitch"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/grid"
+        android:title="@string/switch_view" />
 </menu>

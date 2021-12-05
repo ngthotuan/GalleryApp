@@ -7,12 +7,6 @@
     android:orientation="vertical"
     tools:context=".ui.gallery.GalleryFragment">
 
-    <Button
-        android:id="@+id/btnChangeView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Change view" />
-
     <Spinner
         android:id="@+id/spSort"
         android:layout_width="match_parent"
