@@ -4,10 +4,11 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.transition.Fade;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -15,10 +16,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
@@ -51,7 +52,6 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
     private PictureAdapter adapter;
     private List<Picture> pictures;
     private Button btnChangeView, btnSort;
-    private EditText edtSearch;
     private Spinner spSort;
     private ImageSwitcher imageViewQuick;
     private boolean isGridView = true;
@@ -62,6 +62,7 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         binding = FragmentGalleryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         Activity activity = getActivity();
@@ -69,7 +70,6 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
         rvPictures = binding.rvPictures;
         btnChangeView = binding.btnChangeView;
         btnSort = binding.btnSort;
-        edtSearch = binding.edtSearch;
         spSort = binding.spSort;
         imageViewQuick = binding.imgViewQuick;
 
@@ -101,31 +101,6 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
                 pictures.sort(comparator);
                 reversedSortType();
                 adapter.notifyDataSetChanged();
-            }
-        });
-
-        edtSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence keyword, int i, int i1, int i2) {
-                pictures = PictureUtil.getPictures(activity, null);
-                if (keyword.length() > 0) {
-                    pictures = pictures.stream()
-                            .filter(picture -> picture.getName().toLowerCase()
-                                    .contains(keyword.toString().toLowerCase())
-                                    || DateUtil.getDate(picture.getCreatedDate()).contains(keyword))
-                            .collect(Collectors.toList());
-                }
-                adapter.setPictures(pictures);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
             }
         });
 
@@ -263,4 +238,42 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
 
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.gallery_menu, menu);
+        MenuItem mnuSearchPicture = menu.findItem(R.id.mnuSearchPicture);
+        SearchView searchView = (SearchView) mnuSearchPicture.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                pictures = PictureUtil.getPictures(getActivity(), null);
+                if (s.length() > 0) {
+                    pictures = pictures.stream()
+                            .filter(picture -> picture.getName().toLowerCase()
+                                    .contains(s.toLowerCase())
+                                    || DateUtil.getDate(picture.getCreatedDate()).contains(s))
+                            .collect(Collectors.toList());
+                }
+                adapter.setPictures(pictures);
+                return false;
+            }
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.mnuSetting:
+                Toast.makeText(getContext(), "R.string.coming_soon", Toast.LENGTH_LONG).show();
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
