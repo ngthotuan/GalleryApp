@@ -7,16 +7,33 @@
     android:orientation="vertical"
     tools:context=".ui.gallery.GalleryFragment">
 
-    <Spinner
-        android:id="@+id/spSort"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/btnSort"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sort" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="8dp"
+            android:textColor="@color/black"
+            android:text="@string/sort_type"
+            tools:ignore="RtlSymmetry" />
+
+        <Spinner
+            android:id="@+id/spSort"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center" />
+
+        <Button
+            android:id="@+id/btnSort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/up_icon" />
+    </LinearLayout>
 
     <ImageSwitcher
         android:id="@+id/imgViewQuick"

@@ -57,7 +57,7 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
     private boolean isGridView = true;
     private List<String> sortFields;
     private String sortField = "";
-    private String sortType = "desc";
+    private String sortType = "";
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -140,9 +140,9 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
 
     private List<String> getSortFields() {
         return Arrays.asList(
+                getResources().getString(R.string.created_date),
                 getResources().getString(R.string.name),
-                getResources().getString(R.string.size),
-                getResources().getString(R.string.created_date)
+                getResources().getString(R.string.size)
         );
     }
 
@@ -156,17 +156,17 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
             comparator = Comparator.comparing(Picture::getCreatedDate);
         }
 
-        if (sortType.equals("desc")) {
+        if (sortType.equals(getResources().getString(R.string.up_icon))) {
             comparator = comparator.reversed();
         }
         return comparator;
     }
 
     private void reversedSortType() {
-        if (sortType.equals("desc")) {
-            sortType = "asc";
+        if (sortType.equals(getResources().getString(R.string.down_icon))) {
+            sortType = getResources().getString(R.string.up_icon);
         } else {
-            sortType = "desc";
+            sortType = getResources().getString(R.string.down_icon);
         }
         btnSort.setText(sortType);
     }
@@ -180,8 +180,10 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
                             @Override
                             public void run() {
                                 Random rand = new Random();
-                                Picture picture = pictures.get(rand.nextInt(pictures.size()));
-                                imageViewQuick.setImageURI(picture.getUri());
+                                if (pictures.size() > 0) {
+                                    Picture picture = pictures.get(rand.nextInt(pictures.size()));
+                                    imageViewQuick.setImageURI(picture.getUri());
+                                }
                             }
                         });
                         Thread.sleep(5000);
@@ -259,8 +261,10 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
             case R.id.mnuSwitch:
                 if (isGridView) {
                     item.setIcon(getResources().getDrawable(R.drawable.list));
+                    imageViewQuick.setVisibility(View.GONE);
                 } else {
                     item.setIcon(getResources().getDrawable(R.drawable.grid));
+                    imageViewQuick.setVisibility(View.VISIBLE);
                 }
                 isGridView = !isGridView;
                 layoutManager = getLayoutManger(isGridView);

@@ -24,4 +24,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_picture">Search Picture</string>
     <string name="switch_view">Switch view</string>
+    <string name="up_icon">▲</string>
+    <string name="down_icon">▼</string>
+    <string name="sort_type">Sort Type</string>
 </resources>
