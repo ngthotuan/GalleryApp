@@ -7,16 +7,21 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.transition.Fade;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageSwitcher;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.ViewSwitcher;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -36,6 +41,7 @@ import com.example.galleryapp.utils.PictureUtil;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
@@ -47,11 +53,12 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
     private Button btnChangeView, btnSort;
     private EditText edtSearch;
     private Spinner spSort;
+    private ImageSwitcher imageViewQuick;
     private boolean isGridView = true;
-    private final boolean sortDecreasing = true;
     private List<String> sortFields;
     private String sortField = "";
     private String sortType = "desc";
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -64,6 +71,7 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
         btnSort = binding.btnSort;
         edtSearch = binding.edtSearch;
         spSort = binding.spSort;
+        imageViewQuick = binding.imgViewQuick;
 
         pictures = PictureUtil.getPictures(activity, null);
         adapter = getPictureAdapter(isGridView);
@@ -89,7 +97,6 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onClick(View view) {
-                Log.d("TAG", "sortField= " + sortField + " sortType= " + sortType);
                 Comparator<Picture> comparator = getComparator();
                 pictures.sort(comparator);
                 reversedSortType();
@@ -138,6 +145,23 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
             }
         });
 
+        imageViewQuick.setFactory(new ViewSwitcher.ViewFactory() {
+
+            public View makeView() {
+                ImageView imageView = new ImageView(getContext());
+                imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                imageView.setLayoutParams(new ImageSwitcher.LayoutParams(
+                        LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT));
+                return imageView;
+            }
+        });
+        Animation in = AnimationUtils.loadAnimation(getContext(), android.R.anim.slide_in_left);
+        Animation out = AnimationUtils.loadAnimation(getContext(), android.R.anim.slide_out_right);
+        imageViewQuick.setInAnimation(in);
+        imageViewQuick.setOutAnimation(out);
+
+        autoUpdateQuickImage();
+
         return root;
     }
 
@@ -184,6 +208,29 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
         }
         btnSort.setText(sortType);
     }
+
+    private void autoUpdateQuickImage() {
+        new Thread() {
+            public void run() {
+                while (true) {
+                    try {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Random rand = new Random();
+                                Picture picture = pictures.get(rand.nextInt(pictures.size()));
+                                imageViewQuick.setImageURI(picture.getUri());
+                            }
+                        });
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.start();
+    }
+
 
     @Override
     public void onDestroyView() {

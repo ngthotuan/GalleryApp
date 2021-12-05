@@ -32,6 +32,19 @@
         android:layout_height="wrap_content"
         android:text="Sort" />
 
+    <!--    <ImageView-->
+    <!--        android:paddingHorizontal="8dp"-->
+    <!--        android:id="@+id/imgViewQuick"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="100dp"-->
+    <!--        tools:src="@tools:sample/backgrounds/scenic" />-->
+
+    <ImageSwitcher
+        android:id="@+id/imgViewQuick"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPictures"
         android:layout_width="match_parent"
