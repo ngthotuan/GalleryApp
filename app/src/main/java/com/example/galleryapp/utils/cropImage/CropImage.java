@@ -361,7 +361,6 @@ public class CropImage extends MonitoredActivity {
             cropUtil.startBackgroundJob(this, null, getString(R.string.saving_image),
                     new Runnable() {
                         public void run() {
-
                             saveOutput(b);
                         }
                     }, mHandler);
@@ -373,20 +372,20 @@ public class CropImage extends MonitoredActivity {
             OutputStream outputStream = null;
             try {
                 outputStream = mContentResolver.openOutputStream(mSaveUri);
+
                 if (outputStream != null) {
                     croppedImage.compress(mOutputFormat, 90, outputStream);
                 }
             } catch (IOException ex) {
-
                 Log.e(TAG, "Cannot open file: " + mSaveUri, ex);
                 setResult(RESULT_CANCELED);
                 finish();
                 return;
             } finally {
-
                 cropUtil.closeSilently(outputStream);
             }
 
+            updateGallery(mSaveUri.getPath());
 
             Bundle extras = new Bundle();
             Intent intent = new Intent(mSaveUri.toString());
@@ -395,7 +394,6 @@ public class CropImage extends MonitoredActivity {
             intent.putExtra(ORIENTATION_IN_DEGREES, cropUtil.getOrientationInDegree(this));
             setResult(RESULT_OK, intent);
         } else {
-
             Log.e(TAG, "not defined image url");
         }
         croppedImage.recycle();
@@ -613,6 +611,14 @@ public class CropImage extends MonitoredActivity {
             // blank since we really don't know.
             return CANNOT_STAT_ERROR;
         }
+    }
+
+    private void updateGallery(String filePath) {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File mFile = new File(filePath);
+        Uri contentUri = Uri.fromFile(mFile);
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
     }
 }
 

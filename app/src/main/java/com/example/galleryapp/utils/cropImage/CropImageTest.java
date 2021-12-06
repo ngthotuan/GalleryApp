@@ -60,6 +60,7 @@ public class CropImageTest extends Activity {
         mImageView = findViewById(R.id.image);
 
         String state = Environment.getExternalStorageState();
+
         if (Environment.MEDIA_MOUNTED.equals(state)) {
             mFileTemp = new File(Environment.getExternalStorageDirectory(), TEMP_PHOTO_FILE_NAME);
         } else {
@@ -154,7 +155,6 @@ public class CropImageTest extends Activity {
             Log.v(TAG, "WRITE EXTERNAL Permission denied");
             grantPermissionWRITE();
         }
-        return;
     }
 
     private void checkPermissionREAD() {
@@ -164,7 +164,6 @@ public class CropImageTest extends Activity {
             Log.v(TAG, "READ EXTERNAL Permission denied");
             grantPermissionREAD();
         }
-        return;
     }
 
     private void checkPermissionCAMERA() {
@@ -174,7 +173,6 @@ public class CropImageTest extends Activity {
             Log.v(TAG, "CAMERA EXTERNAL Permission denied");
             grantPermissionREAD();
         }
-        return;
     }
 
     private void openGallery() {
