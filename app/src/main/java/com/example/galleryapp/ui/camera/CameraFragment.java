@@ -8,7 +8,9 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Camera;
 import android.graphics.Picture;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,10 +29,14 @@ import androidx.fragment.app.Fragment;
 import com.example.galleryapp.R;
 import com.example.galleryapp.databinding.FragmentCameraBinding;
 
+import java.io.File;
+import java.io.FileOutputStream;
+
 
 public class CameraFragment extends Fragment{
     private FragmentCameraBinding binding;
     private Button takeImg;
+    private Button saveImg;
     private ImageView imageView;
     static final int CAPTURE_IMAGE_REQUEST=1;
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -39,10 +45,17 @@ public class CameraFragment extends Fragment{
         View root = binding.getRoot();
         takeImg=binding.takePicture;
         imageView = binding.imgCamera;
+        saveImg = binding.saveImage;
         takeImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 captureImage();
+            }
+        });
+        saveImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveToGallery();
             }
         });
         // do something here
@@ -64,7 +77,33 @@ public class CameraFragment extends Fragment{
         Bitmap imageBitmap = (Bitmap) extras.get("data");
         imageView.setImageBitmap(imageBitmap);
     }
-
+    private void saveToGallery(){
+        BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
+        Bitmap bitmap = bitmapDrawable.getBitmap();
+        FileOutputStream outputStream= null;
+        File file = Environment.getExternalStorageDirectory();
+        File dir = new File(file.getAbsolutePath()+ "/MyPics");
+        dir.mkdirs();
+        String filename= String.format("%d.jpg",System.currentTimeMillis());
+        File outFile = new File(dir,filename);
+        try {
+            outputStream = new FileOutputStream(outFile);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        bitmap.compress(Bitmap.CompressFormat.PNG,100,outputStream);
+        try {
+            outputStream.flush();
+            Toast.makeText(getContext(),"Save complete!!!",Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        try {
+            outputStream.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();
