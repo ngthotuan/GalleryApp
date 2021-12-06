@@ -311,7 +311,6 @@ public class CropImage extends MonitoredActivity {
                 croppedImage = cropUtil.transform(new Matrix(),
                         croppedImage, mOutputX, mOutputY, mScaleUp);
                 if (old != croppedImage) {
-
                     old.recycle();
                 }
             } else {
@@ -387,6 +386,7 @@ public class CropImage extends MonitoredActivity {
 
                 cropUtil.closeSilently(outputStream);
             }
+
 
             Bundle extras = new Bundle();
             Intent intent = new Intent(mSaveUri.toString());

@@ -230,6 +230,7 @@ public class CropImageTest extends Activity {
                 }
 
                 bitmap = BitmapFactory.decodeFile(mFileTemp.getPath());
+
                 mImageView.setImageBitmap(bitmap);
                 break;
         }

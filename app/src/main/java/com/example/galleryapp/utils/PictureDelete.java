@@ -18,9 +18,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class PictureDelete {
-    // delete is perma delete. we cant recover so we move item to a hidden folder
+    // delete is perma delete. we cant recover so we move item
+    // to a folder that gallery will not scan
 
-    private void removePic(Context context, File file) {
+    public void removePic(Context context, File file) {
         String trashPath = Environment.getExternalStorageDirectory() + "/.trash";
         File trashDir = new File(trashPath);
         if(!trashDir.isDirectory()) {
@@ -59,7 +60,7 @@ public class PictureDelete {
         return !file.exists();
     }
 
-    private void deleteImg(Context context, File file) {
+    public void deleteImg(Context context, File file) {
         // Set up the projection (we only need the ID)
         String[] projection = {MediaStore.Images.Media._ID};
 
@@ -82,7 +83,7 @@ public class PictureDelete {
         cursor.close();
     }
 
-    private void moveFile(String inputPath, String inputFile, String outputPath) {
+    public void moveFile(String inputPath, String inputFile, String outputPath) {
 
         InputStream fileIn = null;
         OutputStream fileOut = null;
@@ -121,6 +122,25 @@ public class PictureDelete {
             Log.e("tag", exception.getMessage());
         }
 
+    }
+
+    public static void deleteFileFromMediaStore(final ContentResolver contentResolver, final File file) {
+        String canonicalPath;
+        try {
+            canonicalPath = file.getCanonicalPath();
+        } catch (IOException e) {
+            canonicalPath = file.getAbsolutePath();
+        }
+        final Uri uri = MediaStore.Files.getContentUri("external");
+        final int result = contentResolver.delete(uri,
+                MediaStore.Files.FileColumns.DATA + "=?", new String[] {canonicalPath});
+        if (result == 0) {
+            final String absolutePath = file.getAbsolutePath();
+            if (!absolutePath.equals(canonicalPath)) {
+                contentResolver.delete(uri,
+                        MediaStore.Files.FileColumns.DATA + "=?", new String[]{absolutePath});
+            }
+        }
     }
 
 }
