@@ -7,7 +7,7 @@
         <item android:id="@+id/imgViewUseAs"
             android:title="Use As"/>
         <item android:id="@+id/imgViewDetail"
-            android:title="Detail"/>
+            android:title="Details"/>
         <item android:id="@+id/imgViewHide"
             android:title="Hide"/>
         <item android:id="@+id/imgViewLock"

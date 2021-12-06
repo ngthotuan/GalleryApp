@@ -3,6 +3,7 @@ package com.example.galleryapp;
 import static androidx.core.view.ViewCompat.setTransitionName;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,6 +28,7 @@ import com.example.galleryapp.adapter.PictureAdapter;
 import com.example.galleryapp.adapter.RecyclerViewPagerImageIndicator;
 import com.example.galleryapp.listener.OnItemClick;
 import com.example.galleryapp.model.Picture;
+import com.example.galleryapp.utils.DateUtil;
 import com.example.galleryapp.utils.ShareUtils;
 import com.squareup.picasso.Picasso;
 
@@ -88,11 +90,28 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
             case R.id.imgShare: {
                 ShareUtils.shareImage(getContext(), allImages.get(position));
             }
+            case R.id.imgViewDetail:{
+                showDetails();
+            }
         }
         return super.onOptionsItemSelected(item);
 
     }
-
+    private void showDetails(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+        alertDialog.setTitle("Image Infomation.");
+        alertDialog.setIcon(R.drawable.ic_baseline_info_24);
+        alertDialog.setMessage(
+                "Name: " + allImages.get(position).getName()+ "\n"
+                + "Path: " + allImages.get(position).getPath()+ "\n"
+                + "Size: " + allImages.get(position).getSizeStr()+ "\n"
+                + "Type: " + allImages.get(position).getType()+ "\n"
+                + "Uri: " + allImages.get(position).getUri()+ "\n"
+                + "Created date: " + DateUtil.getDate(allImages.get(position).getCreatedDate()) + "\n"
+                + "Modified date" + DateUtil.getDate(allImages.get(position).getModifiedDate()) + "\n");
+        alertDialog.setPositiveButton("Close",null);
+        alertDialog.show();
+    }
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
