@@ -8,63 +8,37 @@ import android.view.Surface;
 
 import java.io.Closeable;
 
-public class cropUtil {
-    private static final String TAG = "db.Util";
+public class CropUtil {
+    private static final String TAG = "cropUtil";
 
-    private cropUtil() {
+    private CropUtil() {
 
     }
 
-    /*
-     * Compute the sample size as a function of minSideLength
-     * and maxNumOfPixels.
-     * minSideLength is used to specify that minimal width or height of a bitmap.
-     * maxNumOfPixels is used to specify the maximal size in pixels that are tolerable
-     * in terms of memory usage.
-     *
-     * The function returns a sample size based on the constraints.
-     * Both size and minSideLength can be passed in as IImage.UNCONSTRAINED,
-     * which indicates no care of the corresponding constraint.
-     * The functions prefers returning a sample size that
-     * generates a smaller bitmap, unless minSideLength = IImage.UNCONSTRAINED.
-     */
-
-
-    public static Bitmap transform(Matrix scaler,
-                                   Bitmap source,
-                                   int targetWidth,
-                                   int targetHeight,
-                                   boolean scaleUp) {
+    public static Bitmap transform(Matrix scaler, Bitmap source, int targetWidth, int targetHeight, boolean scaleUp) {
         int deltaX = source.getWidth() - targetWidth;
         int deltaY = source.getHeight() - targetHeight;
         if (!scaleUp && (deltaX < 0 || deltaY < 0)) {
-            /*
-             * In this case the bitmap is smaller, at least in one dimension,
-             * than the target.  Transform it by placing as much of the image
-             * as possible into the target and leaving the top/bottom or
-             * left/right (or both) black.
-             */
             Bitmap b2 = Bitmap.createBitmap(targetWidth, targetHeight,
                     Bitmap.Config.ARGB_8888);
             Canvas c = new Canvas(b2);
 
             int deltaXHalf = Math.max(0, deltaX / 2);
             int deltaYHalf = Math.max(0, deltaY / 2);
-            Rect src = new Rect(
-                    deltaXHalf,
-                    deltaYHalf,
+
+            Rect src = new Rect(deltaXHalf, deltaYHalf,
                     deltaXHalf + Math.min(targetWidth, source.getWidth()),
                     deltaYHalf + Math.min(targetHeight, source.getHeight()));
+
             int dstX = (targetWidth - src.width()) / 2;
             int dstY = (targetHeight - src.height()) / 2;
-            Rect dst = new Rect(
-                    dstX,
-                    dstY,
-                    targetWidth - dstX,
-                    targetHeight - dstY);
+
+            Rect dst = new Rect(dstX, dstY, targetWidth - dstX, targetHeight - dstY);
             c.drawBitmap(source, src, dst, null);
+
             return b2;
         }
+
         float bitmapWidthF = source.getWidth();
         float bitmapHeightF = source.getHeight();
 
@@ -89,7 +63,6 @@ public class cropUtil {
 
         Bitmap b1;
         if (scaler != null) {
-            // this is used for minithumb and crop, so we want to mFilter here.
             b1 = Bitmap.createBitmap(source, 0, 0,
                     source.getWidth(), source.getHeight(), scaler, true);
         } else {
@@ -118,7 +91,7 @@ public class cropUtil {
         try {
             c.close();
         } catch (Throwable t) {
-            // do nothing
+
         }
     }
 
@@ -153,8 +126,7 @@ public class cropUtil {
 
         @Override
         public void onActivityDestroyed(MonitoredActivity activity) {
-            // We get here only when the onDestroyed being called before
-            // the mCleanupRunner. So, run it now and remove it from the queue
+            // In case onDestroy is called before CleanUp is called
             mCleanupRunner.run();
             mHandler.removeCallbacks(mCleanupRunner);
         }
@@ -171,26 +143,21 @@ public class cropUtil {
     }
 
     public static void startBackgroundJob(MonitoredActivity activity, String title, String message, Runnable job, Handler handler) {
-        // Make the progress dialog uncancelable, so that we can gurantee
-        // the thread will be done before the activity getting destroyed.
+        // Make the progress dialog uncancelable so the thread will be done before activity is destroyed.
         ProgressDialog dialog = ProgressDialog.show(
                 activity, title, message, true, false);
         new Thread(new BackgroundJob(activity, job, dialog, handler)).start();
     }
 
 
-    // Returns Options that set the puregeable flag for Bitmap decode.
     public static BitmapFactory.Options createNativeAllocOptions() {
         BitmapFactory.Options options = new BitmapFactory.Options();
         //options.inNativeAlloc = true;
         return options;
     }
 
-    // Thong added for rotate
     public static Bitmap rotateImage(Bitmap src, float degree) {
-        // create new matrix
         Matrix matrix = new Matrix();
-        // setup rotation degree
         matrix.postRotate(degree);
         Bitmap bmp = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
         return bmp;

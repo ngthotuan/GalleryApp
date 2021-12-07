@@ -35,12 +35,8 @@ public class RotateBitmap {
     }
 
     public Matrix getRotateMatrix() {
-        // By default this is an identity matrix.
         Matrix matrix = new Matrix();
         if (mRotation != 0) {
-            // We want to do the rotation at origin, but since the bounding
-            // rectangle will be changed after rotation, so the delta values
-            // are based on old & new width/height respectively.
             int cx = mBitmap.getWidth() / 2;
             int cy = mBitmap.getHeight() / 2;
             matrix.preTranslate(-cx, -cy);

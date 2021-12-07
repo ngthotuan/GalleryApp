@@ -174,7 +174,7 @@ public class HighlightView {
         }
     }
 
-    // Determines which edges are hit by touching at (x, y).
+    // Determine which edges are hit by touching at (x, y).
     public int getHit(float x, float y) {
         Rect r = computeLayout();
         final float hysteresis = 20F;
@@ -207,28 +207,27 @@ public class HighlightView {
                 retval = GROW_NONE;
             }
         } else {
-            // verticalCheck makes sure the position is between the top and
-            // the bottom edge (with some tolerance). Similar for horizCheck.
+            // check position is in frame
             boolean verticalCheck = (y >= r.top - hysteresis)
                     && (y < r.bottom + hysteresis);
-            boolean horizCheck = (x >= r.left - hysteresis)
+            boolean horizontalCheck = (x >= r.left - hysteresis)
                     && (x < r.right + hysteresis);
 
-            // Check whether the position is near some edge(s).
+            // Check position is near any edge
             if ((Math.abs(r.left - x) < hysteresis) && verticalCheck) {
                 retval |= GROW_LEFT_EDGE;
             }
             if ((Math.abs(r.right - x) < hysteresis) && verticalCheck) {
                 retval |= GROW_RIGHT_EDGE;
             }
-            if ((Math.abs(r.top - y) < hysteresis) && horizCheck) {
+            if ((Math.abs(r.top - y) < hysteresis) && horizontalCheck) {
                 retval |= GROW_TOP_EDGE;
             }
-            if ((Math.abs(r.bottom - y) < hysteresis) && horizCheck) {
+            if ((Math.abs(r.bottom - y) < hysteresis) && horizontalCheck) {
                 retval |= GROW_BOTTOM_EDGE;
             }
 
-            // Not near any edge but inside the rectangle: move.
+            // Not near any edge and inside the frame -> move.
             if (retval == GROW_NONE && r.contains((int) x, (int) y)) {
                 retval = MOVE;
             }
@@ -236,14 +235,13 @@ public class HighlightView {
         return retval;
     }
 
-    // Handles motion (dx, dy) in screen space.
-    // The "edge" parameter specifies which edges the user is dragging.
+    // Handles motion (dx, dy) in screen
     void handleMotion(int edge, float dx, float dy) {
         Rect r = computeLayout();
         if (edge == GROW_NONE) {
             return;
         } else if (edge == MOVE) {
-            // Convert to image space before sending to moveBy().
+            // Convert to image space before sending to moveBy()
             moveBy(dx * (mCropRect.width() / r.width()),
                     dy * (mCropRect.height() / r.height()));
         } else {
@@ -255,7 +253,7 @@ public class HighlightView {
                 dy = 0;
             }
 
-            // Convert to image space before sending to growBy().
+            // Convert to image space before sending to growBy()
             float xDelta = dx * (mCropRect.width() / r.width());
             float yDelta = dy * (mCropRect.height() / r.height());
             growBy((((edge & GROW_LEFT_EDGE) != 0) ? -1 : 1) * xDelta,
@@ -263,13 +261,13 @@ public class HighlightView {
         }
     }
 
-    // Grows the cropping rectange by (dx, dy) in image space.
+    // Grow crop frame by (dx, dy) in image space
     void moveBy(float dx, float dy) {
         Rect invalRect = new Rect(mDrawRect);
 
         mCropRect.offset(dx, dy);
 
-        // Put the cropping rectangle inside image rectangle.
+        // Set crop frame in image frame
         mCropRect.offset(
                 Math.max(0, mImageRect.left - mCropRect.left),
                 Math.max(0, mImageRect.top - mCropRect.top));
@@ -284,7 +282,7 @@ public class HighlightView {
         mContext.invalidate(invalRect);
     }
 
-    // Grows the cropping rectange by (dx, dy) in image space.
+    // Grow crop frame by (dx, dy) in image space
     void growBy(float dx, float dy) {
         if (mMaintainAspectRatio) {
             if (dx != 0) {
@@ -294,9 +292,7 @@ public class HighlightView {
             }
         }
 
-        // Don't let the cropping rectangle grow too fast.
-        // Grow at most half of the difference between the image rectangle and
-        // the cropping rectangle.
+        // Don't let cropg frame grow too fast
         RectF r = new RectF(mCropRect);
         if (dx > 0F && r.width() + 2 * dx > mImageRect.width()) {
             float adjustment = (mImageRect.width() - r.width()) / 2F;
@@ -315,7 +311,7 @@ public class HighlightView {
 
         r.inset(-dx, -dy);
 
-        // Don't let the cropping rectangle shrink too fast.
+        // Don't let crop frame shrink too fast
         final float widthCap = 25F;
         if (r.width() < widthCap) {
             r.inset(-(widthCap - r.width()) / 2F, 0F);
@@ -327,7 +323,7 @@ public class HighlightView {
             r.inset(0F, -(heightCap - r.height()) / 2F);
         }
 
-        // Put the cropping rectangle inside the image rectangle.
+        // Set the crop frame in image frame
         if (r.left < mImageRect.left) {
             r.offset(mImageRect.left - r.left, 0F);
         } else if (r.right > mImageRect.right) {
@@ -344,13 +340,13 @@ public class HighlightView {
         mContext.invalidate();
     }
 
-    // Returns the cropping rectangle in image space.
+    // Return crop frame in image
     public Rect getCropRect() {
         return new Rect((int) mCropRect.left, (int) mCropRect.top,
                 (int) mCropRect.right, (int) mCropRect.bottom);
     }
 
-    // Maps the cropping rectangle from image space to screen space.
+    // Map crop frame from image space to screen space
     private Rect computeLayout() {
         RectF r = new RectF(mCropRect.left, mCropRect.top,
                 mCropRect.right, mCropRect.bottom);

@@ -40,7 +40,7 @@ public class CropImageTest extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);    //To change body of overridden methods use File | Settings | File Templates.
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.test_crop_screen);
 
         findViewById(R.id.gallery).setOnClickListener(new View.OnClickListener() {
@@ -88,7 +88,78 @@ public class CropImageTest extends Activity {
         }
     }
 
-    private void grantPermissionREAD() {
+    private void openGallery() {
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, REQUEST_CODE_GALLERY);
+    }
+
+    private void startCropImage(String filePath) {
+        Intent intent = new Intent(this, CropImage.class);
+        intent.putExtra(CropImage.IMAGE_PATH, filePath);
+        intent.putExtra(CropImage.SCALE, true);
+
+        intent.putExtra(CropImage.ASPECT_X, 3);
+        intent.putExtra(CropImage.ASPECT_Y, 2);
+
+        startActivityForResult(intent, REQUEST_CODE_CROP_IMAGE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != RESULT_OK) {
+            return;
+        }
+
+        Bitmap bitmap;
+        String filePath = mFileTemp.getPath();
+
+        switch (requestCode) {
+            case REQUEST_CODE_GALLERY:
+                try {
+                    checkPermissionWRITE();
+                    checkPermissionREAD();
+                    InputStream inputStream = getContentResolver().openInputStream(data.getData());
+                    FileOutputStream fileOutputStream = new FileOutputStream(mFileTemp);
+                    copyStream(inputStream, fileOutputStream);
+                    fileOutputStream.close();
+                    inputStream.close();
+
+                    startCropImage(filePath);
+                } catch (Exception e) {
+                    Log.e(TAG, "Error while creating temp file", e);
+                }
+
+                break;
+            case REQUEST_CODE_TAKE_PICTURE:
+                checkPermissionCAMERA();
+                // take data from take picture
+                startCropImage(filePath);
+                break;
+            case REQUEST_CODE_CROP_IMAGE:
+                String path = data.getStringExtra(CropImage.IMAGE_PATH);
+                if (path == null) {
+                    return;
+                }
+
+                bitmap = BitmapFactory.decodeFile(filePath);
+
+                mImageView.setImageBitmap(bitmap);
+                break;
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public static void copyStream(InputStream input, OutputStream output) throws IOException {
+        byte[] buffer = new byte[1024];
+        int bytesRead;
+        while ((bytesRead = input.read(buffer)) != -1) {
+            output.write(buffer, 0, bytesRead);
+        }
+    }
+
+    public void grantPermissionREAD() {
         int permissionCheckREAD = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE);
 
@@ -108,7 +179,7 @@ public class CropImageTest extends Activity {
         }
     }
 
-    private void grantPermissionWRITE() {
+    public void grantPermissionWRITE() {
         int permissionCheckWRITE = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
@@ -128,7 +199,7 @@ public class CropImageTest extends Activity {
         }
     }
 
-    private void grantPermissionCAMERA() {
+    public void grantPermissionCAMERA() {
         int permissionCheckWRITE = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CAMERA);
 
@@ -148,7 +219,7 @@ public class CropImageTest extends Activity {
         }
     }
 
-    private void checkPermissionWRITE() {
+    public void checkPermissionWRITE() {
         if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             Log.v(TAG, "WRITE EXTERNAL Permission is granted");
         } else {
@@ -157,7 +228,7 @@ public class CropImageTest extends Activity {
         }
     }
 
-    private void checkPermissionREAD() {
+    public void checkPermissionREAD() {
         if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             Log.v(TAG, "READ EXTERNAL Permission is granted");
         } else {
@@ -166,80 +237,12 @@ public class CropImageTest extends Activity {
         }
     }
 
-    private void checkPermissionCAMERA() {
+    public void checkPermissionCAMERA() {
         if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             Log.v(TAG, "CAMERA Permission is granted");
         } else {
             Log.v(TAG, "CAMERA EXTERNAL Permission denied");
             grantPermissionREAD();
-        }
-    }
-
-    private void openGallery() {
-        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-        photoPickerIntent.setType("image/*");
-        startActivityForResult(photoPickerIntent, REQUEST_CODE_GALLERY);
-    }
-
-    private void startCropImage() {
-        Intent intent = new Intent(this, CropImage.class);
-        intent.putExtra(CropImage.IMAGE_PATH, mFileTemp.getPath());
-        intent.putExtra(CropImage.SCALE, true);
-
-        intent.putExtra(CropImage.ASPECT_X, 3);
-        intent.putExtra(CropImage.ASPECT_Y, 2);
-
-        startActivityForResult(intent, REQUEST_CODE_CROP_IMAGE);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != RESULT_OK) {
-            return;
-        }
-
-        Bitmap bitmap;
-
-        switch (requestCode) {
-            case REQUEST_CODE_GALLERY:
-                try {
-                    checkPermissionWRITE();
-                    checkPermissionREAD();
-                    InputStream inputStream = getContentResolver().openInputStream(data.getData());
-                    FileOutputStream fileOutputStream = new FileOutputStream(mFileTemp);
-                    copyStream(inputStream, fileOutputStream);
-                    fileOutputStream.close();
-                    inputStream.close();
-
-                    startCropImage();
-                } catch (Exception e) {
-                    Log.e(TAG, "Error while creating temp file", e);
-                }
-
-                break;
-            case REQUEST_CODE_TAKE_PICTURE:
-                checkPermissionCAMERA();
-                startCropImage();
-                break;
-            case REQUEST_CODE_CROP_IMAGE:
-                String path = data.getStringExtra(CropImage.IMAGE_PATH);
-                if (path == null) {
-                    return;
-                }
-
-                bitmap = BitmapFactory.decodeFile(mFileTemp.getPath());
-
-                mImageView.setImageBitmap(bitmap);
-                break;
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    public static void copyStream(InputStream input, OutputStream output) throws IOException {
-        byte[] buffer = new byte[1024];
-        int bytesRead;
-        while ((bytesRead = input.read(buffer)) != -1) {
-            output.write(buffer, 0, bytesRead);
         }
     }
 }

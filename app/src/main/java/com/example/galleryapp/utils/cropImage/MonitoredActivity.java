@@ -27,32 +27,31 @@ public class MonitoredActivity extends Activity {
     public static class LifeCycleAdapter implements LifeCycleListener {
 
         public void onActivityCreated(MonitoredActivity activity) {
-            //
+
         }
 
         public void onActivityDestroyed(MonitoredActivity activity) {
-            //
+
         }
 
         public void onActivityPaused(MonitoredActivity activity) {
-            //
+
         }
 
         public void onActivityResumed(MonitoredActivity activity) {
-            //
+
         }
 
         public void onActivityStarted(MonitoredActivity activity) {
-            //
+
         }
 
         public void onActivityStopped(MonitoredActivity activity) {
-            //
+
         }
     }
 
     public void addLifeCycleListener(LifeCycleListener listener) {
-
         if (mListeners.contains(listener)) return;
         mListeners.add(listener);
     }

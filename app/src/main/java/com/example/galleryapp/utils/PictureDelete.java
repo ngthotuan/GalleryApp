@@ -3,7 +3,9 @@ package com.example.galleryapp.utils;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -61,25 +63,23 @@ public class PictureDelete {
     }
 
     public void deleteImg(Context context, File file) {
-        // Set up the projection (we only need the ID)
         String[] projection = {MediaStore.Images.Media._ID};
 
-        // Match on the file path
         String selection = MediaStore.Images.Media.DATA + " = ?";
         String[] selectionArgs = new String[]{file.getAbsolutePath()};
 
-        // Query for the ID of the media matching the file path
         Uri queryUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
         ContentResolver contentResolver = context.getContentResolver();
         Cursor cursor = contentResolver.query(queryUri, projection, selection, selectionArgs, null);
+
         if (cursor.moveToFirst()) {
-            // We found the ID. Deleting the item via the content provider will also remove the file
             long id = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID));
             Uri deleteUri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id);
             contentResolver.delete(deleteUri, null, null);
         } else {
-            // File not found in media store DB
+            // File not found in gallery
         }
+
         cursor.close();
     }
 

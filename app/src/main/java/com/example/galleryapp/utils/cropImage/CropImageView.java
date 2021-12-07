@@ -72,8 +72,6 @@ public class CropImageView extends ImageViewTouchBase {
         }
     }
 
-    // According to the event's position, change the focus to the first
-    // hitting cropping rectangle.
     private void recomputeFocus(MotionEvent event) {
         for (int i = 0; i < mHighlightViews.size(); i++) {
             HighlightView hv = mHighlightViews.get(i);
@@ -159,11 +157,6 @@ public class CropImageView extends ImageViewTouchBase {
                     mLastY = event.getY();
 
                     if (true) {
-                        // This section of code is optional. It has some user
-                        // benefit in that moving the crop rectangle against
-                        // the edge of the screen causes scrolling but it means
-                        // that the crop rectangle is no longer fixed under
-                        // the user's finger.
                         ensureVisible(mMotionHighlightView);
                     }
                 }
@@ -175,10 +168,6 @@ public class CropImageView extends ImageViewTouchBase {
                 center(true, true);
                 break;
             case MotionEvent.ACTION_MOVE:
-                // if we're not zoomed then there's no point in even allowing
-                // the user to move the image around.  This call to center puts
-                // it back to the normalized location (with false meaning don't
-                // animate).
                 if (getScale() == 1F) {
                     center(true, true);
                 }
@@ -188,7 +177,6 @@ public class CropImageView extends ImageViewTouchBase {
         return true;
     }
 
-    // Pan the displayed image to make sure the cropping rectangle is visible.
     private void ensureVisible(HighlightView hv) {
         Rect r = hv.mDrawRect;
 
@@ -206,8 +194,6 @@ public class CropImageView extends ImageViewTouchBase {
         }
     }
 
-    // If the cropping rectangle's size changed significantly, change the
-    // view's center and scale according to the cropping rectangle.
     private void centerBasedOnHighlightView(HighlightView hv) {
         Rect drawRect = hv.mDrawRect;
 
