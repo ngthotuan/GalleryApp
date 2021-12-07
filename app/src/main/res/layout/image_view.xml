@@ -16,14 +16,7 @@
         android:scaleType="fitXY"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Created date"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="486dp" />
+
     <ImageView
         android:id="@+id/btnEdit"
         android:layout_width="85dp"
@@ -32,8 +25,9 @@
         android:padding="12dp"
         android:scaleType="fitCenter"
         android:src="@drawable/edit_icon"
-        tools:layout_editor_absoluteX="45dp"
-        tools:layout_editor_absoluteY="525dp" />
+        tools:layout_editor_absoluteX="48dp"
+        tools:layout_editor_absoluteY="577dp"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/btnFavourite"
@@ -44,7 +38,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/favourite_icon"
         tools:layout_editor_absoluteX="133dp"
-        tools:layout_editor_absoluteY="528dp" />
+        tools:layout_editor_absoluteY="584dp"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/btnShare"
@@ -55,7 +50,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/share_icon"
         tools:layout_editor_absoluteX="203dp"
-        tools:layout_editor_absoluteY="528dp" />
+        tools:layout_editor_absoluteY="584dp"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/btnDelete"
@@ -66,15 +62,20 @@
         android:scaleType="fitCenter"
         android:src="@drawable/trash_bin_icon"
         tools:layout_editor_absoluteX="273dp"
-        tools:layout_editor_absoluteY="528dp" />
+        tools:layout_editor_absoluteY="584dp"
+        tools:ignore="MissingConstraints" />
+
     <ImageView
         android:id="@+id/btnBack"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="99dp"
+        android:layout_height="90dp"
         android:onClick="backOnClick"
         android:padding="12dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/back_arrow" />
+        android:src="@drawable/back_arrow"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="-8dp"
+        tools:layout_editor_absoluteY="-13dp" />
 
     <ImageView
         android:id="@+id/btnOption"
@@ -85,5 +86,6 @@
         android:scaleType="fitCenter"
         android:src="@drawable/three_dot_icon"
         tools:layout_editor_absoluteX="323dp"
-        tools:layout_editor_absoluteY="-14dp" />
+        tools:layout_editor_absoluteY="-14dp"
+        tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>

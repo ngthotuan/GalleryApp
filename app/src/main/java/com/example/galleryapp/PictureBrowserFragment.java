@@ -5,7 +5,11 @@ import static androidx.core.view.ViewCompat.setTransitionName;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,8 +34,11 @@ import com.example.galleryapp.listener.OnItemClick;
 import com.example.galleryapp.model.Picture;
 import com.example.galleryapp.utils.DateUtil;
 import com.example.galleryapp.utils.ShareUtils;
+import com.example.galleryapp.utils.cropImage.CropImage;
+import com.example.galleryapp.utils.PictureDelete;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,10 +100,17 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
             case R.id.imgViewDetail:{
                 showDetails();
             }
+            case R.id.imgViewEdit: {
+
+            }
+            case R.id.imgViewDelete: {
+
+            }
         }
         return super.onOptionsItemSelected(item);
 
     }
+
     private void showDetails(){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
         alertDialog.setTitle("Image Infomation.");
@@ -315,5 +329,61 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
                 }
             }
         }, 4000);
+    }
+
+    File mFileTemp;
+    public static final int REQUEST_CODE_CROP_IMAGE = 0x1;
+    public static final int RESULT_OK = -1;
+    public static final String TEMP_PHOTO_FILE_NAME = "temp_photo.jpg";
+
+    private void EditImage() {
+        String state = Environment.getExternalStorageState();
+
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            mFileTemp = new File(Environment.getExternalStorageDirectory(), TEMP_PHOTO_FILE_NAME);
+        } else {
+            mFileTemp = new File(getActivity().getFilesDir(), TEMP_PHOTO_FILE_NAME);
+        }
+
+        Intent intent = new Intent(getActivity(), CropImage.class);
+
+        String filePath = allImages.get(position).getPath();
+        intent.putExtra(CropImage.IMAGE_PATH, filePath);
+
+        intent.putExtra(CropImage.SCALE, true);
+
+        intent.putExtra(CropImage.ASPECT_X, 3);
+        intent.putExtra(CropImage.ASPECT_Y, 2);
+
+        startActivityForResult(intent, REQUEST_CODE_CROP_IMAGE);
+    }
+
+    private void deleteImage() {
+        String filePath = allImages.get(position).getPath();
+
+        PictureDelete deleter = new PictureDelete();
+        Context context;
+
+        File crrFile = new File(filePath);
+
+        deleter.deleteImg(getActivity(), crrFile);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != RESULT_OK) {
+            return;
+        }
+
+        if (requestCode == REQUEST_CODE_CROP_IMAGE) {
+            String path = data.getStringExtra(CropImage.IMAGE_PATH);
+
+            if (path == null) {
+                return;
+            }
+
+            Bitmap croppedBitmap = BitmapFactory.decodeFile(mFileTemp.getPath());
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

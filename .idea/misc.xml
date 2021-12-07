@@ -61,9 +61,15 @@
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2203125" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/xml/providers_paths.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/layout/content_main.xml" value="0.1" />
-        <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/layout/cropimage.xml" value="0.33" />
+        <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/layout/content_main.xml" value="0.25" />
+        <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/layout/cropimage.xml" value="0.2984822934232715" />
+        <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/layout/folder_item.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/layout/fragment_picture_browser.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/layout/image_view.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/layout/indicator_holder.xml" value="0.1" />
+        <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/layout/picture_browser_pager.xml" value="0.22" />
         <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/layout/test_crop_screen.xml" value="0.22" />
+        <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/menu/image_view_option_drawer.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>

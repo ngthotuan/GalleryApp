@@ -292,7 +292,7 @@ public class HighlightView {
             }
         }
 
-        // Don't let cropg frame grow too fast
+        // Don't let crop frame grow too fast
         RectF r = new RectF(mCropRect);
         if (dx > 0F && r.width() + 2 * dx > mImageRect.width()) {
             float adjustment = (mImageRect.width() - r.width()) / 2F;

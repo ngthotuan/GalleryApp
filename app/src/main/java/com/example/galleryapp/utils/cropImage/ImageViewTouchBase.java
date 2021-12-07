@@ -8,9 +8,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
-import android.widget.ImageView;
 
-public class ImageViewTouchBase extends ImageView {
+public class ImageViewTouchBase extends androidx.appcompat.widget.AppCompatImageView {
     @SuppressWarnings("unused")
     private static final String TAG = "ImageViewTouchBase";
 

@@ -32,7 +32,6 @@ public class CropImageTest extends Activity {
     public static final String TEMP_PHOTO_FILE_NAME = "temp_photo.jpg";
 
     public static final int REQUEST_CODE_GALLERY = 0x1;
-    public static final int REQUEST_CODE_TAKE_PICTURE = 0x2;
     public static final int REQUEST_CODE_CROP_IMAGE = 0x3;
 
     private ImageView mImageView;
@@ -50,13 +49,6 @@ public class CropImageTest extends Activity {
             }
         });
 
-        findViewById(R.id.take_picture).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                takePicture();
-            }
-        });
-
         mImageView = findViewById(R.id.image);
 
         String state = Environment.getExternalStorageState();
@@ -67,25 +59,6 @@ public class CropImageTest extends Activity {
             mFileTemp = new File(getFilesDir(), TEMP_PHOTO_FILE_NAME);
         }
 
-    }
-
-    private void takePicture() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        try {
-            Uri mImageCaptureUri = null;
-            String state = Environment.getExternalStorageState();
-            if (Environment.MEDIA_MOUNTED.equals(state)) {
-                mImageCaptureUri = Uri.fromFile(mFileTemp);
-            } else {
-                mImageCaptureUri = InternalStorageContentProvider.CONTENT_URI;
-            }
-            intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
-            intent.putExtra("return-data", true);
-            startActivityForResult(intent, REQUEST_CODE_TAKE_PICTURE);
-        } catch (ActivityNotFoundException e) {
-            Log.d(TAG, "cannot take picture", e);
-        }
     }
 
     private void openGallery() {
@@ -131,13 +104,9 @@ public class CropImageTest extends Activity {
                 }
 
                 break;
-            case REQUEST_CODE_TAKE_PICTURE:
-                checkPermissionCAMERA();
-                // take data from take picture
-                startCropImage(filePath);
-                break;
             case REQUEST_CODE_CROP_IMAGE:
                 String path = data.getStringExtra(CropImage.IMAGE_PATH);
+
                 if (path == null) {
                     return;
                 }
@@ -145,6 +114,7 @@ public class CropImageTest extends Activity {
                 bitmap = BitmapFactory.decodeFile(filePath);
 
                 mImageView.setImageBitmap(bitmap);
+
                 break;
         }
 
@@ -199,26 +169,6 @@ public class CropImageTest extends Activity {
         }
     }
 
-    public void grantPermissionCAMERA() {
-        int permissionCheckWRITE = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.CAMERA);
-
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.CAMERA)) {
-
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.CAMERA},
-                        REQUEST_CODE_TAKE_PICTURE);
-            }
-        }
-    }
-
     public void checkPermissionWRITE() {
         if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             Log.v(TAG, "WRITE EXTERNAL Permission is granted");
@@ -233,15 +183,6 @@ public class CropImageTest extends Activity {
             Log.v(TAG, "READ EXTERNAL Permission is granted");
         } else {
             Log.v(TAG, "READ EXTERNAL Permission denied");
-            grantPermissionREAD();
-        }
-    }
-
-    public void checkPermissionCAMERA() {
-        if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            Log.v(TAG, "CAMERA Permission is granted");
-        } else {
-            Log.v(TAG, "CAMERA EXTERNAL Permission denied");
             grantPermissionREAD();
         }
     }
