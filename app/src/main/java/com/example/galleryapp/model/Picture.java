@@ -16,6 +16,11 @@ public class Picture implements Serializable {
     private boolean selected;
     private long createdDate;
     private long modifiedDate;
+    private int favourite;
+
+    public Picture() {
+
+    }
 
     public String getType() {
         return type;
@@ -83,6 +88,10 @@ public class Picture implements Serializable {
     public void setModifiedDate(long modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
+
+    public int getFavourite() { return favourite; }
+
+    public void setFavourite(int favourite) { this.favourite = favourite; }
 
     @SuppressLint("DefaultLocale")
     public String getSizeStr() {

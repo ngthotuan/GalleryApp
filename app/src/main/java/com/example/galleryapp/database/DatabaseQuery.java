@@ -32,15 +32,14 @@ public class DatabaseQuery {
 
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(Config.COLUMN_IMAGE_NAME, picture.getName());
-        contentValues.put(Config.COLUMN_IMAGE_PATH, picture.getPath());
-        contentValues.put(Config.COLUMN_IMAGE_SIZE, picture.getSize());
-        contentValues.put(Config.COLUMN_IMAGE_TYPE, picture.getType());
-        contentValues.put(Config.COLUMN_IMAGE_URI, picture.getUri().toString());
-        contentValues.put(Config.COLUMN_IMAGE_CREATED_DATE, picture.getCreatedDate());
-        contentValues.put(Config.COLUMN_IMAGE_MODIFIED_DATE, picture.getModifiedDate());
-        //contentValues.put(Config.COLUMN_IMAGE_ALBUM, picture.getAlbum());
-        //contentValues.put(Config.COLUMN_IMAGE_FAVOURITE, picture.getFavourite());
+        contentValues.put(Config.IMAGE_NAME, picture.getName());
+        contentValues.put(Config.IMAGE_PATH, picture.getPath());
+        contentValues.put(Config.IMAGE_SIZE, picture.getSize());
+        contentValues.put(Config.IMAGE_TYPE, picture.getType());
+        contentValues.put(Config.IMAGE_URI, picture.getUri().toString());
+        contentValues.put(Config.IMAGE_CREATED_DATE, picture.getCreatedDate());
+        contentValues.put(Config.IMAGE_MODIFIED_DATE, picture.getModifiedDate());
+        contentValues.put(Config.IMAGE_FAVOURITE, picture.getFavourite());
 
         try {
             id = sqLiteDatabase.insertOrThrow(Config.TABLE_IMAGE, null, contentValues);
@@ -75,15 +74,14 @@ public class DatabaseQuery {
                     List<Picture> pictureList = new ArrayList<>();
 
                     do {
-                        String path = cursor.getString(cursor.getColumnIndex(Config.COLUMN_IMAGE_PATH));
-                        String name = cursor.getString(cursor.getColumnIndex(Config.COLUMN_IMAGE_NAME));
-                        long size   = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_IMAGE_SIZE));
-                        String type = cursor.getString(cursor.getColumnIndex(Config.COLUMN_IMAGE_TYPE));
-                        Uri uri = Uri.parse(cursor.getString(cursor.getColumnIndex(Config.COLUMN_IMAGE_URI))) ;
-                        long createdDate  = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_IMAGE_CREATED_DATE));
-                        long modifiedDate = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_IMAGE_MODIFIED_DATE));
-                        String album = cursor.getString(cursor.getColumnIndex(Config.COLUMN_IMAGE_ALBUM));
-                        String favourite = cursor.getString(cursor.getColumnIndex(Config.COLUMN_IMAGE_FAVOURITE));
+                        String path = cursor.getString(cursor.getColumnIndex(Config.IMAGE_PATH));
+                        String name = cursor.getString(cursor.getColumnIndex(Config.IMAGE_NAME));
+                        long size   = cursor.getLong(cursor.getColumnIndex(Config.IMAGE_SIZE));
+                        String type = cursor.getString(cursor.getColumnIndex(Config.IMAGE_TYPE));
+                        Uri uri = Uri.parse(cursor.getString(cursor.getColumnIndex(Config.IMAGE_URI))) ;
+                        long createdDate  = cursor.getLong(cursor.getColumnIndex(Config.IMAGE_CREATED_DATE));
+                        long modifiedDate = cursor.getLong(cursor.getColumnIndex(Config.IMAGE_MODIFIED_DATE));
+                        String favourite = cursor.getString(cursor.getColumnIndex(Config.IMAGE_FAVOURITE));
 
                         //Picture constructor
                         //pictureList.add(new Picture())
@@ -116,22 +114,21 @@ public class DatabaseQuery {
         try {
             cursor = sqLiteDatabase.query(Config.TABLE_IMAGE,
                     null,
-                    Config.COLUMN_IMAGE_PATH + " = ?",
+                    Config.IMAGE_PATH + " = ?",
                     new String[] { String.valueOf(picPath) },
                     null,
                     null,
                     null);
 
             if (cursor.moveToFirst()) {
-                String path = cursor.getString(cursor.getColumnIndex(Config.COLUMN_IMAGE_PATH));
-                String name = cursor.getString(cursor.getColumnIndex(Config.COLUMN_IMAGE_NAME));
-                long size   = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_IMAGE_SIZE));
-                String type = cursor.getString(cursor.getColumnIndex(Config.COLUMN_IMAGE_TYPE));
-                Uri uri = Uri.parse(cursor.getString(cursor.getColumnIndex(Config.COLUMN_IMAGE_URI))) ;
-                long createdDate  = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_IMAGE_CREATED_DATE));
-                long modifiedDate = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_IMAGE_MODIFIED_DATE));
-                String album = cursor.getString(cursor.getColumnIndex(Config.COLUMN_IMAGE_ALBUM));
-                String favourite = cursor.getString(cursor.getColumnIndex(Config.COLUMN_IMAGE_FAVOURITE));
+                String path = cursor.getString(cursor.getColumnIndex(Config.IMAGE_PATH));
+                String name = cursor.getString(cursor.getColumnIndex(Config.IMAGE_NAME));
+                long size   = cursor.getLong(cursor.getColumnIndex(Config.IMAGE_SIZE));
+                String type = cursor.getString(cursor.getColumnIndex(Config.IMAGE_TYPE));
+                Uri uri = Uri.parse(cursor.getString(cursor.getColumnIndex(Config.IMAGE_URI))) ;
+                long createdDate  = cursor.getLong(cursor.getColumnIndex(Config.IMAGE_CREATED_DATE));
+                long modifiedDate = cursor.getLong(cursor.getColumnIndex(Config.IMAGE_MODIFIED_DATE));
+                String favourite = cursor.getString(cursor.getColumnIndex(Config.IMAGE_FAVOURITE));
 
                 //Picture constructor
                 //pictureList.add(new Picture())
@@ -159,19 +156,18 @@ public class DatabaseQuery {
 
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(Config.COLUMN_IMAGE_NAME, picture.getName());
-        contentValues.put(Config.COLUMN_IMAGE_PATH, picture.getPath());
-        contentValues.put(Config.COLUMN_IMAGE_SIZE, picture.getSize());
-        contentValues.put(Config.COLUMN_IMAGE_TYPE, picture.getType());
-        contentValues.put(Config.COLUMN_IMAGE_URI, picture.getUri().toString());
-        contentValues.put(Config.COLUMN_IMAGE_CREATED_DATE, picture.getCreatedDate());
-        contentValues.put(Config.COLUMN_IMAGE_MODIFIED_DATE, picture.getModifiedDate());
-        //contentValues.put(Config.COLUMN_IMAGE_ALBUM, picture.getAlbum());
-        //contentValues.put(Config.COLUMN_IMAGE_FAVOURITE, picture.getFavourite());
+        contentValues.put(Config.IMAGE_NAME, picture.getName());
+        contentValues.put(Config.IMAGE_PATH, picture.getPath());
+        contentValues.put(Config.IMAGE_SIZE, picture.getSize());
+        contentValues.put(Config.IMAGE_TYPE, picture.getType());
+        contentValues.put(Config.IMAGE_URI, picture.getUri().toString());
+        contentValues.put(Config.IMAGE_CREATED_DATE, picture.getCreatedDate());
+        contentValues.put(Config.IMAGE_MODIFIED_DATE, picture.getModifiedDate());
+        contentValues.put(Config.IMAGE_FAVOURITE, picture.getFavourite());
 
         try {
             rowAffected = sqLiteDatabase.update(Config.TABLE_IMAGE, contentValues,
-                    Config.COLUMN_IMAGE_PATH + " = ?",
+                    Config.IMAGE_PATH + " = ?",
                     new String[] { String.valueOf(picture.getPath())});
         } catch (SQLException e) {
             Log.e(TAG, "Exception: " + e.getMessage());
@@ -191,7 +187,7 @@ public class DatabaseQuery {
 
         try {
             deletedRowCount = sqLiteDatabase.delete(Config.TABLE_IMAGE,
-                    Config.COLUMN_IMAGE_PATH + " = ? ",
+                    Config.IMAGE_PATH + " = ? ",
                     new String[] { String.valueOf(picPath) });
         } catch (SQLException e) {
             Log.e(TAG, "Exception: " + e.getMessage());
