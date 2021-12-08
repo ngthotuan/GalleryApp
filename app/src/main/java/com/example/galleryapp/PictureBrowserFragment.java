@@ -153,7 +153,7 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
             }
             //handle load left right pager view
             @Override
-            public void onPageSelected(int position) {
+            public void onPageSelected(int positigiton) {
 
                 if (previousSelected != -1) {
                     images.get(previousSelected).setSelected(false);
