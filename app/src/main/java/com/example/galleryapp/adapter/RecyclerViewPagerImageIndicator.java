@@ -25,11 +25,7 @@ public class RecyclerViewPagerImageIndicator extends RecyclerView.Adapter<Recycl
     Context pictureContx;
     private final OnItemClick imageListerner;
 
-    /**
-     * @param pictureList    ArrayList of pictureFacer objects
-     * @param pictureContx   The Activity of fragment context
-     * @param imageListerner Interface for communication between adapter and fragment
-     */
+
     public RecyclerViewPagerImageIndicator(List<Picture> pictureList, Context pictureContx, OnItemClick imageListerner) {
         this.pictureList = pictureList;
         this.pictureContx = pictureContx;
@@ -57,10 +53,6 @@ public class RecyclerViewPagerImageIndicator extends RecyclerView.Adapter<Recycl
                 .load(pic.getUri())
 
                 .into(holder.image);
-//        Glide.with(pictureContx)
-//                .load(pic.getPicturePath())
-//                .apply(new RequestOptions().centerCrop())
-//                .into(holder.image);
 
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override

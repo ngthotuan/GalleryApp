@@ -208,11 +208,9 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
     }
 
     @Override
-    public void onPicClicked(PictureAdapter.PictureHolder holder, int position, List<Picture> pics) {
-        PictureBrowserFragment browser = PictureBrowserFragment.newInstance(pics, position, getContext());
+    public void onPicClicked(PictureAdapter.PictureHolder holder, int position, List<Picture> pictures) {
+        PictureBrowserFragment browser = PictureBrowserFragment.newInstance(pictures, position);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            //browser.setEnterTransition(new Slide());
-            //browser.setExitTransition(new Slide()); uncomment this to use slide transition and comment the two lines below
             browser.setEnterTransition(new Fade());
             browser.setExitTransition(new Fade());
         }
