@@ -7,7 +7,7 @@
         <item android:id="@+id/imgViewUseAs"
             android:title="Use As"/>
         <item android:id="@+id/imgViewEdit"
-            android:title="Crop & Rotate"/>
+            android:title="Crop and Rotate"/>
         <item android:id="@+id/imgViewDetail"
             android:title="Details"/>
         <item android:id="@+id/imgViewHide"

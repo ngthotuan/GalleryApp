@@ -389,7 +389,7 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
         PictureDelete deleter = new PictureDelete();
 
         File crrFile = new File(filePath);
-        
+
         deleter.deleteImg(context, crrFile);
         deleter.deleteFileFromMediaStore(contentResolver, crrFile);
     }
