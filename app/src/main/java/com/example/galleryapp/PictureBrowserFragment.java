@@ -132,17 +132,19 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
         indicatorRecycler.setAdapter(indicatorAdapter);
 
 
-        images.get(position).setSelected(true);
-        previousSelected = position;
-        indicatorAdapter.notifyDataSetChanged();
-        indicatorRecycler.scrollToPosition(position);
-
         //show image current
         viewPager = view.findViewById(R.id.imagePager);
         pagerAdapter = new ImagesPagerAdapter(indicatorRecycler,images);
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOffscreenPageLimit(3);
         viewPager.setCurrentItem(position);
+
+        images.get(position).setSelected(true);
+        previousSelected = position;
+        indicatorAdapter.notifyDataSetChanged();
+        indicatorRecycler.scrollToPosition(position);
+
+
 
 
 
@@ -153,7 +155,7 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
             }
             //handle load left right pager view
             @Override
-            public void onPageSelected(int positigiton) {
+            public void onPageSelected(int position) {
 
                 if (previousSelected != -1) {
                     images.get(previousSelected).setSelected(false);
