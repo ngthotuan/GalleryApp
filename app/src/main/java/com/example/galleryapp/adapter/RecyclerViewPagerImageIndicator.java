@@ -2,6 +2,7 @@ package com.example.galleryapp.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +51,7 @@ public class RecyclerViewPagerImageIndicator extends RecyclerView.Adapter<Recycl
 
         final Picture pic = pictureList.get(position);
 
-//        holder.positionController.setBackgroundColor(pic.getSelected() ? Color.parseColor("#00000000") : Color.parseColor("#8c000000"));
+        holder.positionController.setBackgroundColor(pic.isSelected()? Color.parseColor("#00000000") : Color.parseColor("#8c000000"));
 
         Picasso.get()
                 .load(pic.getUri())
