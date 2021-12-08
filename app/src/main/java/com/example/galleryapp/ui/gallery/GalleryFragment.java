@@ -75,6 +75,7 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
 
         pictures = PictureUtil.getPictures(activity, null);
         adapter = getPictureAdapter(isGridView);
+        adapter.notifyDataSetChanged();
         layoutManager = getLayoutManger(isGridView);
 
         rvPictures.hasFixedSize();

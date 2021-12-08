@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -19,6 +20,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +30,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.dsphotoeditor.sdk.activity.DsPhotoEditorActivity;
+import com.dsphotoeditor.sdk.utils.DsPhotoEditorConstants;
 import com.example.galleryapp.adapter.PictureAdapter;
 import com.example.galleryapp.adapter.RecyclerViewPagerImageIndicator;
 import com.example.galleryapp.listener.OnItemClick;
@@ -96,6 +100,19 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
         switch (item.getItemId()) {
             case R.id.imgShare: {
                 ShareUtils.shareImage(getContext(), allImages.get(position));
+                break;
+            }
+            case R.id.imgEdit:{
+                Intent editIntent = new Intent(getActivity(), DsPhotoEditorActivity.class);
+                editIntent.setData(allImages.get(position).getUri());
+                //set directory
+                editIntent.putExtra(DsPhotoEditorConstants.DS_PHOTO_EDITOR_OUTPUT_DIRECTORY,"images");
+                editIntent.putExtra(DsPhotoEditorConstants.DS_TOOL_BAR_BACKGROUND_COLOR,Color.parseColor("#FF6200EE"));
+
+                editIntent.putExtra(DsPhotoEditorConstants.DS_MAIN_BACKGROUND_COLOR,Color.parseColor("#FFFFFF"));
+                editIntent.putExtra(DsPhotoEditorConstants.DS_PHOTO_EDITOR_TOOLS_TO_HIDE,new int[]{DsPhotoEditorActivity.TOOL_WARMTH,DsPhotoEditorActivity.TOOL_PIXELATE});
+                getActivity().startActivityForResult(editIntent,201);
+                break;
             }
             case R.id.imgViewDetail:{
                 showDetails();
@@ -385,6 +402,9 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
             }
 
             Bitmap croppedBitmap = BitmapFactory.decodeFile(mFileTemp.getPath());
+        }
+        if(requestCode == 201){
+            Toast.makeText(this.getContext(), "OK", Toast.LENGTH_SHORT).show();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

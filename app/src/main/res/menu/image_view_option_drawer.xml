@@ -16,6 +16,8 @@
             android:title="Lock"/>
         <item android:id="@+id/imgShare"
             android:title="Share"/>
+        <item android:id="@+id/imgEdit"
+            android:title="Edit"/>
         <item android:id="@+id/imgViewDelete"
             android:title="Delete"/>
     </group>
