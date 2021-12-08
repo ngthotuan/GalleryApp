@@ -248,6 +248,7 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
                                     || DateUtil.getDate(picture.getCreatedDate()).contains(s))
                             .collect(Collectors.toList());
                 }
+                pictures.sort(getComparator());
                 adapter.setPictures(pictures);
                 return false;
             }
@@ -269,7 +270,9 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
                     imgAnimation.setVisibility(View.GONE);
                 } else {
                     filters.setVisibility(View.GONE);
-                    imgAnimation.setVisibility(View.VISIBLE);
+                    if (isGridView) {
+                        imgAnimation.setVisibility(View.VISIBLE);
+                    }
                 }
         }
         return super.onOptionsItemSelected(item);
