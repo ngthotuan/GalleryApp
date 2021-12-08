@@ -8,6 +8,7 @@
         android:allowBackup="true"
         android:icon="@drawable/gallery"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@drawable/gallery"
         android:supportsRtl="true"
         android:requestLegacyExternalStorage="true"
@@ -35,6 +36,15 @@
         // For CropImage and Rotate Test
         <activity android:name=".utils.cropImage.CropImageTest" android:exported="true"/>
         <activity android:name=".utils.cropImage.CropImage"/>
+
+        <activity android:name="com.dsphotoeditor.sdk.activity.DsPhotoEditorActivity"/>
+        <activity android:name="com.dsphotoeditor.sdk.activity.DsPhotoEditorStickerActivity"/>
+        <activity android:name="com.dsphotoeditor.sdk.activity.DsPhotoEditorTextActivity"
+        android:windowSoftInputMode="adjustPan" />
+        <activity android:name="com.dsphotoeditor.sdk.activity.DsPhotoEditorCropActivity"/>
+        <activity android:name="com.dsphotoeditor.sdk.activity.DsPhotoEditorDrawActivity"/>
+
+
         <provider
             android:authorities="com.example.galleryapp.utils.cropImage"
             android:name=".utils.cropImage.InternalStorageContentProvider"
