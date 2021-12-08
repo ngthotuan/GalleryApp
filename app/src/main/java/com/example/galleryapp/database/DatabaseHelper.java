@@ -32,9 +32,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Create table SQL
         String CREATE_IMAGE_TABLE = "CREATE TABLE " + Config.TABLE_IMAGE + "("
                 + Config.COLUMN_IMAGE_PATH + " TEXT PRIMARY KEY, "
-                + Config.COLUMN_IMAGE_NAME + " TEXT NOT NULL, " // nullable
-                + Config.COLUMN_IMAGE_ALBUM + " TEXT, " // nullable
-                + Config.COLUMN_IMAGE_FAVOURITE + "TEXT " // nullable
+                + Config.COLUMN_IMAGE_NAME + " TEXT, "
+                + Config.COLUMN_IMAGE_SIZE + " INTEGER NOT NULL, "
+                + Config.COLUMN_IMAGE_TYPE + " TEXT NOT NULL, "
+                + Config.COLUMN_IMAGE_URI + " TEXT NOT NULL, "
+                + Config.COLUMN_IMAGE_CREATED_DATE + " INTEGER, "
+                + Config.COLUMN_IMAGE_MODIFIED_DATE + " INTEGER, "
+                + Config.COLUMN_IMAGE_ALBUM + " TEXT, "
+                + Config.COLUMN_IMAGE_FAVOURITE + "INTEGER NOT NULL"
                 + ")";
 
         db.execSQL(CREATE_IMAGE_TABLE);
