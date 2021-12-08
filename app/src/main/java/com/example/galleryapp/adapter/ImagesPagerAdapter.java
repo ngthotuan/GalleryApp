@@ -45,6 +45,7 @@ public class ImagesPagerAdapter extends PagerAdapter {
         setTransitionName(imgView, position + "picture");
 
         Picture pic = images.get(position);
+//        pic.setSelected(true);
         Picasso.get()
                 .load(pic.getUri())
                 .into(imgView);
