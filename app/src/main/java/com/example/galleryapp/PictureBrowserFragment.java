@@ -101,10 +101,10 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
                 showDetails();
             }
             case R.id.imgViewEdit: {
-
+                CropImage();
             }
             case R.id.imgViewDelete: {
-
+                deleteImage();
             }
         }
         return super.onOptionsItemSelected(item);
@@ -336,15 +336,17 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
     public static final int RESULT_OK = -1;
     public static final String TEMP_PHOTO_FILE_NAME = "temp_photo.jpg";
 
-    private void EditImage() {
+    private void CropImage() {
         String state = Environment.getExternalStorageState();
 
         if (Environment.MEDIA_MOUNTED.equals(state)) {
             mFileTemp = new File(Environment.getExternalStorageDirectory(), TEMP_PHOTO_FILE_NAME);
         } else {
+            //mFileTemp = new File(getFilesDir(), TEMP_PHOTO_FILE_NAME);
             mFileTemp = new File(getActivity().getFilesDir(), TEMP_PHOTO_FILE_NAME);
         }
 
+        //Intent intent = new Intent(this, CropImage.class);
         Intent intent = new Intent(getActivity(), CropImage.class);
 
         String filePath = allImages.get(position).getPath();
@@ -362,10 +364,10 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
         String filePath = allImages.get(position).getPath();
 
         PictureDelete deleter = new PictureDelete();
-        Context context;
 
         File crrFile = new File(filePath);
 
+        // getActivity() should be context
         deleter.deleteImg(getActivity(), crrFile);
     }
 
