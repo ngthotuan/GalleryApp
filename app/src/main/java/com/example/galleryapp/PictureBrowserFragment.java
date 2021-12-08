@@ -2,11 +2,8 @@ package com.example.galleryapp;
 
 import static androidx.core.view.ViewCompat.setTransitionName;
 
-import static com.example.galleryapp.utils.cropImage.CropImageTest.copyStream;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -44,7 +41,6 @@ import com.example.galleryapp.model.Picture;
 import com.example.galleryapp.utils.DateUtil;
 import com.example.galleryapp.utils.PictureDelete;
 import com.example.galleryapp.utils.ShareUtils;
-import com.example.galleryapp.utils.cropImage.CropImage;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
