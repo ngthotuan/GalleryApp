@@ -1,6 +1,5 @@
 package com.example.galleryapp.ui.gallery;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,12 +14,12 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
@@ -51,7 +50,7 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
     private RecyclerView.LayoutManager layoutManager;
     private PictureAdapter adapter;
     private List<Picture> pictures;
-    private Button btnSort;
+    private TextView txtSort;
     private Spinner spSort;
     private ImageSwitcher imgAnimation;
     private boolean showAnimation = true;
@@ -69,7 +68,7 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
         Activity activity = getActivity();
 
         rvPictures = binding.rvPictures;
-        btnSort = binding.btnSort;
+        txtSort = binding.txtSort;
         spSort = binding.spSort;
         imgAnimation = binding.imgAnimation;
         rvPictures.hasFixedSize();
@@ -80,8 +79,7 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
 
         setViewMode(isGridView);
 
-        btnSort.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("NotifyDataSetChanged")
+        txtSort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (sortType.equals(getResources().getString(R.string.down_icon))) {
@@ -89,7 +87,7 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
                 } else {
                     sortType = getResources().getString(R.string.down_icon);
                 }
-                btnSort.setText(sortType);
+                txtSort.setText(sortType);
                 updateSort();
             }
         });
