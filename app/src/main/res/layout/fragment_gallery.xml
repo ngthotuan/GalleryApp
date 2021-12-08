@@ -8,8 +8,13 @@
     tools:context=".ui.gallery.GalleryFragment">
 
     <LinearLayout
+        android:id="@+id/filters"
+        android:visibility="gone"
+        android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@drawable/border"
         android:orientation="horizontal">
 
         <TextView
@@ -17,7 +22,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingEnd="8dp"
-            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textColor="@color/teal_700"
             android:text="@string/sort_type"
             tools:ignore="RtlSymmetry" />
 
@@ -28,17 +34,22 @@
             android:layout_weight="1"
             android:layout_gravity="center" />
 
-        <Button
-            android:id="@+id/btnSort"
+        <TextView
+            android:id="@+id/txtSort"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textSize="20sp"
+            android:textColor="@color/purple_200"
+            android:background="#333"
             android:text="@string/up_icon" />
     </LinearLayout>
 
     <ImageSwitcher
         android:id="@+id/imgAnimation"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:paddingVertical="10dp"
+        android:layout_height="300dp"
         android:layout_gravity="center_horizontal" />
 
     <androidx.recyclerview.widget.RecyclerView
