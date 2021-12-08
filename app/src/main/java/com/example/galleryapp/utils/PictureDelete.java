@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class PictureDelete
+public class PictureDelete {
 
     public void removePic(Context context, File file) {
         String trashPath = Environment.getExternalStorageDirectory() + "/.trash";
