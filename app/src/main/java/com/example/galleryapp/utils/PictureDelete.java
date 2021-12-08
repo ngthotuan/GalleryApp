@@ -124,7 +124,7 @@ public class PictureDelete {
 
     }
 
-    public static void deleteFileFromMediaStore(final ContentResolver contentResolver, final File file) {
+    public void deleteFileFromMediaStore(ContentResolver contentResolver,File file) {
         String canonicalPath;
         try {
             canonicalPath = file.getCanonicalPath();

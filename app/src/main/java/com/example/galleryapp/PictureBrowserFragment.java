@@ -4,14 +4,17 @@ import static androidx.core.view.ViewCompat.setTransitionName;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -43,6 +46,7 @@ import com.example.galleryapp.utils.cropImage.CropImage;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -352,6 +356,8 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
     public static final int REQUEST_CODE_CROP_IMAGE = 0x1;
     public static final int RESULT_OK = -1;
     public static final String TEMP_PHOTO_FILE_NAME = "temp_photo.jpg";
+    Context context = getContext();
+    ContentResolver contentResolver = context.getContentResolver();
 
     private void CropImage() {
         String state = Environment.getExternalStorageState();
@@ -383,9 +389,28 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
         PictureDelete deleter = new PictureDelete();
 
         File crrFile = new File(filePath);
+        
+        deleter.deleteImg(context, crrFile);
+        deleter.deleteFileFromMediaStore(contentResolver, crrFile);
+    }
 
-        // getActivity() should be context
-        deleter.deleteImg(getActivity(), crrFile);
+    public void deleteFileFromMediaStore(ContentResolver contentResolver, File file) {
+        String canonicalPath;
+        try {
+            canonicalPath = file.getCanonicalPath();
+        } catch (IOException e) {
+            canonicalPath = file.getAbsolutePath();
+        }
+        final Uri uri = MediaStore.Files.getContentUri("external");
+        final int result = contentResolver.delete(uri,
+                MediaStore.Files.FileColumns.DATA + "=?", new String[] {canonicalPath});
+        if (result == 0) {
+            final String absolutePath = file.getAbsolutePath();
+            if (!absolutePath.equals(canonicalPath)) {
+                contentResolver.delete(uri,
+                        MediaStore.Files.FileColumns.DATA + "=?", new String[]{absolutePath});
+            }
+        }
     }
 
     @Override
