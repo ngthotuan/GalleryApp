@@ -18,6 +18,7 @@ public class QueryContract {
     }
 
     public interface LinkQuery {
-
+        void insertLink(int imageID, int albumID, QueryResponse<Boolean> response);
+        void getAllPictureInAlbum(int albumID, QueryResponse<List<Picture>> response);
     }
 }

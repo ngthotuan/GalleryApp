@@ -14,15 +14,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = Config.DATABASE_NAME;
     private static final int DATABASE_VERSION = 1;
 
-    private DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    private DatabaseHelper() {
+        super(mContext.context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    public static DatabaseHelper getInstance(Context context) {
+    public static DatabaseHelper getInstance() {
         if (databaseHelper == null){
             synchronized (DatabaseHelper.class) {
                 if (databaseHelper == null) {
-                    databaseHelper = new DatabaseHelper(context);
+                    databaseHelper = new DatabaseHelper();
                 }
             }
         }
