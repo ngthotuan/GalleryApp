@@ -6,19 +6,17 @@
             android:title="Slideshow"/>
         <item android:id="@+id/imgViewUseAs"
             android:title="Use As"/>
-        <item android:id="@+id/imgViewEdit"
-            android:title="Crop and Rotate"/>
-        <item android:id="@+id/imgViewDetail"
-            android:title="Details"/>
+        <item android:id="@+id/imgEdit"
+            android:title="Edit"/>
         <item android:id="@+id/imgViewHide"
             android:title="Hide"/>
         <item android:id="@+id/imgViewLock"
             android:title="Lock"/>
         <item android:id="@+id/imgShare"
             android:title="Share"/>
-        <item android:id="@+id/imgEdit"
-            android:title="Edit"/>
         <item android:id="@+id/imgViewDelete"
             android:title="Delete"/>
+        <item android:id="@+id/imgViewDetail"
+            android:title="Details"/>
     </group>
 </menu>

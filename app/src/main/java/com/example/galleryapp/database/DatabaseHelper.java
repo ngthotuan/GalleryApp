@@ -3,9 +3,10 @@ package com.example.galleryapp.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-
+    private static final String TAG = "DatabaseHelper";
     private static DatabaseHelper databaseHelper;
 
     private static final String DATABASE_NAME = Config.DATABASE_NAME;
@@ -43,6 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + ")";
 
         db.execSQL(CREATE_IMAGE_TABLE);
+        Log.d(TAG, "Database created");
     }
 
     @Override

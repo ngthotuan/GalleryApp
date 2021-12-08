@@ -4,11 +4,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.galleryapp.model.Picture;
 
 public class DatabaseQuery {
+
+    private static final String TAG = "DatabaseQuery";
     private Context context;
 
     public DatabaseQuery(Context context) {
@@ -36,7 +39,8 @@ public class DatabaseQuery {
         try {
             id = sqLiteDatabase.insertOrThrow(Config.TABLE_IMAGE, null, contentValues);
         } catch (SQLException e) {
-            Toast.makeText(context, "Operation failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "Exception: " + e.getMessage());
+            Toast.makeText(context, "Insert data failed!", Toast.LENGTH_SHORT).show();
         } finally {
             sqLiteDatabase.close();
         }

@@ -2,6 +2,8 @@ package com.example.galleryapp;
 
 import static androidx.core.view.ViewCompat.setTransitionName;
 
+import static com.example.galleryapp.utils.cropImage.CropImageTest.copyStream;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
@@ -46,7 +48,9 @@ import com.example.galleryapp.utils.cropImage.CropImage;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -121,11 +125,8 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
             case R.id.imgViewDetail:{
                 showDetails();
             }
-            case R.id.imgViewEdit: {
-                CropImage();
-            }
             case R.id.imgViewDelete: {
-                deleteImage();
+                //deleteImage();
             }
         }
         return super.onOptionsItemSelected(item);
@@ -352,36 +353,8 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
         }, 4000);
     }
 
-    File mFileTemp;
-    public static final int REQUEST_CODE_CROP_IMAGE = 0x1;
-    public static final int RESULT_OK = -1;
-    public static final String TEMP_PHOTO_FILE_NAME = "temp_photo.jpg";
-    Context context = getContext();
-    ContentResolver contentResolver = context.getContentResolver();
-
-    private void CropImage() {
-        String state = Environment.getExternalStorageState();
-
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            mFileTemp = new File(Environment.getExternalStorageDirectory(), TEMP_PHOTO_FILE_NAME);
-        } else {
-            //mFileTemp = new File(getFilesDir(), TEMP_PHOTO_FILE_NAME);
-            mFileTemp = new File(getActivity().getFilesDir(), TEMP_PHOTO_FILE_NAME);
-        }
-
-        //Intent intent = new Intent(this, CropImage.class);
-        Intent intent = new Intent(getActivity(), CropImage.class);
-
-        String filePath = allImages.get(position).getPath();
-        intent.putExtra(CropImage.IMAGE_PATH, filePath);
-
-        intent.putExtra(CropImage.SCALE, true);
-
-        intent.putExtra(CropImage.ASPECT_X, 3);
-        intent.putExtra(CropImage.ASPECT_Y, 2);
-
-        startActivityForResult(intent, REQUEST_CODE_CROP_IMAGE);
-    }
+    //Context context = getContext();
+    //ContentResolver contentResolver = context.getContentResolver();
 
     private void deleteImage() {
         String filePath = allImages.get(position).getPath();
@@ -390,28 +363,7 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
 
         File crrFile = new File(filePath);
 
-        deleter.deleteImg(context, crrFile);
-        deleter.deleteFileFromMediaStore(contentResolver, crrFile);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != RESULT_OK) {
-            return;
-        }
-
-        if (requestCode == REQUEST_CODE_CROP_IMAGE) {
-            String path = data.getStringExtra(CropImage.IMAGE_PATH);
-
-            if (path == null) {
-                return;
-            }
-
-            Bitmap croppedBitmap = BitmapFactory.decodeFile(mFileTemp.getPath());
-        }
-        if(requestCode == 201){
-            Toast.makeText(this.getContext(), "OK", Toast.LENGTH_SHORT).show();
-        }
-        super.onActivityResult(requestCode, resultCode, data);
+        //deleter.deleteImg(context, crrFile);
+        //deleter.deleteFileFromMediaStore(contentResolver, crrFile);
     }
 }
