@@ -1,9 +1,14 @@
 package com.example.galleryapp;
 
 import android.annotation.SuppressLint;
+import android.app.WallpaperManager;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,6 +16,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +36,7 @@ import com.example.galleryapp.model.Picture;
 import com.example.galleryapp.utils.DateUtil;
 import com.example.galleryapp.utils.ShareUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,15 +100,37 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
             }
             case R.id.imgViewDetail:{
                 showDetails();
+                break;
             }
             case R.id.imgViewDelete: {
                 //deleteImage();
+            }
+            case R.id.imgWallpaper:{
+                setWallpaper(images.get(position));
+                break;
             }
         }
         return super.onOptionsItemSelected(item);
 
     }
 
+    private void setWallpaper(Picture picture) {
+        Bitmap bitmap = null;
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), picture.getUri());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.d("TAG" , "setWallpaper: " + bitmap);
+        WallpaperManager wallpaperManager = WallpaperManager.getInstance(getContext());
+        try{
+            wallpaperManager.setBitmap(bitmap);
+            Toast.makeText(getContext(),"Wallpaper set !!!",Toast.LENGTH_SHORT).show();
+
+        }catch (IOException e){
+            Toast.makeText(getContext(),"Wallpaper not set !!!", Toast.LENGTH_SHORT).show();
+        }
+    }
     private void showDetails(){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
         alertDialog.setTitle("Image Infomation.");

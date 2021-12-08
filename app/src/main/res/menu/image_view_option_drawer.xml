@@ -12,6 +12,8 @@
             android:title="Hide"/>
         <item android:id="@+id/imgViewLock"
             android:title="Lock"/>
+        <item android:id="@+id/imgWallpaper"
+            android:title="Set Wallpaper"/>
         <item android:id="@+id/imgShare"
             android:title="Share"/>
         <item android:id="@+id/imgViewDelete"
