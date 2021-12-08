@@ -280,12 +280,12 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
     private void reversedViewMode(@NonNull MenuItem item) {
         isGridView = !isGridView;
         if (isGridView) {
-            item.setIcon(getResources().getDrawable(R.drawable.grid));
+            item.setIcon(getResources().getDrawable(R.drawable.ic_baseline_grid_view_24));
             if (!showFilter) {
                 imgAnimation.setVisibility(View.VISIBLE);
             }
         } else {
-            item.setIcon(getResources().getDrawable(R.drawable.list));
+            item.setIcon(getResources().getDrawable(R.drawable.ic_baseline_list_24));
             imgAnimation.setVisibility(View.GONE);
         }
     }

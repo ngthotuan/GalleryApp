@@ -17,6 +17,6 @@
     <item
         android:id="@+id/mnuFilter"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/filter"
+        android:icon="@drawable/ic_baseline_filter_alt_24"
         android:title="@string/filters" />
 </menu>

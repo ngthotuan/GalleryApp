@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudio/project1/GalleryApp/app/src/main/res/drawable-v24/ic_baseline_add_photo_alternate_24.xml" value="0.14635416666666667" />
+        <entry key="..\:/AndroidStudio/project1/GalleryApp/app/src/main/res/drawable/ic_baseline_add_photo_alternate_24.xml" value="0.2351851851851852" />
+        <entry key="..\:/AndroidStudio/project1/GalleryApp/app/src/main/res/layout/activity_dowload_image.xml" value="0.13020833333333334" />
         <entry key="..\:/AndroidStudio/project1/GalleryApp/app/src/main/res/layout/activity_main.xml" value="0.17481884057971014" />
         <entry key="..\:/AndroidStudio/project1/GalleryApp/app/src/main/res/layout/app_bar_main.xml" value="0.17481884057971014" />
         <entry key="..\:/AndroidStudio/project1/GalleryApp/app/src/main/res/layout/content_main.xml" value="0.17481884057971014" />
@@ -14,16 +17,54 @@
         <entry key="..\:/AndroidStudio/project1/GalleryApp/app/src/main/res/layout/fragment_gallery.xml" value="0.17481884057971014" />
         <entry key="..\:/AndroidStudio/project1/GalleryApp/app/src/main/res/layout/fragment_hidden.xml" value="0.17481884057971014" />
         <entry key="..\:/AndroidStudio/project1/GalleryApp/app/src/main/res/layout/fragment_locked.xml" value="0.17481884057971014" />
+        <entry key="..\:/AndroidStudio/project1/GalleryApp/app/src/main/res/layout/fragment_picture_browser.xml" value="0.12360688956433637" />
         <entry key="..\:/AndroidStudio/project1/GalleryApp/app/src/main/res/layout/fragment_picture_of_folder.xml" value="0.17481884057971014" />
         <entry key="..\:/AndroidStudio/project1/GalleryApp/app/src/main/res/layout/fragment_setting.xml" value="0.17481884057971014" />
         <entry key="..\:/AndroidStudio/project1/GalleryApp/app/src/main/res/layout/header_navigation.xml" value="0.17481884057971014" />
         <entry key="..\:/AndroidStudio/project1/GalleryApp/app/src/main/res/layout/image_view.xml" value="0.17481884057971014" />
+        <entry key="..\:/AndroidStudio/project1/GalleryApp/app/src/main/res/layout/picture_browser_pager.xml" value="0.12360688956433637" />
         <entry key="..\:/AndroidStudio/project1/GalleryApp/app/src/main/res/layout/picture_item_gird.xml" value="0.17481884057971014" />
         <entry key="..\:/AndroidStudio/project1/GalleryApp/app/src/main/res/layout/picture_item_list.xml" value="0.17481884057971014" />
         <entry key="..\:/AndroidStudio/project1/GalleryApp/app/src/main/res/layout/test_crop_screen.xml" value="0.17481884057971014" />
         <entry key="..\:/AndroidStudio/project1/GalleryApp/app/src/main/res/menu/activity_main_drawer.xml" value="0.25052083333333336" />
-        <entry key="..\:/AndroidStudio/project1/GalleryApp/app/src/main/res/menu/gallery_menu.xml" value="0.13020833333333334" />
+        <entry key="..\:/AndroidStudio/project1/GalleryApp/app/src/main/res/menu/gallery_menu.xml" value="0.2" />
         <entry key="..\:/AndroidStudio/project1/GalleryApp/app/src/main/res/menu/image_view_option_drawer.xml" value="0.25052083333333336" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/drawable-v24/selector_crop_button.xml" value="0.14635416666666667" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.17395833333333333" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.17395833333333333" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.17395833333333333" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/drawable/ic_baseline_filter_alt_24.xml" value="0.14635416666666667" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/drawable/ic_baseline_grid_view_24.xml" value="0.22685185185185186" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/drawable/ic_baseline_info_24.xml" value="0.14635416666666667" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/drawable/ic_baseline_list_24.xml" value="0.14270833333333333" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/drawable/ic_baseline_photo_library_24.xml" value="0.22685185185185186" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/drawable/ic_baseline_refresh_24.xml" value="0.22685185185185186" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.22685185185185186" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/drawable/ic_baseline_warning_24.xml" value="0.22685185185185186" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/drawable/ic_search_black_24dp.xml" value="0.22685185185185186" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/layout/activity_dowload_image.xml" value="0.1265625" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/layout/activity_main.xml" value="0.16666666666666666" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/layout/app_bar_main.xml" value="0.16666666666666666" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/layout/content_main.xml" value="0.10677083333333333" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/layout/folder_item.xml" value="0.10677083333333333" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/layout/fragment_album.xml" value="0.10677083333333333" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/layout/fragment_camera.xml" value="0.10677083333333333" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/layout/fragment_favorites.xml" value="0.10677083333333333" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/layout/fragment_gallery.xml" value="0.10677083333333333" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/layout/fragment_hidden.xml" value="0.10677083333333333" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/layout/fragment_locked.xml" value="0.10677083333333333" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/layout/fragment_picture_browser.xml" value="0.13020833333333334" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/layout/fragment_picture_of_folder.xml" value="0.10677083333333333" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/layout/fragment_setting.xml" value="0.1265625" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/layout/header_navigation.xml" value="0.16666666666666666" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/layout/image_view.xml" value="0.16666666666666666" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/layout/indicator_holder.xml" value="0.16666666666666666" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/layout/picture_browser_pager.xml" value="0.16666666666666666" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/layout/picture_item_gird.xml" value="0.16666666666666666" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/layout/picture_item_list.xml" value="0.16666666666666666" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/menu/activity_main_drawer.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/menu/gallery_menu.xml" value="0.2" />
+        <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/menu/image_view_option_drawer.xml" value="0.2" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2203125" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/drawable-v24/selector_crop_button.xml" value="0.11770833333333333" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/drawable/border.xml" value="0.2203125" />
