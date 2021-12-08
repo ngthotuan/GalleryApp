@@ -394,25 +394,6 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
         deleter.deleteFileFromMediaStore(contentResolver, crrFile);
     }
 
-    public void deleteFileFromMediaStore(ContentResolver contentResolver, File file) {
-        String canonicalPath;
-        try {
-            canonicalPath = file.getCanonicalPath();
-        } catch (IOException e) {
-            canonicalPath = file.getAbsolutePath();
-        }
-        final Uri uri = MediaStore.Files.getContentUri("external");
-        final int result = contentResolver.delete(uri,
-                MediaStore.Files.FileColumns.DATA + "=?", new String[] {canonicalPath});
-        if (result == 0) {
-            final String absolutePath = file.getAbsolutePath();
-            if (!absolutePath.equals(canonicalPath)) {
-                contentResolver.delete(uri,
-                        MediaStore.Files.FileColumns.DATA + "=?", new String[]{absolutePath});
-            }
-        }
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != RESULT_OK) {

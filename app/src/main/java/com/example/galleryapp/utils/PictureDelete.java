@@ -5,6 +5,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
@@ -19,9 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class PictureDelete {
-    // delete is perma delete. we cant recover so we move item
-    // to a folder that gallery will not scan
+public class PictureDelete
 
     public void removePic(Context context, File file) {
         String trashPath = Environment.getExternalStorageDirectory() + "/.trash";
