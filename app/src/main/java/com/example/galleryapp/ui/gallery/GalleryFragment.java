@@ -72,35 +72,35 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
         btnSort = binding.btnSort;
         spSort = binding.spSort;
         imgAnimation = binding.imgAnimation;
+        rvPictures.hasFixedSize();
+
 
         pictures = PictureUtil.getPictures(activity, null);
-        adapter = getPictureAdapter(isGridView);
-        adapter.notifyDataSetChanged();
-        layoutManager = getLayoutManger(isGridView);
+        sortFields = getSortFields();
 
-        rvPictures.hasFixedSize();
-        rvPictures.setAdapter(adapter);
-        rvPictures.setLayoutManager(layoutManager);
+        setViewMode(isGridView);
 
         btnSort.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onClick(View view) {
-                Comparator<Picture> comparator = getComparator();
-                pictures.sort(comparator);
-                reversedSortType();
-                adapter.notifyDataSetChanged();
+                if (sortType.equals(getResources().getString(R.string.down_icon))) {
+                    sortType = getResources().getString(R.string.up_icon);
+                } else {
+                    sortType = getResources().getString(R.string.down_icon);
+                }
+                btnSort.setText(sortType);
+                updateSort();
             }
         });
 
-        sortFields = getSortFields();
         spSort.setAdapter(new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_spinner_dropdown_item, sortFields));
-
         spSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 sortField = sortFields.get(i);
+                updateSort();
             }
 
             @Override
@@ -124,12 +124,11 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
         imgAnimation.setInAnimation(in);
         imgAnimation.setOutAnimation(out);
 
-        autoUpdateQuickImage();
+        autoShowImageAnimation();
 
         return root;
     }
 
-    @NonNull
     private PictureAdapter getPictureAdapter(boolean isGridView) {
         int resource = isGridView ? R.layout.picture_item_gird : R.layout.picture_item_list;
         return new PictureAdapter(resource, pictures, this);
@@ -158,22 +157,19 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
             comparator = Comparator.comparing(Picture::getCreatedDate);
         }
 
-        if (sortType.equals(getResources().getString(R.string.up_icon))) {
+        if (sortType.equals(getResources().getString(R.string.down_icon))) {
             comparator = comparator.reversed();
         }
         return comparator;
     }
 
-    private void reversedSortType() {
-        if (sortType.equals(getResources().getString(R.string.down_icon))) {
-            sortType = getResources().getString(R.string.up_icon);
-        } else {
-            sortType = getResources().getString(R.string.down_icon);
-        }
-        btnSort.setText(sortType);
+    private void updateSort() {
+        Comparator<Picture> comparator = getComparator();
+        pictures.sort(comparator);
+        adapter.notifyDataSetChanged();
     }
 
-    private void autoUpdateQuickImage() {
+    private void autoShowImageAnimation() {
         new Thread() {
             public void run() {
                 while (showAnimation) {
@@ -188,7 +184,7 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
                                 }
                             }
                         });
-                        Thread.sleep(1000);
+                        Thread.sleep(5000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -196,7 +192,6 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
             }
         }.start();
     }
-
 
     @Override
     public void onDestroyView() {
@@ -223,8 +218,7 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .addSharedElement(holder.picture, position + "picture")
-                .add(R.id.nav_host_fragment_content_main, browser)
-                .addToBackStack(null)
+                .replace(R.id.nav_host_fragment_content_main, browser)
                 .commit();
 
 
@@ -262,21 +256,29 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.mnuSwitch:
-                if (isGridView) {
-                    item.setIcon(getResources().getDrawable(R.drawable.list));
-                    imgAnimation.setVisibility(View.GONE);
-                } else {
-                    item.setIcon(getResources().getDrawable(R.drawable.grid));
-                    imgAnimation.setVisibility(View.VISIBLE);
-                }
-                isGridView = !isGridView;
-                layoutManager = getLayoutManger(isGridView);
-                adapter = getPictureAdapter(isGridView);
-                rvPictures.setAdapter(adapter);
-                rvPictures.setLayoutManager(layoutManager);
-                adapter.notifyDataSetChanged();
+                reversedViewMode(item);
+                setViewMode(isGridView);
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void reversedViewMode(@NonNull MenuItem item) {
+        isGridView = !isGridView;
+        if (isGridView) {
+            item.setIcon(getResources().getDrawable(R.drawable.grid));
+            imgAnimation.setVisibility(View.VISIBLE);
+        } else {
+            item.setIcon(getResources().getDrawable(R.drawable.list));
+            imgAnimation.setVisibility(View.GONE);
+        }
+    }
+
+    private void setViewMode(boolean isGird) {
+        layoutManager = getLayoutManger(isGird);
+        adapter = getPictureAdapter(isGird);
+        rvPictures.setAdapter(adapter);
+        rvPictures.setLayoutManager(layoutManager);
+        adapter.notifyDataSetChanged();
     }
 }
