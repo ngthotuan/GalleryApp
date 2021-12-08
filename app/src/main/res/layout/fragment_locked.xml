@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.locked.LockedFragment">
+    tools:context=".ui.hidden.locked.LockedFragment">
 
     <TextView
         android:text="@string/locked"

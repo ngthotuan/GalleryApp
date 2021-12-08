@@ -1,4 +1,4 @@
-package com.example.galleryapp.ui.locked;
+package com.example.galleryapp.ui.hidden.locked;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

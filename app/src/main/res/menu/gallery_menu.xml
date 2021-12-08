@@ -4,13 +4,19 @@
 
     <item
         android:id="@+id/mnuSearchPicture"
-        android:icon="@drawable/ic_search_black_24dp"
-        app:showAsAction="always"
         app:actionViewClass="android.widget.SearchView"
+        android:icon="@drawable/search"
+        app:showAsAction="always"
         android:title="@string/search_picture" />
     <item
         android:id="@+id/mnuSwitch"
         app:showAsAction="ifRoom"
         android:icon="@drawable/grid"
         android:title="@string/switch_view" />
+
+    <item
+        android:id="@+id/mnuFilter"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/filter"
+        android:title="@string/filters" />
 </menu>

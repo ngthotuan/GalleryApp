@@ -1,5 +1,6 @@
 package com.example.galleryapp.ui.gallery;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
@@ -58,6 +59,8 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
     private List<String> sortFields;
     private String sortField = "";
     private String sortType = "";
+    private LinearLayout filters;
+    private boolean showFilter = false;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -68,10 +71,11 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
         Activity activity = getActivity();
 
         rvPictures = binding.rvPictures;
+        rvPictures.hasFixedSize();
         txtSort = binding.txtSort;
         spSort = binding.spSort;
         imgAnimation = binding.imgAnimation;
-        rvPictures.hasFixedSize();
+        filters = binding.filters;
 
 
         pictures = PictureUtil.getPictures(activity, null);
@@ -250,6 +254,7 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
         });
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -257,6 +262,15 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
                 reversedViewMode(item);
                 setViewMode(isGridView);
                 break;
+            case R.id.mnuFilter:
+                showFilter = !showFilter;
+                if (showFilter) {
+                    filters.setVisibility(View.VISIBLE);
+                    imgAnimation.setVisibility(View.GONE);
+                } else {
+                    filters.setVisibility(View.GONE);
+                    imgAnimation.setVisibility(View.VISIBLE);
+                }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -265,7 +279,9 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
         isGridView = !isGridView;
         if (isGridView) {
             item.setIcon(getResources().getDrawable(R.drawable.grid));
-            imgAnimation.setVisibility(View.VISIBLE);
+            if (!showFilter) {
+                imgAnimation.setVisibility(View.VISIBLE);
+            }
         } else {
             item.setIcon(getResources().getDrawable(R.drawable.list));
             imgAnimation.setVisibility(View.GONE);

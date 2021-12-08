@@ -8,6 +8,9 @@
     tools:context=".ui.gallery.GalleryFragment">
 
     <LinearLayout
+        android:id="@+id/filters"
+        android:visibility="gone"
+        android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -45,7 +48,8 @@
     <ImageSwitcher
         android:id="@+id/imgAnimation"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:paddingVertical="10dp"
+        android:layout_height="300dp"
         android:layout_gravity="center_horizontal" />
 
     <androidx.recyclerview.widget.RecyclerView
