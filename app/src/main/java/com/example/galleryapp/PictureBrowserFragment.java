@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.WallpaperManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -232,10 +231,6 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
         viewPager.setCurrentItem(pos);
     }
 
-    @Override
-    public void onLongClick(List<Picture> item, int pos) {
-
-    }
 
     @Override
     public void onPicClicked(PictureAdapter.PictureHolder holder, int position, List<Picture> pics) {
