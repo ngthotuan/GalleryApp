@@ -12,9 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -43,7 +41,6 @@ import java.util.List;
 public class PictureOfFolderFragment extends Fragment implements OnItemClick<Picture> {
 
     private FragmentPictureOfFolderBinding binding;
-    private final static int REQUEST_CODE_PHOTO = 50;
     private PictureAdapter pictureAdapter;
     ImageView imageView;
     List<Picture> pictures;
@@ -57,9 +54,6 @@ public class PictureOfFolderFragment extends Fragment implements OnItemClick<Pic
         PictureFolder pictureFolder = (PictureFolder) getArguments().getSerializable("pictureFolder");
 
         RecyclerView imageRecycler;
-        TextView txtTitle;
-
-        Button btnTakePhoto;
         imageRecycler = binding.recycler;
 
         imageRecycler.hasFixedSize();
@@ -118,11 +112,10 @@ public class PictureOfFolderFragment extends Fragment implements OnItemClick<Pic
     }
 
     @Override
-    public void onPicClicked(PictureAdapter.PictureHolder holder, int position, List<Picture> pics) {
-        PictureBrowserFragment browser = PictureBrowserFragment.newInstance(pics, position, getContext());
+    public void onPicClicked(PictureAdapter.PictureHolder holder, int position, List<Picture> pictures) {
+        PictureBrowserFragment browser = PictureBrowserFragment.newInstance(pictures, position);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            //browser.setEnterTransition(new Slide());
-            //browser.setExitTransition(new Slide()); uncomment this to use slide transition and comment the two lines below
+
             browser.setEnterTransition(new Fade());
             browser.setExitTransition(new Fade());
         }
