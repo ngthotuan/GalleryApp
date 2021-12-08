@@ -59,7 +59,6 @@ public class PictureUtil {
 
     public static ArrayList<PictureFolder> getPictureFolders(Activity activity) {
         ArrayList<PictureFolder> pictureFolders = new ArrayList<>();
-        PictureFolder pictureFolder = new PictureFolder();
         ArrayList<String> pictureFolderPaths = new ArrayList<>();
         Uri uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
         String[] projection = {MediaStore.Images.ImageColumns.DATA, MediaStore.Images.Media.DISPLAY_NAME,
@@ -68,6 +67,7 @@ public class PictureUtil {
 
         try {
             while (cursor.moveToNext()) {
+                PictureFolder pictureFolder = new PictureFolder();
                 String name = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME));
                 String folder = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME));
                 String dataPath = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA));

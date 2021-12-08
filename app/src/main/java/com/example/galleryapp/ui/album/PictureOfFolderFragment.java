@@ -10,14 +10,10 @@ import android.provider.MediaStore;
 import android.transition.Fade;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResult;
@@ -37,7 +33,6 @@ import com.example.galleryapp.listener.OnItemClick;
 import com.example.galleryapp.model.Picture;
 import com.example.galleryapp.model.PictureFolder;
 import com.example.galleryapp.utils.PictureUtil;
-import com.example.galleryapp.utils.ShareUtils;
 
 import java.util.List;
 
@@ -65,32 +60,14 @@ public class PictureOfFolderFragment extends Fragment implements OnItemClick<Pic
         TextView txtTitle;
 
         Button btnTakePhoto;
-        ProgressBar load;
-        imageView = binding.showingImage;
-        btnTakePhoto = binding.btnTakePhoto;
         imageRecycler = binding.recycler;
-        load = binding.loader;
 
         imageRecycler.hasFixedSize();
-        load.setVisibility(View.VISIBLE);
         pictures = PictureUtil.getPictures(activity, pictureFolder.getPath());
         pictureAdapter = new PictureAdapter(R.layout.picture_item_gird, pictures, this);
-        pictureAdapter.notifyDataSetChanged();
 
         imageRecycler.setAdapter(pictureAdapter);
         imageRecycler.setLayoutManager(new GridLayoutManager(getContext(), 4));
-
-
-        btnTakePhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openSomeActivityForResult();
-//                onLaunchCamera(view);
-            }
-        });
-
-
-//        load.setVisibility(View.GONE);
 
         return root;
     }
@@ -153,11 +130,8 @@ public class PictureOfFolderFragment extends Fragment implements OnItemClick<Pic
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .addSharedElement(holder.picture, position + "picture")
-                .add(R.id.nav_host_fragment_content_main, browser)
-                .addToBackStack(null)
+                .replace(R.id.nav_host_fragment_content_main, browser)
                 .commit();
-
-
     }
 
 

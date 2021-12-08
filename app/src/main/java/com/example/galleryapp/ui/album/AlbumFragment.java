@@ -2,7 +2,6 @@ package com.example.galleryapp.ui.album;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +43,6 @@ public class AlbumFragment extends Fragment implements OnItemClick<PictureFolder
         imageRecycler.hasFixedSize();
         load.setVisibility(View.VISIBLE);
         List<PictureFolder> pictures = PictureUtil.getPictureFolders(activity);
-        Log.e("TAG", "onCreateView: " + pictures.size());
         imageRecycler.setAdapter(new PictureFolderAdapter(pictures, R.layout.folder_item, this));
         imageRecycler.setLayoutManager(new GridLayoutManager(getContext(), 4));
         load.setVisibility(View.GONE);
@@ -59,6 +57,10 @@ public class AlbumFragment extends Fragment implements OnItemClick<PictureFolder
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        FragmentManager fm = this.getActivity().getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.nav_host_fragment_content_main, new EmptyFragment());
+        ft.commit();
     }
 
     @Override
@@ -69,8 +71,7 @@ public class AlbumFragment extends Fragment implements OnItemClick<PictureFolder
         Bundle args = new Bundle();
         args.putSerializable("pictureFolder", pictureFolder);
         llf.setArguments(args);
-        ft.replace(R.id.nav_host_fragment_content_main, llf).addToBackStack(null);
-        Log.e("TAG", "folderImageClick: ");
+        ft.replace(R.id.nav_host_fragment_content_main, llf);
         ft.commit();
     }
 

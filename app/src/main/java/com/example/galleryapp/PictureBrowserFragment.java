@@ -37,9 +37,9 @@ import com.example.galleryapp.adapter.RecyclerViewPagerImageIndicator;
 import com.example.galleryapp.listener.OnItemClick;
 import com.example.galleryapp.model.Picture;
 import com.example.galleryapp.utils.DateUtil;
+import com.example.galleryapp.utils.PictureDelete;
 import com.example.galleryapp.utils.ShareUtils;
 import com.example.galleryapp.utils.cropImage.CropImage;
-import com.example.galleryapp.utils.PictureDelete;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -106,8 +106,8 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
                 Intent editIntent = new Intent(getActivity(), DsPhotoEditorActivity.class);
                 editIntent.setData(allImages.get(position).getUri());
                 //set directory
-                editIntent.putExtra(DsPhotoEditorConstants.DS_PHOTO_EDITOR_OUTPUT_DIRECTORY,"images");
-                editIntent.putExtra(DsPhotoEditorConstants.DS_TOOL_BAR_BACKGROUND_COLOR,Color.parseColor("#FF6200EE"));
+                editIntent.putExtra(DsPhotoEditorConstants.DS_PHOTO_EDITOR_OUTPUT_DIRECTORY, "edit");
+                editIntent.putExtra(DsPhotoEditorConstants.DS_TOOL_BAR_BACKGROUND_COLOR, Color.parseColor("#FF6200EE"));
 
                 editIntent.putExtra(DsPhotoEditorConstants.DS_MAIN_BACKGROUND_COLOR,Color.parseColor("#FFFFFF"));
                 editIntent.putExtra(DsPhotoEditorConstants.DS_PHOTO_EDITOR_TOOLS_TO_HIDE,new int[]{DsPhotoEditorActivity.TOOL_WARMTH,DsPhotoEditorActivity.TOOL_PIXELATE});
