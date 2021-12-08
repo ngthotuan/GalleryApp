@@ -19,7 +19,6 @@ import com.example.galleryapp.adapter.PictureAdapter;
 import com.example.galleryapp.adapter.PictureFolderAdapter;
 import com.example.galleryapp.databinding.FragmentAlbumBinding;
 import com.example.galleryapp.listener.OnItemClick;
-import com.example.galleryapp.model.Picture;
 import com.example.galleryapp.model.PictureFolder;
 import com.example.galleryapp.utils.PictureUtil;
 
@@ -75,8 +74,9 @@ public class AlbumFragment extends Fragment implements OnItemClick<PictureFolder
         ft.commit();
     }
 
+
     @Override
-    public void onPicClicked(PictureAdapter.PictureHolder holder, int position, List<Picture> pics) {
+    public void onPicClicked(PictureAdapter.PictureHolder holder, int position, List<PictureFolder> pics) {
 
     }
 }

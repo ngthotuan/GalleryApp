@@ -204,6 +204,11 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
     }
 
     @Override
+    public void onLongClick(List<Picture> item, int pos) {
+
+    }
+
+    @Override
     public void onPicClicked(PictureAdapter.PictureHolder holder, int position, List<Picture> pics) {
 
     }
