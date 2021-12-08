@@ -4,30 +4,40 @@
     android:id="@+id/picLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_weight="10"
     android:orientation="horizontal"
+    android:background="@drawable/border"
+    android:layout_margin="5dp"
     android:padding="8dp">
 
-    <ImageView
-        android:id="@+id/picture"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        app:srcCompat="@drawable/album" />
 
     <LinearLayout
-        android:layout_weight="8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/picture"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/album" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginStart="8dp"
+        android:layout_weight="8"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/picName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/picCreatedDate"
@@ -37,10 +47,10 @@
     </LinearLayout>
 
     <TextView
-        android:layout_weight="2"
         android:id="@+id/picSize"
-        android:layout_gravity="center"
-        android:gravity="right"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="2"
+        android:gravity="end" />
 </LinearLayout>

@@ -278,6 +278,7 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
         return super.onOptionsItemSelected(item);
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private void reversedViewMode(@NonNull MenuItem item) {
         isGridView = !isGridView;
         if (isGridView) {
@@ -291,11 +292,13 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void setViewMode(boolean isGird) {
         layoutManager = getLayoutManger(isGird);
         adapter = getPictureAdapter(isGird);
         rvPictures.setAdapter(adapter);
         rvPictures.setLayoutManager(layoutManager);
+
         adapter.notifyDataSetChanged();
     }
 }
