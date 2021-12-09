@@ -5,7 +5,7 @@ import android.content.Intent;
 
 import com.example.galleryapp.model.Picture;
 
-public class ShareUtils {
+public class ShareUtil {
     public static void shareImage(Context context, Picture picture) {
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);

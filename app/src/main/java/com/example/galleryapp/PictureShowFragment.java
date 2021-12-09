@@ -39,7 +39,7 @@ import com.example.galleryapp.listener.OnItemClick;
 import com.example.galleryapp.model.Album;
 import com.example.galleryapp.model.Picture;
 import com.example.galleryapp.utils.DateUtil;
-import com.example.galleryapp.utils.ShareUtils;
+import com.example.galleryapp.utils.ShareUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -91,7 +91,7 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.imgShare: {
-                ShareUtils.shareImage(getContext(), images.get(position));
+                ShareUtil.shareImage(getContext(), images.get(position));
                 break;
             }
             case R.id.imgEdit:{
