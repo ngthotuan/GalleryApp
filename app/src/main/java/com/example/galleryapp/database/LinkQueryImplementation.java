@@ -126,7 +126,7 @@ public class LinkQueryImplementation implements QueryContract.LinkQuery {
 
                 response.onSuccess(pictureList);
             } else {
-                response.onFailure("There are no image in this album");
+                response.onSuccess(new ArrayList<>());
             }
         } catch (Exception e) {
             response.onFailure(e.getMessage());
