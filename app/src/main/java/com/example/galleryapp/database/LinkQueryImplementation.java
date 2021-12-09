@@ -1,13 +1,27 @@
 package com.example.galleryapp.database;
 
-import static com.example.galleryapp.database.Config.*;
+import static com.example.galleryapp.database.Config.ALBUM_ID_FK;
+import static com.example.galleryapp.database.Config.IMAGE_CREATED_DATE;
+import static com.example.galleryapp.database.Config.IMAGE_FAVOURITE;
+import static com.example.galleryapp.database.Config.IMAGE_ID;
+import static com.example.galleryapp.database.Config.IMAGE_ID_FK;
+import static com.example.galleryapp.database.Config.IMAGE_MODIFIED_DATE;
+import static com.example.galleryapp.database.Config.IMAGE_NAME;
+import static com.example.galleryapp.database.Config.IMAGE_PATH;
+import static com.example.galleryapp.database.Config.IMAGE_SIZE;
+import static com.example.galleryapp.database.Config.IMAGE_TYPE;
+import static com.example.galleryapp.database.Config.IMAGE_URI;
+import static com.example.galleryapp.database.Config.TABLE_IMAGE;
+import static com.example.galleryapp.database.Config.TABLE_LINK;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.util.Log;
 
+import com.example.galleryapp.model.Album;
 import com.example.galleryapp.model.Picture;
 
 import java.util.ArrayList;
@@ -15,6 +29,49 @@ import java.util.List;
 
 public class LinkQueryImplementation implements QueryContract.LinkQuery {
     private DatabaseHelper databaseHelper = DatabaseHelper.getInstance();
+
+    @Override
+    public void insertImagesToAlbums(List<Picture> pictures, Album album) {
+        QueryContract.AlbumQuery albumQuery = new AlbumQueryImplementation();
+        albumQuery.insertAlbum(album, new QueryResponse<Boolean>() {
+            @Override
+            public void onSuccess(Boolean data) {
+                pictures.forEach(picture -> {
+                    QueryContract.ImageQuery imageQuery =new ImageQueryImplementation();
+                    imageQuery.insertPicture(picture, new QueryResponse<Boolean>() {
+                        @Override
+                        public void onSuccess(Boolean data) {
+                            QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
+                            linkQuery.insertLink(picture.getId(), album.getId(), new QueryResponse<Boolean>() {
+                                @Override
+                                public void onSuccess(Boolean data) {
+//                                    Toast.makeText(, "Save Success", Toast.LENGTH_SHORT).show();
+                                    Log.d("TAG", "onSuccess: "+data);
+                                }
+
+                                @Override
+                                public void onFailure(String message) {
+
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onFailure(String message) {
+
+                        }
+                    });
+                });
+
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
+    }
+
 
     @Override
     public void insertLink(int imageID, int albumID, QueryResponse<Boolean> response) {

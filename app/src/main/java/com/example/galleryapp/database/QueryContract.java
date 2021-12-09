@@ -1,7 +1,5 @@
 package com.example.galleryapp.database;
 
-import android.app.DownloadManager;
-
 import com.example.galleryapp.model.Album;
 import com.example.galleryapp.model.Picture;
 
@@ -22,6 +20,7 @@ public class QueryContract {
     }
 
     public interface LinkQuery {
+        void insertImagesToAlbums(List<Picture> pictures, Album album);
         void insertLink(int imageID, int albumID, QueryResponse<Boolean> response);
         void getAllPictureInAlbum(int albumID, QueryResponse<List<Picture>> response);
         void deleteLink(int imageID, int albumID, QueryResponse<Boolean> response);
