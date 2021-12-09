@@ -12,13 +12,18 @@
 
         <item
             android:id="@+id/nav_folder"
-            android:icon="@drawable/ic_baseline_photo_album_24"
+            android:icon="@drawable/create_folder_white_icon"
             android:title="@string/folders" />
+
+        <item
+            android:id="@+id/nav_album"
+            android:icon="@drawable/ic_baseline_photo_album_24"
+            android:title="@string/album" />
 
         <item
             android:id="@+id/nav_camera"
             android:icon="@drawable/ic_baseline_photo_camera_24"
-            android:title="@string/camera"/>
+            android:title="@string/camera" />
 
         <item
             android:id="@+id/nav_favourites"
