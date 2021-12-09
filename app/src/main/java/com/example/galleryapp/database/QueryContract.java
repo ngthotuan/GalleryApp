@@ -17,6 +17,7 @@ public class QueryContract {
 
     public interface AlbumQuery {
         void insertAlbum(Album album, QueryResponse<Boolean> response);
+        void getAlbumByID(int albumID, QueryResponse<Album> response);
         void getAllAlbum(QueryResponse<List<Album>> response);
         void deleteAlbum(int albumID, QueryResponse<Boolean> response);
     }
