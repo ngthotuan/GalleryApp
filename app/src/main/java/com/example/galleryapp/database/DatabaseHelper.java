@@ -34,7 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public static DatabaseHelper getInstance() {
-        if (databaseHelper == null){
+        if (databaseHelper == null) {
             synchronized (DatabaseHelper.class) {
                 if (databaseHelper == null) {
                     databaseHelper = new DatabaseHelper();

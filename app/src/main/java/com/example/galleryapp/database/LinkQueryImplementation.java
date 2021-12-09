@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LinkQueryImplementation implements QueryContract.LinkQuery {
-    private DatabaseHelper databaseHelper = DatabaseHelper.getInstance();
+    private final DatabaseHelper databaseHelper = DatabaseHelper.getInstance();
 
     @Override
     public void insertImagesToAlbums(List<Picture> pictures, Album album) {
@@ -95,7 +95,7 @@ public class LinkQueryImplementation implements QueryContract.LinkQuery {
         String QUERY = "SELECT * FROM "
                 + TABLE_IMAGE + " AS " + asIMG
                 + " JOIN "
-                + TABLE_LINK  + " AS " + asLINK
+                + TABLE_LINK + " AS " + asLINK
                 + " ON " + asIMG + "." + IMAGE_ID + " = " + asLINK + "." + IMAGE_ID_FK
                 + " WHERE " + asLINK + "." + ALBUM_ID_FK + " = " + albumID;
 
@@ -109,7 +109,7 @@ public class LinkQueryImplementation implements QueryContract.LinkQuery {
                 do {
                     Picture picture = getPictureFromCursor(cursor);
                     pictureList.add(picture);
-                    
+
                 } while (cursor.moveToNext());
 
                 response.onSuccess(pictureList);
@@ -133,7 +133,7 @@ public class LinkQueryImplementation implements QueryContract.LinkQuery {
         try {
             long rowAffected = sqLiteDatabase.delete(TABLE_LINK,
                     IMAGE_ID_FK + " =? AND " + ALBUM_ID_FK + " =? ",
-                    new String[] { String.valueOf(imageID), String.valueOf(albumID) });
+                    new String[]{String.valueOf(imageID), String.valueOf(albumID)});
 
             if (rowAffected > 0) {
                 response.onSuccess(true);

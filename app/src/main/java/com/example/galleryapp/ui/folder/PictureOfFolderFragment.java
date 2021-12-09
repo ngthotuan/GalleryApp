@@ -21,12 +21,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.galleryapp.ui.showImage.PictureShowFragment;
 import com.example.galleryapp.R;
 import com.example.galleryapp.adapter.PictureAdapter;
 import com.example.galleryapp.databinding.FragmentPictureOfFolderBinding;
 import com.example.galleryapp.listener.OnItemClick;
 import com.example.galleryapp.model.Picture;
+import com.example.galleryapp.ui.showImage.PictureShowFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,7 @@ public class PictureOfFolderFragment extends Fragment implements OnItemClick<Pic
     private PictureAdapter pictureAdapter;
     ImageView imageView;
     List<Picture> pictures;
-    List<Picture> longClick =new ArrayList<>();
+    List<Picture> longClick = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

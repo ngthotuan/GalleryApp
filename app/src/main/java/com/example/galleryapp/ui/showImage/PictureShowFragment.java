@@ -100,19 +100,19 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
                 ShareUtils.shareImage(getContext(), images.get(position));
                 break;
             }
-            case R.id.imgEdit:{
+            case R.id.imgEdit: {
                 Intent editIntent = new Intent(getActivity(), DsPhotoEditorActivity.class);
                 editIntent.setData(images.get(position).getUri());
                 //set directory
                 editIntent.putExtra(DsPhotoEditorConstants.DS_PHOTO_EDITOR_OUTPUT_DIRECTORY, "edit");
                 editIntent.putExtra(DsPhotoEditorConstants.DS_TOOL_BAR_BACKGROUND_COLOR, Color.parseColor("#FF6200EE"));
 
-                editIntent.putExtra(DsPhotoEditorConstants.DS_MAIN_BACKGROUND_COLOR,Color.parseColor("#FFFFFF"));
-                editIntent.putExtra(DsPhotoEditorConstants.DS_PHOTO_EDITOR_TOOLS_TO_HIDE,new int[]{DsPhotoEditorActivity.TOOL_WARMTH,DsPhotoEditorActivity.TOOL_PIXELATE});
-                getActivity().startActivityForResult(editIntent,201);
+                editIntent.putExtra(DsPhotoEditorConstants.DS_MAIN_BACKGROUND_COLOR, Color.parseColor("#FFFFFF"));
+                editIntent.putExtra(DsPhotoEditorConstants.DS_PHOTO_EDITOR_TOOLS_TO_HIDE, new int[]{DsPhotoEditorActivity.TOOL_WARMTH, DsPhotoEditorActivity.TOOL_PIXELATE});
+                getActivity().startActivityForResult(editIntent, 201);
                 break;
             }
-            case R.id.imgViewDetail:{
+            case R.id.imgViewDetail: {
                 showDetails();
                 break;
             }
@@ -190,38 +190,38 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
         }
         Log.d("TAG", "setWallpaper: " + bitmap);
         WallpaperManager wallpaperManager = WallpaperManager.getInstance(getContext());
-        try{
+        try {
             wallpaperManager.setBitmap(bitmap);
-            Toast.makeText(getContext(),"Wallpaper set !!!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Wallpaper set !!!", Toast.LENGTH_SHORT).show();
 
-        }catch (IOException e){
-            Toast.makeText(getContext(),"Wallpaper not set !!!", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            Toast.makeText(getContext(), "Wallpaper not set !!!", Toast.LENGTH_SHORT).show();
         }
     }
-    private void showDetails(){
+
+    private void showDetails() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
         alertDialog.setTitle("Image Infomation.");
         alertDialog.setIcon(R.drawable.ic_baseline_info_24);
         alertDialog.setMessage(
-                "Name: " + images.get(position).getName()+ "\n"
-                + "Path: " + images.get(position).getPath()+ "\n"
-                + "Size: " + images.get(position).getSizeStr()+ "\n"
-                + "Type: " + images.get(position).getType()+ "\n"
-                + "Uri: " + images.get(position).getUri()+ "\n"
-                + "Created date: " + DateUtil.getDate(images.get(position).getCreatedDate()) + "\n"
-                + "Modified date" + DateUtil.getDate(images.get(position).getModifiedDate()) + "\n");
-        alertDialog.setPositiveButton("Close",null);
+                "Name: " + images.get(position).getName() + "\n"
+                        + "Path: " + images.get(position).getPath() + "\n"
+                        + "Size: " + images.get(position).getSizeStr() + "\n"
+                        + "Type: " + images.get(position).getType() + "\n"
+                        + "Uri: " + images.get(position).getUri() + "\n"
+                        + "Created date: " + DateUtil.getDate(images.get(position).getCreatedDate()) + "\n"
+                        + "Modified date" + DateUtil.getDate(images.get(position).getModifiedDate()) + "\n");
+        alertDialog.setPositiveButton("Close", null);
         alertDialog.show();
     }
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
 
-
         //Set and show apdapter for list picture in can pick and rely on current picture
-
 
 
         indicatorRecycler.hasFixedSize();
@@ -232,7 +232,7 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
 
         //show image current
 
-        pagerAdapter = new ImagesPagerAdapter(getContext(),indicatorRecycler,images);
+        pagerAdapter = new ImagesPagerAdapter(getContext(), indicatorRecycler, images);
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOffscreenPageLimit(3);
         viewPager.setCurrentItem(position);
@@ -248,12 +248,9 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
             @Override
             public boolean onLongClick(View view) {
                 showDetails();
-                return  false;
+                return false;
             }
         });
-
-
-
 
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -261,6 +258,7 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
             }
+
             //handle load left right pager view
             @SuppressLint("NotifyDataSetChanged")
             @Override
@@ -305,6 +303,6 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
 
     @Override
     public void onPicClicked(PictureAdapter.PictureHolder holder, int position, List<Picture> pics) {
-        Log.e("TAG", "onPicClicked: " );
+        Log.e("TAG", "onPicClicked: ");
     }
 }

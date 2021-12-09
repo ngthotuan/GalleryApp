@@ -21,12 +21,12 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class ImagesPagerAdapter extends PagerAdapter {
-    private Context context;
-    private RecyclerView indicatorRecycler;
-    private List<Picture> images;
+    private final Context context;
+    private final RecyclerView indicatorRecycler;
+    private final List<Picture> images;
     private ImageView imgView;
 
-    public ImagesPagerAdapter(Context context , RecyclerView indicatorRecycler, List<Picture> images) {
+    public ImagesPagerAdapter(Context context, RecyclerView indicatorRecycler, List<Picture> images) {
         this.context = context;
         this.indicatorRecycler = indicatorRecycler;
         this.images = images;
@@ -66,19 +66,20 @@ public class ImagesPagerAdapter extends PagerAdapter {
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
         return view == object;
     }
-    private void showDetails(int pos){
+
+    private void showDetails(int pos) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this.context);
         alertDialog.setTitle("Image Infomation.");
         alertDialog.setIcon(R.drawable.ic_baseline_info_24);
         alertDialog.setMessage(
-                "Name: " + images.get(pos).getName()+ "\n"
-                        + "Path: " + images.get(pos).getPath()+ "\n"
-                        + "Size: " + images.get(pos).getSizeStr()+ "\n"
-                        + "Type: " + images.get(pos).getType()+ "\n"
-                        + "Uri: " + images.get(pos).getUri()+ "\n"
+                "Name: " + images.get(pos).getName() + "\n"
+                        + "Path: " + images.get(pos).getPath() + "\n"
+                        + "Size: " + images.get(pos).getSizeStr() + "\n"
+                        + "Type: " + images.get(pos).getType() + "\n"
+                        + "Uri: " + images.get(pos).getUri() + "\n"
                         + "Created date: " + DateUtil.getDate(images.get(pos).getCreatedDate()) + "\n"
                         + "Modified date" + DateUtil.getDate(images.get(pos).getModifiedDate()) + "\n");
-        alertDialog.setPositiveButton("Close",null);
+        alertDialog.setPositiveButton("Close", null);
         alertDialog.show();
     }
 

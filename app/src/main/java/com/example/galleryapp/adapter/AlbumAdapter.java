@@ -21,7 +21,7 @@ import java.util.List;
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumHolder> {
 
     private List<Album> albums;
-    private OnItemClick<Album> listener;
+    private final OnItemClick<Album> listener;
 
     public AlbumAdapter(List<Album> albums, OnItemClick<Album> listener) {
         this.albums = albums;

@@ -66,7 +66,7 @@ public class FolderFragment extends Fragment implements OnItemClick<PictureFolde
         ArrayList<Picture> pictures = PictureUtil.getPictures(getActivity(), pictureFolder.getPath());
         PictureOfFolderFragment llf = new PictureOfFolderFragment();
         Bundle args = new Bundle();
-        args.putSerializable("pictures",pictures);
+        args.putSerializable("pictures", pictures);
         llf.setArguments(args);
         ft.replace(R.id.nav_host_fragment_content_main, llf);
         ft.commit();

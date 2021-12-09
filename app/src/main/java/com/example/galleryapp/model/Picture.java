@@ -43,7 +43,7 @@ public class Picture implements Serializable {
         this.selected = selected;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
-        this.favourite= favourite;
+        this.favourite = favourite;
     }
 
     public String getType() {
@@ -93,6 +93,7 @@ public class Picture implements Serializable {
     public boolean getSelected() {
         return this.selected;
     }
+
     public void setSelected(boolean selected) {
         this.selected = selected;
     }
@@ -113,13 +114,21 @@ public class Picture implements Serializable {
         this.modifiedDate = modifiedDate;
     }
 
-    public int getFavourite() { return favourite; }
+    public int getFavourite() {
+        return favourite;
+    }
 
-    public void setFavourite(int favourite) { this.favourite = favourite; }
+    public void setFavourite(int favourite) {
+        this.favourite = favourite;
+    }
 
-    public void setId(int id) { this.id = id; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public int getId() { return id; }
+    public int getId() {
+        return id;
+    }
 
     @SuppressLint("DefaultLocale")
     public String getSizeStr() {

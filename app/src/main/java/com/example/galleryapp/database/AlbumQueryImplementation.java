@@ -45,13 +45,13 @@ public class AlbumQueryImplementation implements QueryContract.AlbumQuery {
     public void getAlbumByID(int albumID, QueryResponse<Album> response) {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getReadableDatabase();
 
-        Cursor cursor= null;
+        Cursor cursor = null;
         Album album = null;
 
         try {
             cursor = sqLiteDatabase.query(TABLE_ALBUM, null,
                     ALBUM_ID + " = ? ",
-                    new String[] { String.valueOf(albumID) },
+                    new String[]{String.valueOf(albumID)},
                     null, null, null);
 
             if (cursor.moveToFirst()) {
@@ -83,7 +83,7 @@ public class AlbumQueryImplementation implements QueryContract.AlbumQuery {
         Cursor cursor = null;
         try {
             cursor = sqLiteDatabase.query(TABLE_ALBUM,
-                    null, null, null,null,null, null);
+                    null, null, null, null, null, null);
 
             if (cursor != null && cursor.moveToFirst()) {
                 do {
@@ -111,9 +111,9 @@ public class AlbumQueryImplementation implements QueryContract.AlbumQuery {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
 
         try {
-            long rowAffected =  sqLiteDatabase.delete(TABLE_ALBUM,
+            long rowAffected = sqLiteDatabase.delete(TABLE_ALBUM,
                     ALBUM_ID + " =? ",
-                    new String[] { String.valueOf(albumID) });
+                    new String[]{String.valueOf(albumID)});
 
             if (rowAffected > 0) {
                 response.onSuccess(true);

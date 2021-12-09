@@ -47,7 +47,7 @@ public class RecyclerViewPagerImageIndicator extends RecyclerView.Adapter<Recycl
 
         final Picture picture = pictures.get(position);
 
-        holder.positionController.setBackgroundColor(picture.isSelected()? Color.parseColor("#00000000") : Color.parseColor("#8c000000"));
+        holder.positionController.setBackgroundColor(picture.isSelected() ? Color.parseColor("#00000000") : Color.parseColor("#8c000000"));
 
         Picasso.get()
                 .load(picture.getUri())

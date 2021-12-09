@@ -3,10 +3,7 @@ package com.example.galleryapp.utils;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -25,16 +22,16 @@ public class PictureDelete {
     public void removePic(Context context, File file) {
         String trashPath = Environment.getExternalStorageDirectory() + "/.trash";
         File trashDir = new File(trashPath);
-        if(!trashDir.isDirectory()) {
+        if (!trashDir.isDirectory()) {
             //create trash dir if it doesn't exist
             trashDir.mkdirs();
         }
 
         File noMediaFile = new File(trashPath + ".nomedia");
-        if (!file.exists()){
+        if (!file.exists()) {
             try {
                 file.createNewFile();
-            } catch (IOException ioException){
+            } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
         }
@@ -48,7 +45,7 @@ public class PictureDelete {
 
     public static boolean deletePic(final Context context, final File file) {
         final String location = MediaStore.MediaColumns.DATA + "=?";
-        final String[] selectionArgs = new String[] {
+        final String[] selectionArgs = new String[]{
                 file.getAbsolutePath()
         };
         final ContentResolver contentResolver = context.getContentResolver();
@@ -87,7 +84,7 @@ public class PictureDelete {
         InputStream fileIn = null;
         OutputStream fileOut = null;
         try {
-            File outputDir = new File (outputPath);
+            File outputDir = new File(outputPath);
             if (!outputDir.exists()) {
                 // create output dir if it doesn't exist
                 outputDir.mkdirs();
@@ -113,17 +110,15 @@ public class PictureDelete {
 
             // delete original file
             new File(inputPath + inputFile).delete();
-        }
-        catch (FileNotFoundException fileNotFoundException) {
+        } catch (FileNotFoundException fileNotFoundException) {
             Log.e("tag", fileNotFoundException.getMessage());
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             Log.e("tag", exception.getMessage());
         }
 
     }
 
-    public void deleteFileFromMediaStore(ContentResolver contentResolver,File file) {
+    public void deleteFileFromMediaStore(ContentResolver contentResolver, File file) {
         String canonicalPath;
         try {
             canonicalPath = file.getCanonicalPath();
@@ -132,7 +127,7 @@ public class PictureDelete {
         }
         final Uri uri = MediaStore.Files.getContentUri("external");
         final int result = contentResolver.delete(uri,
-                MediaStore.Files.FileColumns.DATA + "=?", new String[] {canonicalPath});
+                MediaStore.Files.FileColumns.DATA + "=?", new String[]{canonicalPath});
         if (result == 0) {
             final String absolutePath = file.getAbsolutePath();
             if (!absolutePath.equals(canonicalPath)) {

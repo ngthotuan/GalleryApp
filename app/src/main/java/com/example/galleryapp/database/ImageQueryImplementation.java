@@ -26,7 +26,7 @@ import java.util.List;
 public class ImageQueryImplementation implements QueryContract.ImageQuery {
     private static final String TAG = "ImageQuery";
 
-    private DatabaseHelper databaseHelper = DatabaseHelper.getInstance();
+    private final DatabaseHelper databaseHelper = DatabaseHelper.getInstance();
 
     @Override
     public void insertPicture(Picture picture, QueryResponse<Boolean> response) {
@@ -54,13 +54,13 @@ public class ImageQueryImplementation implements QueryContract.ImageQuery {
     public void getPictureByID(int imageID, QueryResponse<Picture> response) {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getReadableDatabase();
 
-        Cursor cursor= null;
+        Cursor cursor = null;
         Picture picture = null;
 
         try {
             cursor = sqLiteDatabase.query(TABLE_IMAGE, null,
                     IMAGE_ID + " = ? ",
-                    new String[] { String.valueOf(imageID) },
+                    new String[]{String.valueOf(imageID)},
                     null, null, null);
 
             if (cursor.moveToFirst()) {
@@ -117,7 +117,7 @@ public class ImageQueryImplementation implements QueryContract.ImageQuery {
         try {
             long rowAffected = sqLiteDatabase.delete(TABLE_IMAGE,
                     IMAGE_ID + " =? ",
-                    new String[] { String.valueOf(imageID) });
+                    new String[]{String.valueOf(imageID)});
 
             if (rowAffected > 0) {
                 response.onSuccess(true);
