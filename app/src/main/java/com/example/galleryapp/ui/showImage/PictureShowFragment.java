@@ -32,16 +32,16 @@ import com.example.galleryapp.R;
 import com.example.galleryapp.adapter.ImagesPagerAdapter;
 import com.example.galleryapp.adapter.PictureAdapter;
 import com.example.galleryapp.adapter.RecyclerViewPagerImageIndicator;
-import com.example.galleryapp.database.AlbumQueryImplementation;
-import com.example.galleryapp.database.LinkQueryImplementation;
-import com.example.galleryapp.database.QueryContract;
-import com.example.galleryapp.database.QueryResponse;
+import com.example.galleryapp.database.databaseImplementation.AlbumQueryImplementation;
+import com.example.galleryapp.database.databaseImplementation.LinkQueryImplementation;
+import com.example.galleryapp.database.databaseInterface.QueryContract;
+import com.example.galleryapp.database.databaseInterface.QueryResponse;
 import com.example.galleryapp.databinding.FragmentPictureShowBinding;
 import com.example.galleryapp.listener.OnItemClick;
 import com.example.galleryapp.model.Album;
 import com.example.galleryapp.model.Picture;
 import com.example.galleryapp.utils.DateUtil;
-import com.example.galleryapp.utils.ShareUtils;
+import com.example.galleryapp.utils.ShareUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -97,7 +97,7 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.imgShare: {
-                ShareUtils.shareImage(getContext(), images.get(position));
+                ShareUtil.shareImage(getContext(), images.get(position));
                 break;
             }
             case R.id.imgEdit: {
@@ -144,7 +144,6 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
                         .toArray(String[]::new);
                 boolean[] checkedItems = new boolean[data.size()];
                 Arrays.fill(checkedItems, Boolean.FALSE);
-
                 builder.setMultiChoiceItems(objects, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
@@ -152,7 +151,6 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
                         checkedItems[which] = isChecked;
                     }
                 });
-
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -167,15 +165,12 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
                     }
                 });
                 builder.setNegativeButton("Cancel", null);
-
                 AlertDialog dialog = builder.create();
                 dialog.show();
             }
 
             @Override
             public void onFailure(String message) {
-                System.out.println("error========");
-                System.out.println(message);
 
             }
         });

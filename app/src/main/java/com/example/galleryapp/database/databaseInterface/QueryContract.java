@@ -1,4 +1,4 @@
-package com.example.galleryapp.database;
+package com.example.galleryapp.database.databaseInterface;
 
 import com.example.galleryapp.model.Album;
 import com.example.galleryapp.model.Picture;

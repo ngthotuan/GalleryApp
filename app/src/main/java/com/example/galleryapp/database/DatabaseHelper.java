@@ -1,33 +1,16 @@
 package com.example.galleryapp.database;
 
-import static com.example.galleryapp.database.Config.ALBUM_ID;
-import static com.example.galleryapp.database.Config.ALBUM_ID_FK;
-import static com.example.galleryapp.database.Config.ALBUM_NAME;
-import static com.example.galleryapp.database.Config.IMAGE_CREATED_DATE;
-import static com.example.galleryapp.database.Config.IMAGE_FAVOURITE;
-import static com.example.galleryapp.database.Config.IMAGE_ID;
-import static com.example.galleryapp.database.Config.IMAGE_ID_FK;
-import static com.example.galleryapp.database.Config.IMAGE_MODIFIED_DATE;
-import static com.example.galleryapp.database.Config.IMAGE_NAME;
-import static com.example.galleryapp.database.Config.IMAGE_PATH;
-import static com.example.galleryapp.database.Config.IMAGE_SIZE;
-import static com.example.galleryapp.database.Config.IMAGE_TYPE;
-import static com.example.galleryapp.database.Config.IMAGE_URI;
-import static com.example.galleryapp.database.Config.TABLE_ALBUM;
-import static com.example.galleryapp.database.Config.TABLE_IMAGE;
-import static com.example.galleryapp.database.Config.TABLE_LINK;
-import static com.example.galleryapp.database.Config.TABLE_LINK_ID;
+import static com.example.galleryapp.database.databaseUtil.Config.*;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.example.galleryapp.database.databaseUtil.mContext;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "DatabaseHelper";
     private static DatabaseHelper databaseHelper;
-
-    private static final String DATABASE_NAME = Config.DATABASE_NAME;
-    private static final int DATABASE_VERSION = 1;
 
     private DatabaseHelper() {
         super(mContext.context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -41,7 +24,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 }
             }
         }
-
         return databaseHelper;
     }
 
@@ -93,7 +75,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onOpen(SQLiteDatabase db) {
         super.onOpen(db);
 
-        //enable foreign key constraints like ON UPDATE CASCADE, ON DELETE CASCADE
+        // Enable foreign key constraints like ON UPDATE CASCADE, ON DELETE CASCADE
         db.execSQL("PRAGMA foreign_keys=ON;");
     }
 }
