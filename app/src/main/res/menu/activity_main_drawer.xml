@@ -11,9 +11,9 @@
             android:title="@string/gallery" />
 
         <item
-            android:id="@+id/nav_album"
+            android:id="@+id/nav_folder"
             android:icon="@drawable/ic_baseline_photo_album_24"
-            android:title="@string/album"/>
+            android:title="@string/folders" />
 
         <item
             android:id="@+id/nav_camera"

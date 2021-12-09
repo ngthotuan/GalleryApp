@@ -1,4 +1,4 @@
-package com.example.galleryapp.ui.album;
+package com.example.galleryapp.ui.folder;
 
 import androidx.fragment.app.Fragment;
 

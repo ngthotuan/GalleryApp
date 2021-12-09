@@ -1,4 +1,4 @@
-package com.example.galleryapp.ui.album;
+package com.example.galleryapp.ui.folder;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -17,19 +17,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.galleryapp.R;
 import com.example.galleryapp.adapter.PictureAdapter;
 import com.example.galleryapp.adapter.PictureFolderAdapter;
-import com.example.galleryapp.databinding.FragmentAlbumBinding;
+import com.example.galleryapp.databinding.FragmentFolderBinding;
 import com.example.galleryapp.listener.OnItemClick;
 import com.example.galleryapp.model.PictureFolder;
 import com.example.galleryapp.utils.PictureUtil;
 
 import java.util.List;
 
-public class AlbumFragment extends Fragment implements OnItemClick<PictureFolder> {
-    FragmentAlbumBinding binding;
+public class FolderFragment extends Fragment implements OnItemClick<PictureFolder> {
+    FragmentFolderBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentAlbumBinding.inflate(inflater, container, false);
+        binding = FragmentFolderBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         Activity activity = getActivity();
 
@@ -37,7 +37,7 @@ public class AlbumFragment extends Fragment implements OnItemClick<PictureFolder
 
         ProgressBar load;
 
-        imageRecycler = binding.recyclerAlbum;
+        imageRecycler = binding.recyclerFolder;
         load = binding.loader;
         imageRecycler.hasFixedSize();
         load.setVisibility(View.VISIBLE);

@@ -1,4 +1,4 @@
-package com.example.galleryapp.ui.album;
+package com.example.galleryapp.ui.folder;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

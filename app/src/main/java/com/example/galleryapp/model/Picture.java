@@ -19,6 +19,10 @@ public class Picture implements Serializable {
     private long modifiedDate;
     private int favourite;
 
+    public Picture() {
+
+    }
+
     public Picture(int id,
                    String name,
                    String path,

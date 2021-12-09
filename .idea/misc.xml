@@ -89,6 +89,7 @@
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/fragment_album.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/fragment_camera.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/fragment_favorites.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/fragment_folder.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/fragment_gallery.xml" value="0.1" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/fragment_gallery1.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/fragment_gallery2.xml" value="0.20416666666666666" />
@@ -100,6 +101,7 @@
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/fragment_setting.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/header_navigation.xml" value="0.17844202898550723" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/image_view.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/picture_browser_pager.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/picture_item.xml" value="0.18" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/picture_item2.xml" value="0.1490036231884058" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/picture_item_gird.xml" value="0.1933876811594203" />
