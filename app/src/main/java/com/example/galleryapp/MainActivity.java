@@ -13,8 +13,15 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.galleryapp.database.AlbumQueryImplementation;
+import com.example.galleryapp.database.QueryContract;
+import com.example.galleryapp.database.QueryResponse;
+import com.example.galleryapp.database.mContext;
 import com.example.galleryapp.databinding.ActivityMainBinding;
+import com.example.galleryapp.model.Album;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,6 +58,37 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController,
                 mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        // setup db
+        mContext.context = getApplicationContext();
+        QueryContract.AlbumQuery albumQuery = new AlbumQueryImplementation();
+        QueryResponse<Boolean> onCreateAlbum = new QueryResponse<Boolean>() {
+            @Override
+            public void onSuccess(Boolean data) {
+                System.out.println("success insert new album");
+            }
+
+            @Override
+            public void onFailure(String message) {
+                System.out.println("fail: " + message);
+            }
+        };
+        albumQuery.getAllAlbum(new QueryResponse<List<Album>>() {
+            @Override
+            public void onSuccess(List<Album> data) {
+                if (data != null && data.size() >= 2) {
+                } else {
+                    albumQuery.insertAlbum(new Album("Favorites"), onCreateAlbum);
+                    albumQuery.insertAlbum(new Album("Hidden"), onCreateAlbum);
+                }
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
+
 
     }
 
@@ -116,5 +154,6 @@ public class MainActivity extends AppCompatActivity {
             // add other cases for more permissions
         }
     }
+
 
 }
