@@ -4,10 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.transition.Fade;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -117,12 +115,6 @@ public class PictureOfFolderFragment extends Fragment implements OnItemClick<Pic
     @Override
     public void onPicClicked(PictureAdapter.PictureHolder holder, int position, List<Picture> pictures) {
         PictureShowFragment browser = PictureShowFragment.newInstance(pictures, position);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-
-            browser.setEnterTransition(new Fade());
-            browser.setExitTransition(new Fade());
-        }
-
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .addSharedElement(holder.picture, position + "picture")

@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -162,7 +161,7 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
 
         //show image current
         viewPager = view.findViewById(R.id.imagePager);
-        pagerAdapter = new ImagesPagerAdapter(indicatorRecycler,images);
+        pagerAdapter = new ImagesPagerAdapter(getContext(),indicatorRecycler,images);
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOffscreenPageLimit(3);
         viewPager.setCurrentItem(position);
@@ -171,6 +170,14 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
         previousSelected = position;
         indicatorAdapter.notifyDataSetChanged();
         indicatorRecycler.scrollToPosition(position);
+
+        viewPager.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                showDetails();
+                return  false;
+            }
+        });
 
 
 
@@ -204,16 +211,6 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
 
             }
         });
-
-
-        indicatorRecycler.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                return false;
-            }
-        });
-
     }
 
 
@@ -234,19 +231,9 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
 
     @Override
     public void onPicClicked(PictureAdapter.PictureHolder holder, int position, List<Picture> pics) {
-
+        Log.e("TAG", "onPicClicked: " );
     }
 
 
 
-//    private void deleteImage() {
-//        String filePath = images.get(position).getPath();
-//
-//        PictureDelete deleter = new PictureDelete();
-//
-//        File crrFile = new File(filePath);
-//
-//        //deleter.deleteImg(context, crrFile);
-//        //deleter.deleteFileFromMediaStore(contentResolver, crrFile);
-//    }
 }
