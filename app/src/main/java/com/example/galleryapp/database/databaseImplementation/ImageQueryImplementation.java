@@ -1,15 +1,6 @@
 package com.example.galleryapp.database.databaseImplementation;
 
-import static com.example.galleryapp.database.databaseUtil.Config.IMAGE_CREATED_DATE;
-import static com.example.galleryapp.database.databaseUtil.Config.IMAGE_FAVOURITE;
-import static com.example.galleryapp.database.databaseUtil.Config.IMAGE_ID;
-import static com.example.galleryapp.database.databaseUtil.Config.IMAGE_MODIFIED_DATE;
-import static com.example.galleryapp.database.databaseUtil.Config.IMAGE_NAME;
-import static com.example.galleryapp.database.databaseUtil.Config.IMAGE_PATH;
-import static com.example.galleryapp.database.databaseUtil.Config.IMAGE_SIZE;
-import static com.example.galleryapp.database.databaseUtil.Config.IMAGE_TYPE;
-import static com.example.galleryapp.database.databaseUtil.Config.IMAGE_URI;
-import static com.example.galleryapp.database.databaseUtil.Config.TABLE_IMAGE;
+import static com.example.galleryapp.database.databaseUtil.Config.*;
 
 import android.content.ContentValues;
 import android.database.Cursor;

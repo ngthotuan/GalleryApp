@@ -84,7 +84,6 @@
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/drawable/ic_search_black_24dp.xml" value="0.2203125" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/drawable/side_nav_bar.xml" value="0.2203125" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/activity_main.xml" value="0.17844202898550723" />
-        <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/album_item.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/app_bar_main.xml" value="0.17844202898550723" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/content_main.xml" value="0.2" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/cropimage.xml" value="0.20416666666666666" />
@@ -92,7 +91,6 @@
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/fragment_album.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/fragment_camera.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/fragment_favorites.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/fragment_folder.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/fragment_gallery.xml" value="0.1" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/fragment_gallery1.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/fragment_gallery2.xml" value="0.20416666666666666" />
@@ -104,7 +102,6 @@
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/fragment_setting.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/header_navigation.xml" value="0.17844202898550723" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/image_view.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/picture_browser_pager.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/picture_item.xml" value="0.18" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/picture_item2.xml" value="0.1490036231884058" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/layout/picture_item_gird.xml" value="0.1933876811594203" />
@@ -123,6 +120,9 @@
         <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/layout/test_crop_screen.xml" value="0.22" />
         <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/menu/activity_main_drawer.xml" value="0.12083333333333333" />
         <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/menu/image_view_option_drawer.xml" value="0.25" />
+        <entry key="..\:/Users/zjack/source/AndroidStudio/GalleryApp/app/src/main/res/drawable-v24/ic_baseline_add_photo_alternate_24.xml" value="0.2203125" />
+        <entry key="..\:/Users/zjack/source/AndroidStudio/GalleryApp/app/src/main/res/drawable/border.xml" value="0.2203125" />
+        <entry key="..\:/Users/zjack/source/AndroidStudio/GalleryApp/app/src/main/res/layout/image_view.xml" value="0.1" />
         <entry key="..\:/Users/zjack/source/AndroidStudio/GalleryApp/app/src/main/res/menu/image_view_option_drawer.xml" value="0.20416666666666666" />
       </map>
     </option>

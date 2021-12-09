@@ -1,8 +1,6 @@
 package com.example.galleryapp.database.databaseImplementation;
 
-import static com.example.galleryapp.database.databaseUtil.Config.ALBUM_ID;
-import static com.example.galleryapp.database.databaseUtil.Config.ALBUM_NAME;
-import static com.example.galleryapp.database.databaseUtil.Config.TABLE_ALBUM;
+import static com.example.galleryapp.database.databaseUtil.Config.*;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -62,7 +60,6 @@ public class AlbumQueryImplementation implements QueryContract.AlbumQuery {
                 String name = cursor.getString(cursor.getColumnIndex(ALBUM_NAME));
 
                 album = new Album(id, name);
-
                 response.onSuccess(album);
             } else {
                 response.onFailure("Get album from database failed");
@@ -84,6 +81,7 @@ public class AlbumQueryImplementation implements QueryContract.AlbumQuery {
         List<Album> albumList = new ArrayList<>();
 
         Cursor cursor = null;
+
         try {
             cursor = sqLiteDatabase.query(TABLE_ALBUM,
                     null, null, null, null, null, null);
