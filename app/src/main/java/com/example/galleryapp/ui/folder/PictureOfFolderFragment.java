@@ -73,8 +73,6 @@ public class PictureOfFolderFragment extends Fragment implements OnItemClick<Pic
                         // There are no request codes
                         Intent data = result.getData();
                         Bitmap photo = (Bitmap) data.getExtras().get("data");
-                        Log.e("TAG", "onActivityResult: ");
-//                        new ImageSave(getContext()).save(photo);
                         imageView.setImageBitmap(photo);
 
 
@@ -103,8 +101,6 @@ public class PictureOfFolderFragment extends Fragment implements OnItemClick<Pic
 
     @Override
     public void onClick(Picture item, int pos) {
-//        Toast.makeText(getContext(), item.toString(), Toast.LENGTH_SHORT).show();
-
 
     }
 
@@ -114,7 +110,7 @@ public class PictureOfFolderFragment extends Fragment implements OnItemClick<Pic
         PictureShowFragment browser = PictureShowFragment.newInstance(pictures, position);
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .addSharedElement(holder.picture, position + "picture")
+                .addSharedElement(holder.picture, holder.picName.getText().toString())
                 .replace(R.id.nav_host_fragment_content_main, browser)
                 .commit();
     }

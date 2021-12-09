@@ -41,11 +41,7 @@ public class FolderFragment extends Fragment implements OnItemClick<PictureFolde
         List<PictureFolder> pictures = PictureUtil.getPictureFolders(activity);
         imageRecycler.setAdapter(new PictureFolderAdapter(pictures, R.layout.folder_item, this));
         imageRecycler.setLayoutManager(new GridLayoutManager(getContext(), 4));
-
         return root;
-
-        // do something here
-
     }
 
     @Override

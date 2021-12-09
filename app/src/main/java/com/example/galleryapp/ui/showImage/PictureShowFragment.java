@@ -139,7 +139,7 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
             @Override
             public void onSuccess(List<Album> data) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Choose albums");
+                builder.setTitle(getResources().getString(R.string.choose_album));
                 String[] objects = data.stream().map(Album::getName)
                         .toArray(String[]::new);
                 boolean[] checkedItems = new boolean[data.size()];
@@ -183,7 +183,6 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.d("TAG", "setWallpaper: " + bitmap);
         WallpaperManager wallpaperManager = WallpaperManager.getInstance(getContext());
         try {
             wallpaperManager.setBitmap(bitmap);
@@ -196,17 +195,17 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
 
     private void showDetails() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-        alertDialog.setTitle("Image Infomation.");
+        alertDialog.setTitle(getResources().getString(R.string.image_information));
         alertDialog.setIcon(R.drawable.ic_baseline_info_24);
         alertDialog.setMessage(
-                "Name: " + images.get(position).getName() + "\n"
-                        + "Path: " + images.get(position).getPath() + "\n"
-                        + "Size: " + images.get(position).getSizeStr() + "\n"
-                        + "Type: " + images.get(position).getType() + "\n"
-                        + "Uri: " + images.get(position).getUri() + "\n"
-                        + "Created date: " + DateUtil.getDate(images.get(position).getCreatedDate()) + "\n"
-                        + "Modified date" + DateUtil.getDate(images.get(position).getModifiedDate()) + "\n");
-        alertDialog.setPositiveButton("Close", null);
+                getResources().getString(R.string.name)+":" + images.get(position).getName() + "\n"
+                        + getResources().getString(R.string.path)+": " + images.get(position).getPath() + "\n"
+                        + getResources().getString(R.string.size)+": " + images.get(position).getSizeStr() + "\n"
+                        + getResources().getString(R.string.type)+": " + images.get(position).getType() + "\n"
+                        + getResources().getString(R.string.uri)+": " + images.get(position).getUri() + "\n"
+                        + getResources().getString(R.string.created_date)+ ": " + DateUtil.getDate(images.get(position).getCreatedDate()) + "\n"
+                        + getResources().getString(R.string.modified_date)+": " + DateUtil.getDate(images.get(position).getModifiedDate()) + "\n");
+        alertDialog.setPositiveButton(getResources().getString(R.string.close), null);
         alertDialog.show();
     }
 
