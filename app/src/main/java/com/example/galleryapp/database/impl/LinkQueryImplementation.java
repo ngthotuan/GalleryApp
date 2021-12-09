@@ -1,6 +1,18 @@
-package com.example.galleryapp.database.databaseImplementation;
+package com.example.galleryapp.database.impl;
 
-import static com.example.galleryapp.database.databaseUtil.Config.*;
+import static com.example.galleryapp.database.util.Config.ALBUM_ID_FK;
+import static com.example.galleryapp.database.util.Config.IMAGE_CREATED_DATE;
+import static com.example.galleryapp.database.util.Config.IMAGE_FAVOURITE;
+import static com.example.galleryapp.database.util.Config.IMAGE_ID;
+import static com.example.galleryapp.database.util.Config.IMAGE_ID_FK;
+import static com.example.galleryapp.database.util.Config.IMAGE_MODIFIED_DATE;
+import static com.example.galleryapp.database.util.Config.IMAGE_NAME;
+import static com.example.galleryapp.database.util.Config.IMAGE_PATH;
+import static com.example.galleryapp.database.util.Config.IMAGE_SIZE;
+import static com.example.galleryapp.database.util.Config.IMAGE_TYPE;
+import static com.example.galleryapp.database.util.Config.IMAGE_URI;
+import static com.example.galleryapp.database.util.Config.TABLE_IMAGE;
+import static com.example.galleryapp.database.util.Config.TABLE_LINK;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -10,8 +22,7 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.example.galleryapp.database.DatabaseHelper;
-import com.example.galleryapp.database.databaseInterface.QueryContract;
-import com.example.galleryapp.database.databaseInterface.QueryResponse;
+import com.example.galleryapp.database.QueryContract;
 import com.example.galleryapp.model.Album;
 import com.example.galleryapp.model.Picture;
 
@@ -25,11 +36,11 @@ public class LinkQueryImplementation implements QueryContract.LinkQuery {
     public void insertImagesToAlbums(List<Picture> pictures, Album album) {
         pictures.forEach(picture -> {
             QueryContract.ImageQuery imageQuery = new ImageQueryImplementation();
-            imageQuery.insertPicture(picture, new QueryResponse<Boolean>() {
+            imageQuery.insertPicture(picture, new DatabaseHelper.QueryResponse<Boolean>() {
                 @Override
                 public void onSuccess(Boolean data) {
                     QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
-                    linkQuery.insertLink(picture.getId(), album.getId(), new QueryResponse<Boolean>() {
+                    linkQuery.insertLink(picture.getId(), album.getId(), new DatabaseHelper.QueryResponse<Boolean>() {
                         @Override
                         public void onSuccess(Boolean data) {
                             Log.d("TAG", "onSuccess: insert imagealbum " + data);
@@ -52,7 +63,7 @@ public class LinkQueryImplementation implements QueryContract.LinkQuery {
 
 
     @Override
-    public void insertLink(int imageID, int albumID, QueryResponse<Boolean> response) {
+    public void insertLink(int imageID, int albumID, DatabaseHelper.QueryResponse<Boolean> response) {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -77,7 +88,7 @@ public class LinkQueryImplementation implements QueryContract.LinkQuery {
     }
 
     @Override
-    public void getAllPictureInAlbum(int albumID, QueryResponse<List<Picture>> response) {
+    public void getAllPictureInAlbum(int albumID, DatabaseHelper.QueryResponse<List<Picture>> response) {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getReadableDatabase();
         String asIMG = "img";
         String asLINK = "lk";
@@ -117,7 +128,7 @@ public class LinkQueryImplementation implements QueryContract.LinkQuery {
     }
 
     @Override
-    public void deleteLink(int imageID, int albumID, QueryResponse<Boolean> response) {
+    public void deleteLink(int imageID, int albumID, DatabaseHelper.QueryResponse<Boolean> response) {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
 
         try {

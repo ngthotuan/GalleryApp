@@ -1,4 +1,4 @@
-package com.example.galleryapp.database.databaseUtil;
+package com.example.galleryapp.database.util;
 
 public class Config {
     public static final String DATABASE_NAME = "gallery_db";

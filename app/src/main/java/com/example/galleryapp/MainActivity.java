@@ -13,10 +13,10 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.galleryapp.database.databaseImplementation.AlbumQueryImplementation;
-import com.example.galleryapp.database.databaseInterface.QueryContract;
-import com.example.galleryapp.database.databaseInterface.QueryResponse;
-import com.example.galleryapp.database.databaseUtil.mContext;
+import com.example.galleryapp.database.DatabaseHelper;
+import com.example.galleryapp.database.QueryContract;
+import com.example.galleryapp.database.impl.AlbumQueryImplementation;
+import com.example.galleryapp.database.util.mContext;
 import com.example.galleryapp.databinding.ActivityMainBinding;
 import com.example.galleryapp.model.Album;
 import com.google.android.material.navigation.NavigationView;
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         // setup db
         mContext.context = getApplicationContext();
         QueryContract.AlbumQuery albumQuery = new AlbumQueryImplementation();
-        QueryResponse<Boolean> onCreateAlbum = new QueryResponse<Boolean>() {
+        DatabaseHelper.QueryResponse<Boolean> onCreateAlbum = new DatabaseHelper.QueryResponse<Boolean>() {
             @Override
             public void onSuccess(Boolean data) {
                 System.out.println("success insert new album");
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("fail: " + message);
             }
         };
-        albumQuery.getAllAlbum(new QueryResponse<List<Album>>() {
+        albumQuery.getAllAlbum(new DatabaseHelper.QueryResponse<List<Album>>() {
             @Override
             public void onSuccess(List<Album> data) {
                 if (data != null && data.size() >= 2) {

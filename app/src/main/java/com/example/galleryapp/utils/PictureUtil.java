@@ -46,7 +46,7 @@ public class PictureUtil {
                 picture.setModifiedDate(cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_MODIFIED)));
                 picture.setUri(FileProvider.getUriForFile(activity,
                         activity.getApplicationContext().getPackageName() + ".provider", new File(picture.getPath())));
-                picture.setType("jpg png".contains(picture.getPath().substring(picture.getPath().lastIndexOf("."))) ? "image" : "video");
+                picture.setType("image");
                 pictures.add(picture);
             } while (cursor.moveToNext());
             cursor.close();

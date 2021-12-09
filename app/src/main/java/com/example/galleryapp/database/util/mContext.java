@@ -1,4 +1,4 @@
-package com.example.galleryapp.database.databaseUtil;
+package com.example.galleryapp.database.util;
 
 import android.app.Application;
 import android.content.Context;

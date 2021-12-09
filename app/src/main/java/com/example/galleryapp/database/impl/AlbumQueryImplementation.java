@@ -1,6 +1,8 @@
-package com.example.galleryapp.database.databaseImplementation;
+package com.example.galleryapp.database.impl;
 
-import static com.example.galleryapp.database.databaseUtil.Config.*;
+import static com.example.galleryapp.database.util.Config.ALBUM_ID;
+import static com.example.galleryapp.database.util.Config.ALBUM_NAME;
+import static com.example.galleryapp.database.util.Config.TABLE_ALBUM;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -8,8 +10,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.galleryapp.database.DatabaseHelper;
-import com.example.galleryapp.database.databaseInterface.QueryContract;
-import com.example.galleryapp.database.databaseInterface.QueryResponse;
+import com.example.galleryapp.database.QueryContract;
 import com.example.galleryapp.model.Album;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class AlbumQueryImplementation implements QueryContract.AlbumQuery {
     DatabaseHelper databaseHelper = DatabaseHelper.getInstance();
 
     @Override
-    public void insertAlbum(Album album, QueryResponse<Boolean> response) {
+    public void insertAlbum(Album album, DatabaseHelper.QueryResponse<Boolean> response) {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -43,7 +44,7 @@ public class AlbumQueryImplementation implements QueryContract.AlbumQuery {
     }
 
     @Override
-    public void getAlbumByID(int albumID, QueryResponse<Album> response) {
+    public void getAlbumByID(int albumID, DatabaseHelper.QueryResponse<Album> response) {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getReadableDatabase();
 
         Cursor cursor = null;
@@ -75,7 +76,7 @@ public class AlbumQueryImplementation implements QueryContract.AlbumQuery {
     }
 
     @Override
-    public void getAllAlbum(QueryResponse<List<Album>> response) {
+    public void getAllAlbum(DatabaseHelper.QueryResponse<List<Album>> response) {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getReadableDatabase();
 
         List<Album> albumList = new ArrayList<>();
@@ -108,7 +109,7 @@ public class AlbumQueryImplementation implements QueryContract.AlbumQuery {
     }
 
     @Override
-    public void deleteAlbum(int albumID, QueryResponse<Boolean> response) {
+    public void deleteAlbum(int albumID, DatabaseHelper.QueryResponse<Boolean> response) {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
 
         try {

@@ -1,6 +1,15 @@
-package com.example.galleryapp.database.databaseImplementation;
+package com.example.galleryapp.database.impl;
 
-import static com.example.galleryapp.database.databaseUtil.Config.*;
+import static com.example.galleryapp.database.util.Config.IMAGE_CREATED_DATE;
+import static com.example.galleryapp.database.util.Config.IMAGE_FAVOURITE;
+import static com.example.galleryapp.database.util.Config.IMAGE_ID;
+import static com.example.galleryapp.database.util.Config.IMAGE_MODIFIED_DATE;
+import static com.example.galleryapp.database.util.Config.IMAGE_NAME;
+import static com.example.galleryapp.database.util.Config.IMAGE_PATH;
+import static com.example.galleryapp.database.util.Config.IMAGE_SIZE;
+import static com.example.galleryapp.database.util.Config.IMAGE_TYPE;
+import static com.example.galleryapp.database.util.Config.IMAGE_URI;
+import static com.example.galleryapp.database.util.Config.TABLE_IMAGE;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -9,8 +18,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
 import com.example.galleryapp.database.DatabaseHelper;
-import com.example.galleryapp.database.databaseInterface.QueryContract;
-import com.example.galleryapp.database.databaseInterface.QueryResponse;
+import com.example.galleryapp.database.QueryContract;
 import com.example.galleryapp.model.Picture;
 
 import java.util.ArrayList;
@@ -23,7 +31,7 @@ public class ImageQueryImplementation implements QueryContract.ImageQuery {
     private final DatabaseHelper databaseHelper = DatabaseHelper.getInstance();
 
     @Override
-    public void insertPicture(Picture picture, QueryResponse<Boolean> response) {
+    public void insertPicture(Picture picture, DatabaseHelper.QueryResponse<Boolean> response) {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
 
         ContentValues contentValues = getContentValuesForPicture(picture);
@@ -45,7 +53,7 @@ public class ImageQueryImplementation implements QueryContract.ImageQuery {
     }
 
     @Override
-    public void getPictureByID(int imageID, QueryResponse<Picture> response) {
+    public void getPictureByID(int imageID, DatabaseHelper.QueryResponse<Picture> response) {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getReadableDatabase();
 
         Cursor cursor = null;
@@ -74,7 +82,7 @@ public class ImageQueryImplementation implements QueryContract.ImageQuery {
     }
 
     @Override
-    public void getAllPicture(QueryResponse<List<Picture>> response) {
+    public void getAllPicture(DatabaseHelper.QueryResponse<List<Picture>> response) {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getReadableDatabase();
 
         List<Picture> pictureList = new ArrayList<>();
@@ -105,7 +113,7 @@ public class ImageQueryImplementation implements QueryContract.ImageQuery {
     }
 
     @Override
-    public void deletePicture(int imageID, QueryResponse<Boolean> response) {
+    public void deletePicture(int imageID, DatabaseHelper.QueryResponse<Boolean> response) {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
 
         try {

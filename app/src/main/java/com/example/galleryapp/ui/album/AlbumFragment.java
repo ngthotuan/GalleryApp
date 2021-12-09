@@ -21,10 +21,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.galleryapp.R;
 import com.example.galleryapp.adapter.AlbumAdapter;
 import com.example.galleryapp.adapter.PictureAdapter;
-import com.example.galleryapp.database.databaseImplementation.AlbumQueryImplementation;
-import com.example.galleryapp.database.databaseImplementation.LinkQueryImplementation;
-import com.example.galleryapp.database.databaseInterface.QueryContract;
-import com.example.galleryapp.database.databaseInterface.QueryResponse;
+import com.example.galleryapp.database.DatabaseHelper;
+import com.example.galleryapp.database.QueryContract;
+import com.example.galleryapp.database.impl.AlbumQueryImplementation;
+import com.example.galleryapp.database.impl.LinkQueryImplementation;
 import com.example.galleryapp.databinding.FragmentAlbumBinding;
 import com.example.galleryapp.listener.OnItemClick;
 import com.example.galleryapp.model.Album;
@@ -69,7 +69,7 @@ public class AlbumFragment extends Fragment implements OnItemClick<Album> {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (!input.getText().toString().isEmpty()) {
-                            albumQuery.insertAlbum(new Album(input.getText().toString()), new QueryResponse<Boolean>() {
+                            albumQuery.insertAlbum(new Album(input.getText().toString()), new DatabaseHelper.QueryResponse<Boolean>() {
                                 @Override
                                 public void onSuccess(Boolean data) {
                                     getAllAlbum(albums);
@@ -99,7 +99,7 @@ public class AlbumFragment extends Fragment implements OnItemClick<Album> {
     }
 
     private void getAllAlbum(List<Album> albums) {
-        albumQuery.getAllAlbum(new QueryResponse<List<Album>>() {
+        albumQuery.getAllAlbum(new DatabaseHelper.QueryResponse<List<Album>>() {
             @Override
             public void onSuccess(List<Album> data) {
                 albums.clear();
@@ -122,7 +122,7 @@ public class AlbumFragment extends Fragment implements OnItemClick<Album> {
     @Override
     public void onClick(Album item, int pos) {
         QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
-        linkQuery.getAllPictureInAlbum(item.getId(), new QueryResponse<List<Picture>>() {
+        linkQuery.getAllPictureInAlbum(item.getId(), new DatabaseHelper.QueryResponse<List<Picture>>() {
             @Override
             public void onSuccess(List<Picture> data) {
                 FragmentManager fm = getActivity().getSupportFragmentManager();

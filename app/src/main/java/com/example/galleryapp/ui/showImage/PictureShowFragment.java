@@ -32,10 +32,10 @@ import com.example.galleryapp.R;
 import com.example.galleryapp.adapter.ImagesPagerAdapter;
 import com.example.galleryapp.adapter.PictureAdapter;
 import com.example.galleryapp.adapter.RecyclerViewPagerImageIndicator;
-import com.example.galleryapp.database.databaseImplementation.AlbumQueryImplementation;
-import com.example.galleryapp.database.databaseImplementation.LinkQueryImplementation;
-import com.example.galleryapp.database.databaseInterface.QueryContract;
-import com.example.galleryapp.database.databaseInterface.QueryResponse;
+import com.example.galleryapp.database.DatabaseHelper;
+import com.example.galleryapp.database.QueryContract;
+import com.example.galleryapp.database.impl.AlbumQueryImplementation;
+import com.example.galleryapp.database.impl.LinkQueryImplementation;
 import com.example.galleryapp.databinding.FragmentPictureShowBinding;
 import com.example.galleryapp.listener.OnItemClick;
 import com.example.galleryapp.model.Album;
@@ -135,7 +135,7 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
 
     private void addImageToAlbum() {
         QueryContract.AlbumQuery albumQuery = new AlbumQueryImplementation();
-        albumQuery.getAllAlbum(new QueryResponse<List<Album>>() {
+        albumQuery.getAllAlbum(new DatabaseHelper.QueryResponse<List<Album>>() {
             @Override
             public void onSuccess(List<Album> data) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);

@@ -1,12 +1,30 @@
 package com.example.galleryapp.database;
 
-import static com.example.galleryapp.database.databaseUtil.Config.*;
+import static com.example.galleryapp.database.util.Config.ALBUM_ID;
+import static com.example.galleryapp.database.util.Config.ALBUM_ID_FK;
+import static com.example.galleryapp.database.util.Config.ALBUM_NAME;
+import static com.example.galleryapp.database.util.Config.DATABASE_NAME;
+import static com.example.galleryapp.database.util.Config.DATABASE_VERSION;
+import static com.example.galleryapp.database.util.Config.IMAGE_CREATED_DATE;
+import static com.example.galleryapp.database.util.Config.IMAGE_FAVOURITE;
+import static com.example.galleryapp.database.util.Config.IMAGE_ID;
+import static com.example.galleryapp.database.util.Config.IMAGE_ID_FK;
+import static com.example.galleryapp.database.util.Config.IMAGE_MODIFIED_DATE;
+import static com.example.galleryapp.database.util.Config.IMAGE_NAME;
+import static com.example.galleryapp.database.util.Config.IMAGE_PATH;
+import static com.example.galleryapp.database.util.Config.IMAGE_SIZE;
+import static com.example.galleryapp.database.util.Config.IMAGE_TYPE;
+import static com.example.galleryapp.database.util.Config.IMAGE_URI;
+import static com.example.galleryapp.database.util.Config.TABLE_ALBUM;
+import static com.example.galleryapp.database.util.Config.TABLE_IMAGE;
+import static com.example.galleryapp.database.util.Config.TABLE_LINK;
+import static com.example.galleryapp.database.util.Config.TABLE_LINK_ID;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.galleryapp.database.databaseUtil.mContext;
+import com.example.galleryapp.database.util.mContext;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "DatabaseHelper";
@@ -77,5 +95,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // Enable foreign key constraints like ON UPDATE CASCADE, ON DELETE CASCADE
         db.execSQL("PRAGMA foreign_keys=ON;");
+    }
+
+    public static interface QueryResponse<T> {
+        void onSuccess(T data);
+
+        void onFailure(String message);
     }
 }
