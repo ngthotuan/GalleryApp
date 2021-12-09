@@ -27,8 +27,6 @@ import com.example.galleryapp.adapter.PictureAdapter;
 import com.example.galleryapp.databinding.FragmentPictureOfFolderBinding;
 import com.example.galleryapp.listener.OnItemClick;
 import com.example.galleryapp.model.Picture;
-import com.example.galleryapp.model.PictureFolder;
-import com.example.galleryapp.utils.PictureUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,13 +49,12 @@ public class PictureOfFolderFragment extends Fragment implements OnItemClick<Pic
         binding = FragmentPictureOfFolderBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         Activity activity = getActivity();
-        PictureFolder pictureFolder = (PictureFolder) getArguments().getSerializable("pictureFolder");
 
+        List<Picture> pictures = (List<Picture>) getArguments().getSerializable("pictures");
         RecyclerView imageRecycler;
         imageRecycler = binding.recycler;
 
         imageRecycler.hasFixedSize();
-        pictures = PictureUtil.getPictures(activity, pictureFolder.getPath());
         pictureAdapter = new PictureAdapter(R.layout.picture_item_gird, pictures, this, longClick);
 
         imageRecycler.setAdapter(pictureAdapter);

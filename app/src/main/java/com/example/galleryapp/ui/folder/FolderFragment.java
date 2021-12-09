@@ -18,9 +18,11 @@ import com.example.galleryapp.adapter.PictureAdapter;
 import com.example.galleryapp.adapter.PictureFolderAdapter;
 import com.example.galleryapp.databinding.FragmentFolderBinding;
 import com.example.galleryapp.listener.OnItemClick;
+import com.example.galleryapp.model.Picture;
 import com.example.galleryapp.model.PictureFolder;
 import com.example.galleryapp.utils.PictureUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FolderFragment extends Fragment implements OnItemClick<PictureFolder> {
@@ -59,10 +61,12 @@ public class FolderFragment extends Fragment implements OnItemClick<PictureFolde
     @Override
     public void onClick(PictureFolder pictureFolder, int pos) {
         FragmentManager fm = this.getActivity().getSupportFragmentManager();
+
         FragmentTransaction ft = fm.beginTransaction();
+        ArrayList<Picture> pictures = PictureUtil.getPictures(getActivity(), pictureFolder.getPath());
         PictureOfFolderFragment llf = new PictureOfFolderFragment();
         Bundle args = new Bundle();
-        args.putSerializable("pictureFolder", pictureFolder);
+        args.putSerializable("pictures",pictures);
         llf.setArguments(args);
         ft.replace(R.id.nav_host_fragment_content_main, llf);
         ft.commit();
