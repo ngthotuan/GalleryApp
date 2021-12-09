@@ -40,6 +40,39 @@ public class AlbumQueryImplementation implements QueryContract.AlbumQuery {
     }
 
     @Override
+    public void getAlbumByID(int albumID, QueryResponse<Album> response) {
+        SQLiteDatabase sqLiteDatabase = databaseHelper.getReadableDatabase();
+
+        Cursor cursor= null;
+        Album album = null;
+
+        try {
+            cursor = sqLiteDatabase.query(TABLE_ALBUM, null,
+                    ALBUM_ID + " = ? ",
+                    new String[] { String.valueOf(albumID) },
+                    null, null, null);
+
+            if (cursor.moveToFirst()) {
+                int id = cursor.getInt(cursor.getColumnIndex(ALBUM_ID));
+                String name = cursor.getString(cursor.getColumnIndex(ALBUM_NAME));
+
+                album = new Album(id, name);
+
+                response.onSuccess(album);
+            } else {
+                response.onFailure("Get album from database failed");
+            }
+        } catch (Exception e) {
+            response.onFailure(e.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+            sqLiteDatabase.close();
+        }
+    }
+
+    @Override
     public void getAllAlbum(QueryResponse<List<Album>> response) {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getReadableDatabase();
 

@@ -149,7 +149,7 @@ public class ImageQueryImplementation implements QueryContract.ImageQuery {
         long modifiedDate = cursor.getLong(cursor.getColumnIndex(IMAGE_MODIFIED_DATE));
         int favourite = cursor.getInt(cursor.getColumnIndex(IMAGE_FAVOURITE));
 
-        Picture picture = new Picture();
+        Picture picture = new Picture(id, name, path, size, type, uri, false, createdDate, modifiedDate, favourite);
         return picture;
     }
 }
