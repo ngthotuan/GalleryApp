@@ -31,7 +31,7 @@ public class LinkQueryImplementation implements QueryContract.LinkQuery {
             if (rowCount > 0) {
                 response.onSuccess(true);
             } else {
-                response.onFailure("LinkQuery: Add image to album failed");
+                response.onFailure("LinkQuery: Add image to album (database) failed");
             }
         } catch (SQLException e) {
             response.onFailure(e.getMessage());
@@ -88,6 +88,27 @@ public class LinkQueryImplementation implements QueryContract.LinkQuery {
             if (cursor != null) {
                 cursor.close();
             }
+            sqLiteDatabase.close();
+        }
+    }
+
+    @Override
+    public void deleteLink(int imageID, int albumID, QueryResponse<Boolean> response) {
+        SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
+
+        try {
+            long rowAffected = sqLiteDatabase.delete(TABLE_LINK,
+                    IMAGE_ID_FK + " =? AND " + ALBUM_ID_FK + " =? ",
+                    new String[] { String.valueOf(imageID), String.valueOf(albumID) });
+
+            if (rowAffected > 0) {
+                response.onSuccess(true);
+            } else {
+                response.onFailure("Delete image from album (database) failed");
+            }
+        } catch (Exception e) {
+            response.onFailure(e.getMessage());
+        } finally {
             sqLiteDatabase.close();
         }
     }
