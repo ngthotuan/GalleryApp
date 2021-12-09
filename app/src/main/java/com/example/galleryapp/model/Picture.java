@@ -19,8 +19,27 @@ public class Picture implements Serializable {
     private long modifiedDate;
     private int favourite;
 
-    public Picture() {
+    public Picture(int id,
+                   String name,
+                   String path,
+                   long size,
+                   String type,
+                   Uri uri,
+                   boolean selected,
+                   long createdDate,
+                   long modifiedDate,
+                   int favourite) {
 
+        this.id = id;
+        this.name = name;
+        this.path = path;
+        this.size = size;
+        this.type = type;
+        this.uri = uri;
+        this.selected = selected;
+        this.createdDate = createdDate;
+        this.modifiedDate = modifiedDate;
+        this.favourite= favourite;
     }
 
     public String getType() {

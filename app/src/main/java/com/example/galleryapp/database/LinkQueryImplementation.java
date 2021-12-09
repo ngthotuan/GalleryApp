@@ -62,17 +62,7 @@ public class LinkQueryImplementation implements QueryContract.LinkQuery {
 
             if (cursor.moveToFirst()) {
                 do {
-                    String name = cursor.getString(cursor.getColumnIndex(IMAGE_NAME));
-                    String path = cursor.getString(cursor.getColumnIndex(IMAGE_PATH));
-                    long size= cursor.getLong(cursor.getColumnIndex(IMAGE_SIZE));
-                    String type = cursor.getString(cursor.getColumnIndex(IMAGE_TYPE));
-                    Uri uri = Uri.parse(cursor.getString(cursor.getColumnIndex(IMAGE_URI)));
-                    long createdDate = cursor.getLong(cursor.getColumnIndex(IMAGE_CREATED_DATE));
-                    long modifiedDate = cursor.getLong(cursor.getColumnIndex(IMAGE_MODIFIED_DATE));
-                    int favourite = cursor.getInt(cursor.getColumnIndex(IMAGE_FAVOURITE));
-
-                    // Picture constructor with all attribute above
-                    Picture picture = new Picture();
+                    Picture picture = getPictureFromCursor(cursor);
                     pictureList.add(picture);
                     
                 } while (cursor.moveToNext());
@@ -110,5 +100,20 @@ public class LinkQueryImplementation implements QueryContract.LinkQuery {
         } finally {
             sqLiteDatabase.close();
         }
+    }
+
+    private Picture getPictureFromCursor(Cursor cursor) {
+        int id = cursor.getInt(cursor.getColumnIndex(IMAGE_ID));
+        String name = cursor.getString(cursor.getColumnIndex(IMAGE_NAME));
+        String path = cursor.getString(cursor.getColumnIndex(IMAGE_PATH));
+        long size = cursor.getLong(cursor.getColumnIndex(IMAGE_SIZE));
+        String type = cursor.getString(cursor.getColumnIndex(IMAGE_TYPE));
+        Uri uri = Uri.parse(cursor.getString(cursor.getColumnIndex(IMAGE_URI)));
+        long createdDate = cursor.getLong(cursor.getColumnIndex(IMAGE_CREATED_DATE));
+        long modifiedDate = cursor.getLong(cursor.getColumnIndex(IMAGE_MODIFIED_DATE));
+        int favourite = cursor.getInt(cursor.getColumnIndex(IMAGE_FAVOURITE));
+
+        Picture picture = new Picture(id, name, path, size, type, uri, false, createdDate, modifiedDate, favourite);
+        return picture;
     }
 }
