@@ -8,6 +8,7 @@ import com.example.galleryapp.utils.DateUtil;
 import java.io.Serializable;
 
 public class Picture implements Serializable {
+    private int id;
     private String name;
     private String path;
     private long size;
@@ -18,8 +19,27 @@ public class Picture implements Serializable {
     private long modifiedDate;
     private int favourite;
 
-    public Picture() {
+    public Picture(int id,
+                   String name,
+                   String path,
+                   long size,
+                   String type,
+                   Uri uri,
+                   boolean selected,
+                   long createdDate,
+                   long modifiedDate,
+                   int favourite) {
 
+        this.id = id;
+        this.name = name;
+        this.path = path;
+        this.size = size;
+        this.type = type;
+        this.uri = uri;
+        this.selected = selected;
+        this.createdDate = createdDate;
+        this.modifiedDate = modifiedDate;
+        this.favourite= favourite;
     }
 
     public String getType() {
@@ -92,6 +112,10 @@ public class Picture implements Serializable {
     public int getFavourite() { return favourite; }
 
     public void setFavourite(int favourite) { this.favourite = favourite; }
+
+    public void setId(int id) { this.id = id; }
+
+    public int getId() { return id; }
 
     @SuppressLint("DefaultLocale")
     public String getSizeStr() {
