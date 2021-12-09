@@ -1,6 +1,8 @@
 package com.example.galleryapp.database;
 
-import static com.example.galleryapp.database.Config.*;
+import static com.example.galleryapp.database.Config.ALBUM_ID;
+import static com.example.galleryapp.database.Config.ALBUM_NAME;
+import static com.example.galleryapp.database.Config.TABLE_ALBUM;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -92,10 +94,8 @@ public class AlbumQueryImplementation implements QueryContract.AlbumQuery {
                     albumList.add(album);
                 } while (cursor.moveToNext());
 
-                response.onSuccess(albumList);
-            } else {
-                response.onFailure("There are no album in database");
             }
+            response.onSuccess(albumList);
         } catch (Exception e) {
             response.onFailure(e.getMessage());
         } finally {

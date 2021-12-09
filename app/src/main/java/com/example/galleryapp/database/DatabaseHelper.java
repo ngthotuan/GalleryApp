@@ -1,8 +1,23 @@
 package com.example.galleryapp.database;
 
-import static com.example.galleryapp.database.Config.*;
+import static com.example.galleryapp.database.Config.ALBUM_ID;
+import static com.example.galleryapp.database.Config.ALBUM_ID_FK;
+import static com.example.galleryapp.database.Config.ALBUM_NAME;
+import static com.example.galleryapp.database.Config.IMAGE_CREATED_DATE;
+import static com.example.galleryapp.database.Config.IMAGE_FAVOURITE;
+import static com.example.galleryapp.database.Config.IMAGE_ID;
+import static com.example.galleryapp.database.Config.IMAGE_ID_FK;
+import static com.example.galleryapp.database.Config.IMAGE_MODIFIED_DATE;
+import static com.example.galleryapp.database.Config.IMAGE_NAME;
+import static com.example.galleryapp.database.Config.IMAGE_PATH;
+import static com.example.galleryapp.database.Config.IMAGE_SIZE;
+import static com.example.galleryapp.database.Config.IMAGE_TYPE;
+import static com.example.galleryapp.database.Config.IMAGE_URI;
+import static com.example.galleryapp.database.Config.TABLE_ALBUM;
+import static com.example.galleryapp.database.Config.TABLE_IMAGE;
+import static com.example.galleryapp.database.Config.TABLE_LINK;
+import static com.example.galleryapp.database.Config.TABLE_LINK_ID;
 
-import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -42,7 +57,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + IMAGE_URI + " TEXT, "
                 + IMAGE_CREATED_DATE + " INTEGER, "
                 + IMAGE_MODIFIED_DATE + " INTEGER, "
-                + IMAGE_FAVOURITE + "INTEGER NOT NULL"
+                + IMAGE_FAVOURITE + " INTEGER "
                 + ")";
 
         String CREATE_ALBUM_TABLE = "CREATE TABLE " + TABLE_ALBUM + "("
@@ -51,11 +66,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + ")";
 
         String CREATE_LINK_TABLE = "CREATE TABLE " + TABLE_LINK + "("
+                + TABLE_LINK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + IMAGE_ID_FK + " INTEGER NOT NULL, "
-                + ALBUM_ID_FK + " INTEGER NOT NULL, "
-                + "FOREIGN KEY (" + IMAGE_ID_FK + ") REFERENCES " + TABLE_IMAGE + "(" + IMAGE_ID + ") ON UPDATE CASCADE ON DELETE CASCADE, "
-                + "FOREIGN KEY (" + ALBUM_ID_FK + ") REFERENCES " + TABLE_ALBUM + "(" + ALBUM_ID + ") ON UPDATE CASCADE ON DELETE CASCADE, "
-                + "CONSTRAINT " + IMAGE_SUB_CONSTRAINT + " UNIQUE (" + IMAGE_ID_FK + "," + ALBUM_ID_FK + ")"
+                + ALBUM_ID_FK + " INTEGER NOT NULL"
                 + ")";
 
         db.execSQL(CREATE_IMAGE_TABLE);

@@ -2,6 +2,8 @@ package com.example.galleryapp;
 
 import android.annotation.SuppressLint;
 import android.app.WallpaperManager;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -29,13 +31,19 @@ import com.dsphotoeditor.sdk.utils.DsPhotoEditorConstants;
 import com.example.galleryapp.adapter.ImagesPagerAdapter;
 import com.example.galleryapp.adapter.PictureAdapter;
 import com.example.galleryapp.adapter.RecyclerViewPagerImageIndicator;
+import com.example.galleryapp.database.AlbumQueryImplementation;
+import com.example.galleryapp.database.LinkQueryImplementation;
+import com.example.galleryapp.database.QueryContract;
+import com.example.galleryapp.database.QueryResponse;
 import com.example.galleryapp.listener.OnItemClick;
+import com.example.galleryapp.model.Album;
 import com.example.galleryapp.model.Picture;
 import com.example.galleryapp.utils.DateUtil;
 import com.example.galleryapp.utils.ShareUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PictureShowFragment extends Fragment implements OnItemClick<Picture> {
@@ -47,6 +55,7 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
 
     private ImagesPagerAdapter pagerAdapter;
     private int previousSelected = -1;
+    private Context context = null;
 
     public PictureShowFragment() {
 
@@ -67,6 +76,7 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
+        context = getContext();
         return inflater.inflate(R.layout.fragment_picture_browser, container, false);
 
     }
@@ -102,14 +112,67 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
             }
             case R.id.imgViewDelete: {
                 //deleteImage();
+                break;
             }
-            case R.id.imgWallpaper:{
+            case R.id.imgWallpaper: {
                 setWallpaper(images.get(position));
+                break;
+            }
+            case R.id.imgAddAlbum: {
+                addImageToAlbum();
                 break;
             }
         }
         return super.onOptionsItemSelected(item);
 
+    }
+
+    private void addImageToAlbum() {
+        QueryContract.AlbumQuery albumQuery = new AlbumQueryImplementation();
+        albumQuery.getAllAlbum(new QueryResponse<List<Album>>() {
+            @Override
+            public void onSuccess(List<Album> data) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Choose albums");
+                String[] objects = data.stream().map(Album::getName)
+                        .toArray(String[]::new);
+                boolean[] checkedItems = new boolean[data.size()];
+                Arrays.fill(checkedItems, Boolean.FALSE);
+
+                builder.setMultiChoiceItems(objects, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        // The user checked or unchecked a box
+                        checkedItems[which] = isChecked;
+                    }
+                });
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // The user clicked OK
+                        for (int i = 0; i < checkedItems.length; i++) {
+                            if (checkedItems[i]) {
+                                List<Picture> pictures = Arrays.asList(images.get(position));
+                                QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
+                                linkQuery.insertImagesToAlbums(pictures, data.get(i));
+                            }
+                        }
+                    }
+                });
+                builder.setNegativeButton("Cancel", null);
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+
+            @Override
+            public void onFailure(String message) {
+                System.out.println("error========");
+                System.out.println(message);
+
+            }
+        });
     }
 
     private void setWallpaper(Picture picture) {
@@ -119,7 +182,7 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.d("TAG" , "setWallpaper: " + bitmap);
+        Log.d("TAG", "setWallpaper: " + bitmap);
         WallpaperManager wallpaperManager = WallpaperManager.getInstance(getContext());
         try{
             wallpaperManager.setBitmap(bitmap);

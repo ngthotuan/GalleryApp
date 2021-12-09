@@ -1,13 +1,21 @@
 package com.example.galleryapp.database;
 
-import static com.example.galleryapp.database.Config.*;
+import static com.example.galleryapp.database.Config.IMAGE_CREATED_DATE;
+import static com.example.galleryapp.database.Config.IMAGE_FAVOURITE;
+import static com.example.galleryapp.database.Config.IMAGE_ID;
+import static com.example.galleryapp.database.Config.IMAGE_MODIFIED_DATE;
+import static com.example.galleryapp.database.Config.IMAGE_NAME;
+import static com.example.galleryapp.database.Config.IMAGE_PATH;
+import static com.example.galleryapp.database.Config.IMAGE_SIZE;
+import static com.example.galleryapp.database.Config.IMAGE_TYPE;
+import static com.example.galleryapp.database.Config.IMAGE_URI;
+import static com.example.galleryapp.database.Config.TABLE_IMAGE;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.util.Log;
 
 import com.example.galleryapp.model.Picture;
 
@@ -125,7 +133,6 @@ public class ImageQueryImplementation implements QueryContract.ImageQuery {
 
     private ContentValues getContentValuesForPicture(Picture picture) {
         ContentValues contentValues = new ContentValues();
-
         contentValues.put(IMAGE_NAME, picture.getName());
         contentValues.put(IMAGE_PATH, picture.getPath());
         contentValues.put(IMAGE_SIZE, picture.getSize());

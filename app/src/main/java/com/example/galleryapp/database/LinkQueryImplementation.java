@@ -32,43 +32,31 @@ public class LinkQueryImplementation implements QueryContract.LinkQuery {
 
     @Override
     public void insertImagesToAlbums(List<Picture> pictures, Album album) {
-        QueryContract.AlbumQuery albumQuery = new AlbumQueryImplementation();
-        albumQuery.insertAlbum(album, new QueryResponse<Boolean>() {
-            @Override
-            public void onSuccess(Boolean data) {
-                pictures.forEach(picture -> {
-                    QueryContract.ImageQuery imageQuery =new ImageQueryImplementation();
-                    imageQuery.insertPicture(picture, new QueryResponse<Boolean>() {
+        pictures.forEach(picture -> {
+            QueryContract.ImageQuery imageQuery = new ImageQueryImplementation();
+            imageQuery.insertPicture(picture, new QueryResponse<Boolean>() {
+                @Override
+                public void onSuccess(Boolean data) {
+                    QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
+                    linkQuery.insertLink(picture.getId(), album.getId(), new QueryResponse<Boolean>() {
                         @Override
                         public void onSuccess(Boolean data) {
-                            QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
-                            linkQuery.insertLink(picture.getId(), album.getId(), new QueryResponse<Boolean>() {
-                                @Override
-                                public void onSuccess(Boolean data) {
 //                                    Toast.makeText(, "Save Success", Toast.LENGTH_SHORT).show();
-                                    Log.d("TAG", "onSuccess: "+data);
-                                }
-
-                                @Override
-                                public void onFailure(String message) {
-
-                                }
-                            });
+                            Log.d("TAG", "onSuccess: insert imagealbum " + data);
                         }
 
                         @Override
                         public void onFailure(String message) {
+                            Log.d("TAG", message);
 
                         }
                     });
-                });
+                }
 
-            }
-
-            @Override
-            public void onFailure(String message) {
-
-            }
+                @Override
+                public void onFailure(String message) {
+                }
+            });
         });
     }
 
@@ -91,6 +79,7 @@ public class LinkQueryImplementation implements QueryContract.LinkQuery {
                 response.onFailure("LinkQuery: Add image to album (database) failed");
             }
         } catch (SQLException e) {
+            e.printStackTrace();
             response.onFailure(e.getMessage());
         } finally {
             sqLiteDatabase.close();
@@ -100,7 +89,6 @@ public class LinkQueryImplementation implements QueryContract.LinkQuery {
     @Override
     public void getAllPictureInAlbum(int albumID, QueryResponse<List<Picture>> response) {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getReadableDatabase();
-
         String asIMG = "img";
         String asLINK = "lk";
 
