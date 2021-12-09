@@ -1,6 +1,6 @@
 package com.example.galleryapp.database;
 
-import static com.example.galleryapp.database.Config.*;
+import static com.example.galleryapp.database.ConstantLib.*;
 
 import android.content.ContentValues;
 import android.database.Cursor;

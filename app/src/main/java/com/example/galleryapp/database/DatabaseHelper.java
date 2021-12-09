@@ -1,8 +1,7 @@
 package com.example.galleryapp.database;
 
-import static com.example.galleryapp.database.Config.*;
+import static com.example.galleryapp.database.ConstantLib.*;
 
-import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -11,11 +10,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "DatabaseHelper";
     private static DatabaseHelper databaseHelper;
 
-    private static final String DATABASE_NAME = Config.DATABASE_NAME;
+    private static final String DATABASE_NAME = ConstantLib.DATABASE_NAME;
     private static final int DATABASE_VERSION = 1;
 
     private DatabaseHelper() {
-        super(mContext.context, DATABASE_NAME, null, DATABASE_VERSION);
+        super(MContext.context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     public static DatabaseHelper getInstance() {
