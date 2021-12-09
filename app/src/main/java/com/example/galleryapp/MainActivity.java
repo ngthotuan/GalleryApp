@@ -3,6 +3,7 @@ package com.example.galleryapp;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -65,12 +66,12 @@ public class MainActivity extends AppCompatActivity {
         DatabaseHelper.QueryResponse<Boolean> onCreateAlbum = new DatabaseHelper.QueryResponse<Boolean>() {
             @Override
             public void onSuccess(Boolean data) {
-                System.out.println("success insert new album");
+                Log.d("TAG", "add album default success");
             }
 
             @Override
             public void onFailure(String message) {
-                System.out.println("fail: " + message);
+                Log.d("TAG", "fail: " + message);
             }
         };
         albumQuery.getAllAlbum(new DatabaseHelper.QueryResponse<List<Album>>() {
@@ -137,21 +138,15 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
             case READ_STORAGE_PERMISSION_REQUEST_CODE:
             case CAMERA_PERMISSION_REQUEST_CODE: {
-                // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission granted and now can proceed
                     Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
 
                 } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
                     Toast.makeText(MainActivity.this, "Permission denied to read your External storage", Toast.LENGTH_SHORT).show();
                 }
                 break;
             }
-            // add other cases for more permissions
         }
     }
 
