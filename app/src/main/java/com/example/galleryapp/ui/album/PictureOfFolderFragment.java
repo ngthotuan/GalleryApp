@@ -23,7 +23,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.galleryapp.PictureBrowserFragment;
+import com.example.galleryapp.PictureShowFragment;
 import com.example.galleryapp.R;
 import com.example.galleryapp.adapter.PictureAdapter;
 import com.example.galleryapp.databinding.FragmentPictureOfFolderBinding;
@@ -116,7 +116,7 @@ public class PictureOfFolderFragment extends Fragment implements OnItemClick<Pic
 
     @Override
     public void onPicClicked(PictureAdapter.PictureHolder holder, int position, List<Picture> pictures) {
-        PictureBrowserFragment browser = PictureBrowserFragment.newInstance(pictures, position);
+        PictureShowFragment browser = PictureShowFragment.newInstance(pictures, position);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
             browser.setEnterTransition(new Fade());
