@@ -1,4 +1,4 @@
-package com.example.galleryapp;
+package com.example.galleryapp.ui.showImage;
 
 import android.annotation.SuppressLint;
 import android.app.WallpaperManager;
@@ -28,6 +28,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.dsphotoeditor.sdk.activity.DsPhotoEditorActivity;
 import com.dsphotoeditor.sdk.utils.DsPhotoEditorConstants;
+import com.example.galleryapp.R;
 import com.example.galleryapp.adapter.ImagesPagerAdapter;
 import com.example.galleryapp.adapter.PictureAdapter;
 import com.example.galleryapp.adapter.RecyclerViewPagerImageIndicator;
@@ -35,6 +36,7 @@ import com.example.galleryapp.database.AlbumQueryImplementation;
 import com.example.galleryapp.database.LinkQueryImplementation;
 import com.example.galleryapp.database.QueryContract;
 import com.example.galleryapp.database.QueryResponse;
+import com.example.galleryapp.databinding.FragmentPictureShowBinding;
 import com.example.galleryapp.listener.OnItemClick;
 import com.example.galleryapp.model.Album;
 import com.example.galleryapp.model.Picture;
@@ -45,14 +47,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class PictureShowFragment extends Fragment implements OnItemClick<Picture> {
 
+    FragmentPictureShowBinding binding;
     private List<Picture> images = new ArrayList<>();
     private int position;
     private ViewPager viewPager;
     private RecyclerView indicatorRecycler;
-
     private ImagesPagerAdapter pagerAdapter;
     private int previousSelected = -1;
     private Context context = null;
@@ -77,8 +80,11 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         context = getContext();
-        return inflater.inflate(R.layout.fragment_picture_browser, container, false);
-
+        binding = FragmentPictureShowBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
+        indicatorRecycler = binding.indicatorRecycler;
+        viewPager = binding.imagePager;
+        return root;
     }
 
     @Override
@@ -213,9 +219,11 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
         super.onViewCreated(view, savedInstanceState);
 
 
+
         //Set and show apdapter for list picture in can pick and rely on current picture
 
-        indicatorRecycler = view.findViewById(R.id.indicatorRecycler);
+
+
         indicatorRecycler.hasFixedSize();
         indicatorRecycler.setLayoutManager(new GridLayoutManager(getContext(), 1, RecyclerView.HORIZONTAL, false));
         RecyclerView.Adapter indicatorAdapter = new RecyclerViewPagerImageIndicator(images, getContext(), this);
@@ -223,16 +231,18 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
 
 
         //show image current
-        viewPager = view.findViewById(R.id.imagePager);
+
         pagerAdapter = new ImagesPagerAdapter(getContext(),indicatorRecycler,images);
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOffscreenPageLimit(3);
         viewPager.setCurrentItem(position);
 
+        indicatorRecycler.setVisibility(View.VISIBLE);
         images.get(position).setSelected(true);
         previousSelected = position;
         indicatorAdapter.notifyDataSetChanged();
         indicatorRecycler.scrollToPosition(position);
+
 
         viewPager.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -252,6 +262,7 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
 
             }
             //handle load left right pager view
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onPageSelected(int position) {
 
@@ -259,14 +270,14 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
                     images.get(previousSelected).setSelected(false);
                     previousSelected = position;
                     images.get(position).setSelected(true);
-                    indicatorRecycler.getAdapter().notifyDataSetChanged();
+
                     indicatorRecycler.scrollToPosition(position);
                 } else {
                     previousSelected = position;
                     images.get(position).setSelected(true);
-                    indicatorRecycler.getAdapter().notifyDataSetChanged();
                     indicatorRecycler.scrollToPosition(position);
                 }
+                indicatorRecycler.getAdapter().notifyDataSetChanged();
             }
 
             @Override
@@ -282,7 +293,7 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
         if (previousSelected != -1) {
             images.get(previousSelected).setSelected(false);
             previousSelected = pos;
-            indicatorRecycler.getAdapter().notifyDataSetChanged();
+            Objects.requireNonNull(indicatorRecycler.getAdapter()).notifyDataSetChanged();
         } else {
             previousSelected = pos;
         }
@@ -296,7 +307,4 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
     public void onPicClicked(PictureAdapter.PictureHolder holder, int position, List<Picture> pics) {
         Log.e("TAG", "onPicClicked: " );
     }
-
-
-
 }

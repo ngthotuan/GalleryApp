@@ -49,24 +49,9 @@ public class ImagesPagerAdapter extends PagerAdapter {
         setTransitionName(imgView, position + "picture");
 
         Picture pic = images.get(position);
-//        pic.setSelected(true);
         Picasso.get()
                 .load(pic.getUri())
                 .into(imgView);
-
-
-        imgView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (indicatorRecycler.getVisibility() == View.GONE) {
-                    indicatorRecycler.setVisibility(View.VISIBLE);
-                } else {
-                    indicatorRecycler.setVisibility(View.GONE);
-                }
-            }
-        });
-
 
         containerCollection.addView(view);
         return view;

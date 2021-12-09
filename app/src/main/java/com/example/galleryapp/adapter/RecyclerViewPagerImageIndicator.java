@@ -21,15 +21,15 @@ import java.util.List;
 
 public class RecyclerViewPagerImageIndicator extends RecyclerView.Adapter<RecyclerViewPagerImageIndicator.indicatorHolder> {
 
-    List<Picture> pictureList;
-    Context pictureContx;
-    private final OnItemClick imageListerner;
+    List<Picture> pictures;
+    Context context;
+    private final OnItemClick listener;
 
 
-    public RecyclerViewPagerImageIndicator(List<Picture> pictureList, Context pictureContx, OnItemClick imageListerner) {
-        this.pictureList = pictureList;
-        this.pictureContx = pictureContx;
-        this.imageListerner = imageListerner;
+    public RecyclerViewPagerImageIndicator(List<Picture> pictures, Context context, OnItemClick listener) {
+        this.pictures = pictures;
+        this.context = context;
+        this.listener = listener;
     }
 
 
@@ -37,30 +37,29 @@ public class RecyclerViewPagerImageIndicator extends RecyclerView.Adapter<Recycl
     @Override
     public indicatorHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View cell = inflater.inflate(R.layout.indicator_holder, parent, false);
-        return new indicatorHolder(cell);
+        View view = inflater.inflate(R.layout.indicator_holder, parent, false);
+        return new indicatorHolder(view);
     }
 
 
     @Override
     public void onBindViewHolder(@NonNull indicatorHolder holder, @SuppressLint("RecyclerView") final int position) {
 
-        final Picture pic = pictureList.get(position);
+        final Picture picture = pictures.get(position);
 
-        holder.positionController.setBackgroundColor(pic.isSelected()? Color.parseColor("#00000000") : Color.parseColor("#8c000000"));
+        holder.positionController.setBackgroundColor(picture.isSelected()? Color.parseColor("#00000000") : Color.parseColor("#8c000000"));
 
         Picasso.get()
-                .load(pic.getUri())
-
+                .load(picture.getUri())
                 .into(holder.image);
 
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //holder.card.setCardElevation(5);
-                pic.setSelected(true);
+                picture.setSelected(true);
                 notifyDataSetChanged();
-                imageListerner.onClick(pic, position);
+                listener.onClick(picture, position);
             }
         });
 
@@ -68,7 +67,7 @@ public class RecyclerViewPagerImageIndicator extends RecyclerView.Adapter<Recycl
 
     @Override
     public int getItemCount() {
-        return pictureList.size();
+        return pictures.size();
     }
 
     static class indicatorHolder extends RecyclerView.ViewHolder {

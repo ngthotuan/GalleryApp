@@ -21,7 +21,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.galleryapp.PictureShowFragment;
+import com.example.galleryapp.ui.showImage.PictureShowFragment;
 import com.example.galleryapp.R;
 import com.example.galleryapp.adapter.PictureAdapter;
 import com.example.galleryapp.databinding.FragmentPictureOfFolderBinding;
