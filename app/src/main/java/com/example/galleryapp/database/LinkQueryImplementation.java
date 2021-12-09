@@ -1,18 +1,18 @@
 package com.example.galleryapp.database;
 
-import static com.example.galleryapp.database.ConstantLib.ALBUM_ID_FK;
-import static com.example.galleryapp.database.ConstantLib.IMAGE_CREATED_DATE;
-import static com.example.galleryapp.database.ConstantLib.IMAGE_FAVOURITE;
-import static com.example.galleryapp.database.ConstantLib.IMAGE_ID;
-import static com.example.galleryapp.database.ConstantLib.IMAGE_ID_FK;
-import static com.example.galleryapp.database.ConstantLib.IMAGE_MODIFIED_DATE;
-import static com.example.galleryapp.database.ConstantLib.IMAGE_NAME;
-import static com.example.galleryapp.database.ConstantLib.IMAGE_PATH;
-import static com.example.galleryapp.database.ConstantLib.IMAGE_SIZE;
-import static com.example.galleryapp.database.ConstantLib.IMAGE_TYPE;
-import static com.example.galleryapp.database.ConstantLib.IMAGE_URI;
-import static com.example.galleryapp.database.ConstantLib.TABLE_IMAGE;
-import static com.example.galleryapp.database.ConstantLib.TABLE_LINK;
+import static com.example.galleryapp.database.Config.ALBUM_ID_FK;
+import static com.example.galleryapp.database.Config.IMAGE_CREATED_DATE;
+import static com.example.galleryapp.database.Config.IMAGE_FAVOURITE;
+import static com.example.galleryapp.database.Config.IMAGE_ID;
+import static com.example.galleryapp.database.Config.IMAGE_ID_FK;
+import static com.example.galleryapp.database.Config.IMAGE_MODIFIED_DATE;
+import static com.example.galleryapp.database.Config.IMAGE_NAME;
+import static com.example.galleryapp.database.Config.IMAGE_PATH;
+import static com.example.galleryapp.database.Config.IMAGE_SIZE;
+import static com.example.galleryapp.database.Config.IMAGE_TYPE;
+import static com.example.galleryapp.database.Config.IMAGE_URI;
+import static com.example.galleryapp.database.Config.TABLE_IMAGE;
+import static com.example.galleryapp.database.Config.TABLE_LINK;
 
 import android.content.ContentValues;
 import android.database.Cursor;

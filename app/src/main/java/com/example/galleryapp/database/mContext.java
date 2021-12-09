@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
-public class MContext extends Application {
+public class mContext extends Application {
     public static Context context = null;
 
     @Override

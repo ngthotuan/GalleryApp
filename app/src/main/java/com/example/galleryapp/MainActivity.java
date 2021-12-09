@@ -16,7 +16,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.galleryapp.database.AlbumQueryImplementation;
 import com.example.galleryapp.database.QueryContract;
 import com.example.galleryapp.database.QueryResponse;
-import com.example.galleryapp.database.MContext;
+import com.example.galleryapp.database.mContext;
 import com.example.galleryapp.databinding.ActivityMainBinding;
 import com.example.galleryapp.model.Album;
 import com.google.android.material.navigation.NavigationView;
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         // setup db
-        MContext.context = getApplicationContext();
+        mContext.context = getApplicationContext();
         QueryContract.AlbumQuery albumQuery = new AlbumQueryImplementation();
         QueryResponse<Boolean> onCreateAlbum = new QueryResponse<Boolean>() {
             @Override
