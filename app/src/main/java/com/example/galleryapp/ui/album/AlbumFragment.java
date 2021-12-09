@@ -13,9 +13,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.galleryapp.R;
 import com.example.galleryapp.adapter.AlbumAdapter;
 import com.example.galleryapp.adapter.PictureAdapter;
 import com.example.galleryapp.database.AlbumQueryImplementation;
@@ -26,7 +29,9 @@ import com.example.galleryapp.databinding.FragmentAlbumBinding;
 import com.example.galleryapp.listener.OnItemClick;
 import com.example.galleryapp.model.Album;
 import com.example.galleryapp.model.Picture;
+import com.example.galleryapp.ui.folder.PictureOfFolderFragment;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -120,11 +125,22 @@ public class AlbumFragment extends Fragment implements OnItemClick<Album> {
         linkQuery.getAllPictureInAlbum(item.getId(), new QueryResponse<List<Picture>>() {
             @Override
             public void onSuccess(List<Picture> data) {
-                Log.d("TAG", "onSuccess: " + data);
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+
+                FragmentTransaction ft = fm.beginTransaction();
+
+                PictureOfFolderFragment llf = new PictureOfFolderFragment();
+                Bundle args = new Bundle();
+                args.putSerializable("pictures", (Serializable) data);
+                llf.setArguments(args);
+                ft.replace(R.id.nav_host_fragment_content_main, llf);
+                ft.commit();
             }
 
             @Override
             public void onFailure(String message) {
+                Log.d("TAG", "onSuccess: " + message);
+
 
             }
         });
