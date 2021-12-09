@@ -28,4 +28,11 @@
     <string name="down_icon">▼</string>
     <string name="sort_type">Sort Type</string>
     <string name="filters">Filters</string>
+    <string name="edit">Edit</string>
+    <string name="hide">Hide</string>
+    <string name="lock">Lock</string>
+    <string name="set_wallpaper">Set Wallpaper</string>
+    <string name="share">Share</string>
+    <string name="delete">Delete</string>
+    <string name="details">Details</string>
 </resources>
