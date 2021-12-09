@@ -1,6 +1,6 @@
 package com.example.galleryapp.database;
 
-public class Config {
+public class ConstantLib {
     public static final String DATABASE_NAME = "gallery_db";
 
     // Image Table
