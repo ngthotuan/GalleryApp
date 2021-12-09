@@ -44,8 +44,16 @@ public class LinkQueryImplementation implements QueryContract.LinkQuery {
     public void getAllPictureInAlbum(int albumID, QueryResponse<List<Picture>> response) {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getReadableDatabase();
 
-        String QUERY = "SELECT * FROM " + TABLE_IMAGE + " as s JOIN " + TABLE_LINK
-                + " as ss ON s._id = ss." + IMAGE_ID_FK + " WHERE ss." + ALBUM_ID_FK + " = " + albumID;
+        String asIMG = "img";
+        String asLINK = "lk";
+
+        String QUERY = "SELECT * FROM "
+                + TABLE_IMAGE + " AS " + asIMG
+                + " JOIN "
+                + TABLE_LINK  + " AS " + asLINK
+                + " ON " + asIMG + "." + IMAGE_ID + " = " + asLINK + "." + IMAGE_ID_FK
+                + " WHERE " + asLINK + "." + ALBUM_ID_FK + " = " + albumID;
+
         Cursor cursor = null;
 
         try {
