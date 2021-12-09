@@ -1,14 +1,17 @@
-package com.example.galleryapp.database;
+package com.example.galleryapp.database.databaseImplementation;
 
-import static com.example.galleryapp.database.Config.ALBUM_ID;
-import static com.example.galleryapp.database.Config.ALBUM_NAME;
-import static com.example.galleryapp.database.Config.TABLE_ALBUM;
+import static com.example.galleryapp.database.databaseUtil.Config.ALBUM_ID;
+import static com.example.galleryapp.database.databaseUtil.Config.ALBUM_NAME;
+import static com.example.galleryapp.database.databaseUtil.Config.TABLE_ALBUM;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.galleryapp.database.DatabaseHelper;
+import com.example.galleryapp.database.databaseInterface.QueryContract;
+import com.example.galleryapp.database.databaseInterface.QueryResponse;
 import com.example.galleryapp.model.Album;
 
 import java.util.ArrayList;

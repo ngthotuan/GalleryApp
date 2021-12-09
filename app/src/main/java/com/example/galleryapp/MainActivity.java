@@ -13,10 +13,10 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.galleryapp.database.AlbumQueryImplementation;
-import com.example.galleryapp.database.QueryContract;
-import com.example.galleryapp.database.QueryResponse;
-import com.example.galleryapp.database.mContext;
+import com.example.galleryapp.database.databaseImplementation.AlbumQueryImplementation;
+import com.example.galleryapp.database.databaseInterface.QueryContract;
+import com.example.galleryapp.database.databaseInterface.QueryResponse;
+import com.example.galleryapp.database.databaseUtil.mContext;
 import com.example.galleryapp.databinding.ActivityMainBinding;
 import com.example.galleryapp.model.Album;
 import com.google.android.material.navigation.NavigationView;

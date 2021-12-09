@@ -1,7 +1,8 @@
-package com.example.galleryapp.database;
+package com.example.galleryapp.database.databaseUtil;
 
 public class Config {
     public static final String DATABASE_NAME = "gallery_db";
+    public static final int DATABASE_VERSION = 1;
 
     // Image Table
     public static final String TABLE_IMAGE = "imageTable";
@@ -26,12 +27,4 @@ public class Config {
     public static final String ALBUM_ID_FK = "album_id";
     public static final String IMAGE_ID_FK = "image_id";
     public static final String IMAGE_SUB_CONSTRAINT = "image_sub_unique";
-
-    // For general purpose key-value pair data
-    public static final String TITLE = "title";
-    public static final String CREATE_IMAGE = "create_image";
-    public static final String UPDATE_IMAGE = "update_image";
-    public static final String CREATE_ALBUM = "create_album";
-    public static final String UPDATE_ALBUM = "update_album";
-
 }

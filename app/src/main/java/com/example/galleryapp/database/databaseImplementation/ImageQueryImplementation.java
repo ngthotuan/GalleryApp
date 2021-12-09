@@ -1,15 +1,15 @@
-package com.example.galleryapp.database;
+package com.example.galleryapp.database.databaseImplementation;
 
-import static com.example.galleryapp.database.Config.IMAGE_CREATED_DATE;
-import static com.example.galleryapp.database.Config.IMAGE_FAVOURITE;
-import static com.example.galleryapp.database.Config.IMAGE_ID;
-import static com.example.galleryapp.database.Config.IMAGE_MODIFIED_DATE;
-import static com.example.galleryapp.database.Config.IMAGE_NAME;
-import static com.example.galleryapp.database.Config.IMAGE_PATH;
-import static com.example.galleryapp.database.Config.IMAGE_SIZE;
-import static com.example.galleryapp.database.Config.IMAGE_TYPE;
-import static com.example.galleryapp.database.Config.IMAGE_URI;
-import static com.example.galleryapp.database.Config.TABLE_IMAGE;
+import static com.example.galleryapp.database.databaseUtil.Config.IMAGE_CREATED_DATE;
+import static com.example.galleryapp.database.databaseUtil.Config.IMAGE_FAVOURITE;
+import static com.example.galleryapp.database.databaseUtil.Config.IMAGE_ID;
+import static com.example.galleryapp.database.databaseUtil.Config.IMAGE_MODIFIED_DATE;
+import static com.example.galleryapp.database.databaseUtil.Config.IMAGE_NAME;
+import static com.example.galleryapp.database.databaseUtil.Config.IMAGE_PATH;
+import static com.example.galleryapp.database.databaseUtil.Config.IMAGE_SIZE;
+import static com.example.galleryapp.database.databaseUtil.Config.IMAGE_TYPE;
+import static com.example.galleryapp.database.databaseUtil.Config.IMAGE_URI;
+import static com.example.galleryapp.database.databaseUtil.Config.TABLE_IMAGE;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -17,6 +17,9 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
+import com.example.galleryapp.database.DatabaseHelper;
+import com.example.galleryapp.database.databaseInterface.QueryContract;
+import com.example.galleryapp.database.databaseInterface.QueryResponse;
 import com.example.galleryapp.model.Picture;
 
 import java.util.ArrayList;
