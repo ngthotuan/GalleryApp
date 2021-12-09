@@ -73,6 +73,7 @@ public class LinkQueryImplementation implements QueryContract.LinkQuery {
 
                     // Picture constructor with all attribute above
                     Picture picture = new Picture();
+
                     pictureList.add(picture);
                     
                 } while (cursor.moveToNext());
