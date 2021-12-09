@@ -4,7 +4,6 @@ import static androidx.core.view.ViewCompat.setTransitionName;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -55,19 +54,7 @@ public class ImagesPagerAdapter extends PagerAdapter {
                 .load(pic.getUri())
                 .into(imgView);
 
-        imgView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if(motionEvent.getAction() == MotionEvent.ACTION_MOVE){
-                    showDetails(position);
-                    // Do what you want
-                    return true;
-                }
-                ;
-                return false;
-            }
 
-        });
         imgView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
