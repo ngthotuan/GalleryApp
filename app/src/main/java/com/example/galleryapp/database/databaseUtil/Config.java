@@ -26,5 +26,4 @@ public class Config {
     public static final String TABLE_LINK_ID = "_id";
     public static final String ALBUM_ID_FK = "album_id";
     public static final String IMAGE_ID_FK = "image_id";
-    public static final String IMAGE_SUB_CONSTRAINT = "image_sub_unique";
 }
