@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.WallpaperManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -40,7 +39,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PictureBrowserFragment extends Fragment implements OnItemClick<Picture> {
+public class PictureShowFragment extends Fragment implements OnItemClick<Picture> {
 
     private List<Picture> images = new ArrayList<>();
     private int position;
@@ -50,17 +49,17 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
     private ImagesPagerAdapter pagerAdapter;
     private int previousSelected = -1;
 
-    public PictureBrowserFragment() {
+    public PictureShowFragment() {
 
     }
 
-    public PictureBrowserFragment(List<Picture> images, int position) {
+    public PictureShowFragment(List<Picture> images, int position) {
         this.images = images;
         this.position = position;
     }
 
-    public static PictureBrowserFragment newInstance(List<Picture> images, int position) {
-        PictureBrowserFragment fragment = new PictureBrowserFragment(images, position);
+    public static PictureShowFragment newInstance(List<Picture> images, int position) {
+        PictureShowFragment fragment = new PictureShowFragment(images, position);
         return fragment;
     }
 
@@ -231,6 +230,7 @@ public class PictureBrowserFragment extends Fragment implements OnItemClick<Pict
         position = pos;
         viewPager.setCurrentItem(pos);
     }
+
 
     @Override
     public void onPicClicked(PictureAdapter.PictureHolder holder, int position, List<Picture> pics) {

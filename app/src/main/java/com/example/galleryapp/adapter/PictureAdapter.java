@@ -19,17 +19,20 @@ import com.example.galleryapp.model.Picture;
 import com.example.galleryapp.utils.DateUtil;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureHolder> {
     private List<Picture> pictures;
     private final int resource;
     private final OnItemClick<Picture> listener;
+    List<Picture> pictureLongCLick = new ArrayList<>();
 
-    public PictureAdapter(int resource, @NonNull List<Picture> pictures, OnItemClick<Picture> listener) {
+    public PictureAdapter(int resource, @NonNull List<Picture> pictures, OnItemClick<Picture> listener, List<Picture> listLongCLick) {
         this.resource = resource;
         this.pictures = pictures;
         this.listener = listener;
+        this.pictureLongCLick = listLongCLick;
     }
 
     @NonNull
@@ -68,6 +71,15 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
             holder.picCreatedDate.setText(DateUtil.getDate(picture.getCreatedDate()));
         }
 
+        holder.picLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+//                return false;
+
+                pictureLongCLick.add(pictures.get(position));
+                return true;
+            }
+        });
         holder.picLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

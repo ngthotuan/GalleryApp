@@ -23,7 +23,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.galleryapp.PictureBrowserFragment;
+import com.example.galleryapp.PictureShowFragment;
 import com.example.galleryapp.R;
 import com.example.galleryapp.adapter.PictureAdapter;
 import com.example.galleryapp.databinding.FragmentPictureOfFolderBinding;
@@ -32,6 +32,7 @@ import com.example.galleryapp.model.Picture;
 import com.example.galleryapp.model.PictureFolder;
 import com.example.galleryapp.utils.PictureUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,6 +45,7 @@ public class PictureOfFolderFragment extends Fragment implements OnItemClick<Pic
     private PictureAdapter pictureAdapter;
     ImageView imageView;
     List<Picture> pictures;
+    List<Picture> longClick =new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -58,7 +60,7 @@ public class PictureOfFolderFragment extends Fragment implements OnItemClick<Pic
 
         imageRecycler.hasFixedSize();
         pictures = PictureUtil.getPictures(activity, pictureFolder.getPath());
-        pictureAdapter = new PictureAdapter(R.layout.picture_item_gird, pictures, this);
+        pictureAdapter = new PictureAdapter(R.layout.picture_item_gird, pictures, this, longClick);
 
         imageRecycler.setAdapter(pictureAdapter);
         imageRecycler.setLayoutManager(new GridLayoutManager(getContext(), 4));
@@ -111,9 +113,10 @@ public class PictureOfFolderFragment extends Fragment implements OnItemClick<Pic
 
     }
 
+
     @Override
     public void onPicClicked(PictureAdapter.PictureHolder holder, int position, List<Picture> pictures) {
-        PictureBrowserFragment browser = PictureBrowserFragment.newInstance(pictures, position);
+        PictureShowFragment browser = PictureShowFragment.newInstance(pictures, position);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
             browser.setEnterTransition(new Fade());

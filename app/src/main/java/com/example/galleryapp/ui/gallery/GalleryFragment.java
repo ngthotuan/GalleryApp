@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.transition.Fade;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,7 +31,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.galleryapp.PictureBrowserFragment;
+import com.example.galleryapp.PictureShowFragment;
 import com.example.galleryapp.R;
 import com.example.galleryapp.adapter.PictureAdapter;
 import com.example.galleryapp.databinding.FragmentGalleryBinding;
@@ -39,6 +40,7 @@ import com.example.galleryapp.model.Picture;
 import com.example.galleryapp.utils.DateUtil;
 import com.example.galleryapp.utils.PictureUtil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -61,6 +63,7 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
     private String sortType = "";
     private LinearLayout filters;
     private boolean showFilter = false;
+    private List<Picture> listLongImage = new ArrayList<>();
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -92,6 +95,7 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
                     sortType = getResources().getString(R.string.down_icon);
                 }
                 txtSort.setText(sortType);
+                Log.e("TAG", "onClick: "+listLongImage.size());
                 updateSort();
             }
         });
@@ -133,7 +137,7 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
 
     private PictureAdapter getPictureAdapter(boolean isGridView) {
         int resource = isGridView ? R.layout.picture_item_gird : R.layout.picture_item_list;
-        return new PictureAdapter(resource, pictures, this);
+        return new PictureAdapter(resource, pictures, this, listLongImage);
     }
 
     private RecyclerView.LayoutManager getLayoutManger(boolean isGridView) {
@@ -209,7 +213,7 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
 
     @Override
     public void onPicClicked(PictureAdapter.PictureHolder holder, int position, List<Picture> pictures) {
-        PictureBrowserFragment browser = PictureBrowserFragment.newInstance(pictures, position);
+        PictureShowFragment browser = PictureShowFragment.newInstance(pictures, position);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             browser.setEnterTransition(new Fade());
             browser.setExitTransition(new Fade());
