@@ -119,7 +119,7 @@ public class ImageQueryImplementation implements QueryContract.ImageQuery {
         try {
             long rowAffected = sqLiteDatabase.delete(TABLE_IMAGE,
                     IMAGE_ID + " =? ",
-                    new String[]{String.valueOf(imageID)});
+                    new String[]{ String.valueOf(imageID) });
 
             if (rowAffected > 0) {
                 response.onSuccess(true);
@@ -129,6 +129,39 @@ public class ImageQueryImplementation implements QueryContract.ImageQuery {
         } catch (Exception e) {
             response.onFailure(e.getMessage());
         } finally {
+            sqLiteDatabase.close();
+        }
+    }
+
+    @Override
+    public void getAllFavourite(DatabaseHelper.QueryResponse<List<Picture>> response) {
+        SQLiteDatabase sqLiteDatabase = DatabaseHelper.getInstance().getReadableDatabase();
+
+        List<Picture> favouriteList = new ArrayList<>();
+
+        Cursor cursor = null;
+
+        try {
+            cursor = sqLiteDatabase.query(TABLE_IMAGE, null,
+                    IMAGE_FAVOURITE + " = ? ",
+                    new String[]{ String.valueOf(1) },
+                    null, null, null);
+
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    Picture picture = getPictureFromCursor(cursor);
+                    favouriteList.add(picture);
+                } while (cursor.moveToNext());
+            }
+
+            response.onSuccess(favouriteList);
+        } catch (Exception e) {
+            response.onFailure(e.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+
             sqLiteDatabase.close();
         }
     }

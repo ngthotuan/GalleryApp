@@ -14,6 +14,8 @@ public class QueryContract {
         void getAllPicture(DatabaseHelper.QueryResponse<List<Picture>> response);
 
         void deletePicture(int imageID, DatabaseHelper.QueryResponse<Boolean> response);
+
+        void getAllFavourite(DatabaseHelper.QueryResponse<List<Picture>> response);
     }
 
     public interface AlbumQuery {
