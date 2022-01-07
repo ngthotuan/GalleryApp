@@ -43,7 +43,7 @@ public class LinkQueryImplementation implements QueryContract.LinkQuery {
                     linkQuery.insertLink(picture.getId(), album.getId(), new DatabaseHelper.QueryResponse<Boolean>() {
                         @Override
                         public void onSuccess(Boolean data) {
-                            Log.d("TAG", "onSuccess: insert imagealbum " + data);
+                            Log.d("TAG", "onSuccess: insert imagealbum " + picture.getId()+ album.getId());
                         }
 
                         @Override

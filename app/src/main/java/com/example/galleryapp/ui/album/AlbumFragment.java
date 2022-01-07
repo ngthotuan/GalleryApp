@@ -63,7 +63,7 @@ public class AlbumFragment extends Fragment implements OnItemClick<Album> {
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle("Create new Album");
-                final EditText input = new EditText(getContext());
+                EditText input = new EditText(getContext());
                 builder.setView(input);
                 builder.setPositiveButton("Create", new DialogInterface.OnClickListener() {
                     @Override
@@ -125,16 +125,19 @@ public class AlbumFragment extends Fragment implements OnItemClick<Album> {
         linkQuery.getAllPictureInAlbum(item.getId(), new DatabaseHelper.QueryResponse<List<Picture>>() {
             @Override
             public void onSuccess(List<Picture> data) {
+
                 FragmentManager fm = getActivity().getSupportFragmentManager();
 
                 FragmentTransaction ft = fm.beginTransaction();
-
                 PictureOfFolderFragment llf = new PictureOfFolderFragment();
                 Bundle args = new Bundle();
+                Log.e("TAG", "onSuccess:  data picture"+ data.size() );
                 args.putSerializable("pictures", (Serializable) data);
                 llf.setArguments(args);
                 ft.replace(R.id.nav_host_fragment_content_main, llf);
                 ft.commit();
+
+
             }
 
             @Override
