@@ -40,6 +40,7 @@ public class AlbumFragment extends Fragment implements OnItemClick<Album> {
     Button btnCreate;
     RecyclerView rvAlbum;
     QueryContract.AlbumQuery albumQuery = new AlbumQueryImplementation();
+    List<Album> albums = new ArrayList<>();
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -50,8 +51,7 @@ public class AlbumFragment extends Fragment implements OnItemClick<Album> {
         rvAlbum = binding.rvAlbum;
 
         // get list album
-        List<Album> albums = new ArrayList<>();
-        getAllAlbum(albums);
+        getAllAlbum();
 
         AlbumAdapter albumAdapter = new AlbumAdapter(albums, this);
         rvAlbum.setAdapter(albumAdapter);
@@ -69,18 +69,13 @@ public class AlbumFragment extends Fragment implements OnItemClick<Album> {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (!input.getText().toString().isEmpty()) {
-                            albumQuery.insertAlbum(new Album(input.getText().toString()), new DatabaseHelper.QueryResponse<Boolean>() {
-                                @Override
-                                public void onSuccess(Boolean data) {
-                                    getAllAlbum(albums);
-                                    albumAdapter.setAlbums(albums);
-                                }
-
-                                @Override
-                                public void onFailure(String message) {
-                                    Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                            long id = albumQuery.insertAlbum(new Album(input.getText().toString()));
+                            if(id != -1) {
+                                getAllAlbum();
+                                albumAdapter.setAlbums(albums);
+                            } else {
+                                Toast.makeText(getContext(), "Create album failed", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
                 });
@@ -98,19 +93,9 @@ public class AlbumFragment extends Fragment implements OnItemClick<Album> {
         return root;
     }
 
-    private void getAllAlbum(List<Album> albums) {
-        albumQuery.getAllAlbum(new DatabaseHelper.QueryResponse<List<Album>>() {
-            @Override
-            public void onSuccess(List<Album> data) {
-                albums.clear();
-                albums.addAll(data);
-            }
-
-            @Override
-            public void onFailure(String message) {
-                System.out.println("Album Fail: " + message);
-            }
-        });
+    private void getAllAlbum() {
+        albums.clear();
+        albums.addAll(albumQuery.getAllAlbum());
     }
 
     @Override
@@ -122,29 +107,20 @@ public class AlbumFragment extends Fragment implements OnItemClick<Album> {
     @Override
     public void onClick(Album item, int pos) {
         QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
-        linkQuery.getAllPictureInAlbum(item.getId(), new DatabaseHelper.QueryResponse<List<Picture>>() {
-            @Override
-            public void onSuccess(List<Picture> data) {
+        List<Picture> allPictureInAlbum = linkQuery.getAllPictureInAlbum(item.getId());
+        if (allPictureInAlbum != null) {
+            FragmentManager fm = getActivity().getSupportFragmentManager();
 
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-
-                FragmentTransaction ft = fm.beginTransaction();
-                PictureOfFolderFragment llf = new PictureOfFolderFragment();
-                Bundle args = new Bundle();
-                Log.e("TAG", "onSuccess:  data picture"+ data.size() );
-                args.putSerializable("pictures", (Serializable) data);
-                llf.setArguments(args);
-                ft.replace(R.id.nav_host_fragment_content_main, llf);
-                ft.commit();
-
-
-            }
-
-            @Override
-            public void onFailure(String message) {
-                Log.d("TAG", "Fail: " + message);
-            }
-        });
+            FragmentTransaction ft = fm.beginTransaction();
+            PictureOfFolderFragment llf = new PictureOfFolderFragment();
+            Bundle args = new Bundle();
+            args.putSerializable("pictures", (Serializable) allPictureInAlbum);
+            llf.setArguments(args);
+            ft.replace(R.id.nav_host_fragment_content_main, llf);
+            ft.commit();
+        } else {
+            Toast.makeText(getContext(), "Get picture in album fail", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

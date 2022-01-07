@@ -22,7 +22,7 @@ public class AlbumQueryImplementation implements QueryContract.AlbumQuery {
     DatabaseHelper databaseHelper = DatabaseHelper.getInstance();
 
     @Override
-    public void insertAlbum(Album album, DatabaseHelper.QueryResponse<Boolean> response) {
+    public long insertAlbum(Album album) {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -32,20 +32,19 @@ public class AlbumQueryImplementation implements QueryContract.AlbumQuery {
             long id = sqLiteDatabase.insertOrThrow(TABLE_ALBUM, null, contentValues);
 
             if (id > 0) {
-                response.onSuccess(true);
-                album.setId((int) id);
+                return id;
             } else {
-                response.onFailure("Insert album to database failed");
+                return -1;
             }
         } catch (SQLException e) {
-            response.onFailure(e.getMessage());
+            return -1;
         } finally {
             sqLiteDatabase.close();
         }
     }
 
     @Override
-    public void getAlbumByID(int albumID, DatabaseHelper.QueryResponse<Album> response) {
+    public Album getAlbumByID(int albumID) {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getReadableDatabase();
 
         Cursor cursor = null;
@@ -62,22 +61,21 @@ public class AlbumQueryImplementation implements QueryContract.AlbumQuery {
                 String name = cursor.getString(cursor.getColumnIndex(ALBUM_NAME));
 
                 album = new Album(id, name);
-                response.onSuccess(album);
-            } else {
-                response.onFailure("Get album from database failed");
             }
         } catch (Exception e) {
-            response.onFailure(e.getMessage());
+            e.printStackTrace();
         } finally {
             if (cursor != null) {
                 cursor.close();
             }
             sqLiteDatabase.close();
         }
+
+        return album;
     }
 
     @Override
-    public void getAllAlbum(DatabaseHelper.QueryResponse<List<Album>> response) {
+    public List<Album> getAllAlbum() {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getReadableDatabase();
 
         List<Album> albumList = new ArrayList<>();
@@ -99,9 +97,39 @@ public class AlbumQueryImplementation implements QueryContract.AlbumQuery {
                 } while (cursor.moveToNext());
 
             }
-            response.onSuccess(albumList);
+            return albumList;
         } catch (Exception e) {
-            response.onFailure(e.getMessage());
+            return null;
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+            sqLiteDatabase.close();
+        }
+    }
+
+    @Override
+    public Album getAlbumByName(String albumName) {
+        SQLiteDatabase sqLiteDatabase = databaseHelper.getReadableDatabase();
+
+        Cursor cursor = null;
+        Album album = null;
+
+        try {
+            cursor = sqLiteDatabase.query(TABLE_ALBUM, null,
+                    ALBUM_NAME + " = ? ",
+                    new String[]{albumName},
+                    null, null, null);
+
+            if (cursor.moveToFirst()) {
+                int id = cursor.getInt(cursor.getColumnIndex(ALBUM_ID));
+                String name = cursor.getString(cursor.getColumnIndex(ALBUM_NAME));
+
+                return new Album(id, name);
+            }
+            return null;
+        } catch (Exception e) {
+            return null;
         } finally {
             if (cursor != null) {
                 cursor.close();
@@ -122,7 +150,7 @@ public class AlbumQueryImplementation implements QueryContract.AlbumQuery {
     }
 
     @Override
-    public void deleteAlbum(int albumID, DatabaseHelper.QueryResponse<Boolean> response) {
+    public boolean deleteAlbum(int albumID) {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
 
         try {
@@ -131,14 +159,13 @@ public class AlbumQueryImplementation implements QueryContract.AlbumQuery {
                     new String[]{String.valueOf(albumID)});
 
             if (rowAffected > 0) {
-                response.onSuccess(true);
-            } else {
-                response.onFailure("Delete album from database failed");
+                return true;
             }
         } catch (Exception e) {
-            response.onFailure(e.getMessage());
+            e.printStackTrace();
         } finally {
             sqLiteDatabase.close();
         }
+        return false;
     }
 }

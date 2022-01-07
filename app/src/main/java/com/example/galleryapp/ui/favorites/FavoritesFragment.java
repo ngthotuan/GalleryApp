@@ -14,16 +14,24 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.galleryapp.R;
 import com.example.galleryapp.adapter.PictureAdapter;
 import com.example.galleryapp.database.DatabaseHelper;
 import com.example.galleryapp.database.QueryContract;
+import com.example.galleryapp.database.impl.AlbumQueryImplementation;
 import com.example.galleryapp.database.impl.ImageQueryImplementation;
+import com.example.galleryapp.database.impl.LinkQueryImplementation;
 import com.example.galleryapp.databinding.FragmentFavoritesBinding;
 import com.example.galleryapp.databinding.FragmentGalleryBinding;
+import com.example.galleryapp.model.Album;
 import com.example.galleryapp.model.Picture;
+import com.example.galleryapp.ui.folder.PictureOfFolderFragment;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,39 +55,19 @@ public class FavoritesFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentFavoritesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        Activity activity = getActivity();
 
-//        rvFav = binding.rvFav;
-//        rvFav.hasFixedSize();
-//        txtSort = binding.txtSort;
-//        spSort = binding.spSort;
-//        filters = binding.filters;
-
-        // do something here
-
-        // get favourite pic from DB
-        List<Picture> favouriteList = new ArrayList<>();
-        getAllFavourite(favouriteList);
+        getAllFavourite();
 
         return root;
     }
 
-    private void getAllFavourite(List<Picture> pictureList) {
-        List<Picture> favouriteList = new ArrayList<>();
-        QueryContract.ImageQuery imageQuery = new ImageQueryImplementation();
-
-        imageQuery.getAllFavourite(new DatabaseHelper.QueryResponse<List<Picture>>() {
-            @Override
-            public void onSuccess(List<Picture> data) {
-                favouriteList.clear();
-                favouriteList.addAll(data);
-            }
-
-            @Override
-            public void onFailure(String message) {
-                Log.e("Favourite Fragmant", "Error while getting favourited images from DB");
-            }
-        });
+    private void getAllFavourite() {
+        QueryContract.AlbumQuery albumQuery = new AlbumQueryImplementation();
+        Album album = albumQuery.getAlbumFavorite();
+        QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
+        List<Picture> data = linkQuery.getAllPictureInAlbum(album.getId());Log.d("TAG", "favorites size: " + data.size());
+        Log.d("TAG", "favorites: " + data);
+        Toast.makeText(getContext(), "favorites size: " + data.size(), Toast.LENGTH_SHORT).show();
     }
 
     @Override

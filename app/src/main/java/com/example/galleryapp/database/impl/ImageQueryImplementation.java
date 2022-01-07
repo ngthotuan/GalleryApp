@@ -17,7 +17,6 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
-import android.util.Log;
 import com.example.galleryapp.database.DatabaseHelper;
 import com.example.galleryapp.database.QueryContract;
 import com.example.galleryapp.model.Picture;
@@ -32,7 +31,7 @@ public class ImageQueryImplementation implements QueryContract.ImageQuery {
     private final DatabaseHelper databaseHelper = DatabaseHelper.getInstance();
 
     @Override
-    public void insertPicture(Picture picture, DatabaseHelper.QueryResponse<Long> response) {
+    public long insertPicture(Picture picture) {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
 
         ContentValues contentValues = getContentValuesForPicture(picture);
@@ -41,19 +40,19 @@ public class ImageQueryImplementation implements QueryContract.ImageQuery {
             long id = sqLiteDatabase.insertOrThrow(TABLE_IMAGE, null, contentValues);
 
             if (id > 0) {
-                response.onSuccess(id);
+                return id;
             } else {
-                response.onFailure("Insert picture to database failed");
+                return -1;
             }
         } catch (SQLException e) {
-            response.onFailure(e.getMessage());
+            return -1;
         } finally {
             sqLiteDatabase.close();
         }
     }
 
     @Override
-    public void getPictureByID(int imageID, DatabaseHelper.QueryResponse<Picture> response) {
+    public Picture getPictureByID(int imageID) {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getReadableDatabase();
 
         Cursor cursor = null;
@@ -67,22 +66,20 @@ public class ImageQueryImplementation implements QueryContract.ImageQuery {
 
             if (cursor.moveToFirst()) {
                 picture = getPictureFromCursor(cursor);
-                response.onSuccess(picture);
-            } else {
-                response.onFailure("Get picture from database failed");
             }
         } catch (Exception e) {
-            response.onFailure(e.getMessage());
+            e.printStackTrace();
         } finally {
             if (cursor != null) {
                 cursor.close();
             }
             sqLiteDatabase.close();
         }
+        return picture;
     }
 
     @Override
-    public void getAllPicture(DatabaseHelper.QueryResponse<List<Picture>> response) {
+    public List<Picture> getAllPicture() {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getReadableDatabase();
 
         List<Picture> pictureList = new ArrayList<>();
@@ -97,13 +94,12 @@ public class ImageQueryImplementation implements QueryContract.ImageQuery {
                     Picture picture = getPictureFromCursor(cursor);
                     pictureList.add(picture);
                 } while (cursor.moveToNext());
-
-                response.onSuccess(pictureList);
-            } else {
-                response.onFailure("There are no image in database");
             }
+
+            return pictureList;
         } catch (Exception e) {
-            response.onFailure(e.getMessage());
+            e.printStackTrace();
+            return null;
         } finally {
             if (cursor != null) {
                 cursor.close();
@@ -113,7 +109,7 @@ public class ImageQueryImplementation implements QueryContract.ImageQuery {
     }
 
     @Override
-    public void deletePicture(int imageID, DatabaseHelper.QueryResponse<Boolean> response) {
+    public boolean deletePicture(int imageID) {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
 
         try {
@@ -122,19 +118,20 @@ public class ImageQueryImplementation implements QueryContract.ImageQuery {
                     new String[]{ String.valueOf(imageID) });
 
             if (rowAffected > 0) {
-                response.onSuccess(true);
+                return true;
             } else {
-                response.onFailure("Delete image from database failed");
+                return false;
             }
         } catch (Exception e) {
-            response.onFailure(e.getMessage());
+            e.printStackTrace();
+            return false;
         } finally {
             sqLiteDatabase.close();
         }
     }
 
     @Override
-    public void getAllFavourite(DatabaseHelper.QueryResponse<List<Picture>> response) {
+    public List<Picture> getAllFavourite() {
         SQLiteDatabase sqLiteDatabase = DatabaseHelper.getInstance().getReadableDatabase();
 
         List<Picture> favouriteList = new ArrayList<>();
@@ -154,9 +151,10 @@ public class ImageQueryImplementation implements QueryContract.ImageQuery {
                 } while (cursor.moveToNext());
             }
 
-            response.onSuccess(favouriteList);
+            return favouriteList;
         } catch (Exception e) {
-            response.onFailure(e.getMessage());
+            e.printStackTrace();
+            return null;
         } finally {
             if (cursor != null) {
                 cursor.close();

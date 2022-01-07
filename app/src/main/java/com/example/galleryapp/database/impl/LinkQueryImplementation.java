@@ -36,34 +36,18 @@ public class LinkQueryImplementation implements QueryContract.LinkQuery {
     public void insertImagesToAlbums(List<Picture> pictures, Album album) {
         pictures.forEach(picture -> {
             QueryContract.ImageQuery imageQuery = new ImageQueryImplementation();
-            imageQuery.insertPicture(picture, new DatabaseHelper.QueryResponse<Long>() {
-                @Override
-                public void onSuccess(Long imageId) {
-                    QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
-                    linkQuery.insertLink(imageId.intValue(), album.getId(), new DatabaseHelper.QueryResponse<Boolean>() {
-                        @Override
-                        public void onSuccess(Boolean data) {
-                            Log.d("TAG", "onSuccess: insert image to album " + picture.getId()+ album.getId());
-                        }
+            QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
 
-                        @Override
-                        public void onFailure(String message) {
-                            Log.d("TAG", message);
-
-                        }
-                    });
-                }
-
-                @Override
-                public void onFailure(String message) {
-                }
-            });
+            long id = imageQuery.insertPicture(picture);
+            if (id > 0) {
+                linkQuery.insertLink((int) id, album.getId());
+            }
         });
     }
 
 
     @Override
-    public void insertLink(int imageID, int albumID, DatabaseHelper.QueryResponse<Boolean> response) {
+    public long insertLink(int imageID, int albumID) {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -72,23 +56,23 @@ public class LinkQueryImplementation implements QueryContract.LinkQuery {
         contentValues.put(ALBUM_ID_FK, albumID);
 
         try {
-            long rowCount = sqLiteDatabase.insertOrThrow(TABLE_LINK, null, contentValues);
+            long id = sqLiteDatabase.insertOrThrow(TABLE_LINK, null, contentValues);
 
-            if (rowCount > 0) {
-                response.onSuccess(true);
+            if (id > 0) {
+                return id;
             } else {
-                response.onFailure("LinkQuery: Add image to album (database) failed");
+                return -1;
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            response.onFailure(e.getMessage());
+            return -1;
         } finally {
             sqLiteDatabase.close();
         }
     }
 
     @Override
-    public void getAllPictureInAlbum(int albumID, DatabaseHelper.QueryResponse<List<Picture>> response) {
+    public List<Picture> getAllPictureInAlbum(int albumID) {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getReadableDatabase();
         String asIMG = "img";
         String asLINK = "lk";
@@ -113,12 +97,11 @@ public class LinkQueryImplementation implements QueryContract.LinkQuery {
 
                 } while (cursor.moveToNext());
 
-                response.onSuccess(pictureList);
-            } else {
-                response.onSuccess(new ArrayList<>());
+
             }
+            return pictureList;
         } catch (Exception e) {
-            response.onFailure(e.getMessage());
+            return null;
         } finally {
             if (cursor != null) {
                 cursor.close();
@@ -128,7 +111,7 @@ public class LinkQueryImplementation implements QueryContract.LinkQuery {
     }
 
     @Override
-    public void deleteLink(int imageID, int albumID, DatabaseHelper.QueryResponse<Boolean> response) {
+    public boolean deleteLink(int imageID, int albumID) {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
 
         try {
@@ -137,15 +120,15 @@ public class LinkQueryImplementation implements QueryContract.LinkQuery {
                     new String[]{String.valueOf(imageID), String.valueOf(albumID)});
 
             if (rowAffected > 0) {
-                response.onSuccess(true);
-            } else {
-                response.onFailure("Delete image from album (database) failed");
+                return true;
             }
         } catch (Exception e) {
-            response.onFailure(e.getMessage());
+            e.printStackTrace();
         } finally {
             sqLiteDatabase.close();
         }
+
+        return false;
     }
 
     private Picture getPictureFromCursor(Cursor cursor) {

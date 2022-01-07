@@ -7,36 +7,47 @@ import java.util.List;
 
 public class QueryContract {
     public interface ImageQuery {
-        void insertPicture(Picture picture, DatabaseHelper.QueryResponse<Long> response);
+        long insertPicture(Picture picture);
 
-        void getPictureByID(int imageID, DatabaseHelper.QueryResponse<Picture> response);
+        Picture getPictureByID(int imageID);
 
-        void getAllPicture(DatabaseHelper.QueryResponse<List<Picture>> response);
+        List<Picture> getAllPicture();
 
-        void deletePicture(int imageID, DatabaseHelper.QueryResponse<Boolean> response);
+        boolean deletePicture(int imageID);
 
-        void getAllFavourite(DatabaseHelper.QueryResponse<List<Picture>> response);
+        List<Picture> getAllFavourite();
     }
 
     public interface AlbumQuery {
-        void insertAlbum(Album album, DatabaseHelper.QueryResponse<Boolean> response);
+        long insertAlbum(Album album);
 
-        void getAlbumByID(int albumID, DatabaseHelper.QueryResponse<Album> response);
+        Album getAlbumByID(int albumID);
 
-        void getAllAlbum(DatabaseHelper.QueryResponse<List<Album>> response);
+        List<Album> getAllAlbum();
 
         int getAlbumCount();
 
-        void deleteAlbum(int albumID, DatabaseHelper.QueryResponse<Boolean> response);
+        Album getAlbumByName(String albumName);
+
+        default Album getAlbumFavorite() {
+            return getAlbumByName("Favorites");
+        }
+
+        default Album getAlbumHidden() {
+            return getAlbumByName("Hidden");
+        }
+
+
+        boolean deleteAlbum(int albumID);
     }
 
     public interface LinkQuery {
         void insertImagesToAlbums(List<Picture> pictures, Album album);
 
-        void insertLink(int imageID, int albumID, DatabaseHelper.QueryResponse<Boolean> response);
+        long insertLink(int imageID, int albumID);
 
-        void getAllPictureInAlbum(int albumID, DatabaseHelper.QueryResponse<List<Picture>> response);
+        List<Picture> getAllPictureInAlbum(int albumID);
 
-        void deleteLink(int imageID, int albumID, DatabaseHelper.QueryResponse<Boolean> response);
+        boolean deleteLink(int imageID, int albumID);
     }
 }

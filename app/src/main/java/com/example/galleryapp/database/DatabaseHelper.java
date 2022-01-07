@@ -96,10 +96,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Enable foreign key constraints like ON UPDATE CASCADE, ON DELETE CASCADE
         db.execSQL("PRAGMA foreign_keys=ON;");
     }
-
-    public static interface QueryResponse<T> {
-        void onSuccess(T data);
-
-        void onFailure(String message);
-    }
 }

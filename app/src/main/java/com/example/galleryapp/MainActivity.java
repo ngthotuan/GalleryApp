@@ -63,21 +63,10 @@ public class MainActivity extends AppCompatActivity {
         // setup db
         mContext.context = getApplicationContext();
         QueryContract.AlbumQuery albumQuery = new AlbumQueryImplementation();
-        DatabaseHelper.QueryResponse<Boolean> onCreateAlbum = new DatabaseHelper.QueryResponse<Boolean>() {
-            @Override
-            public void onSuccess(Boolean data) {
-                Log.d("TAG", "add album default success");
-            }
-
-            @Override
-            public void onFailure(String message) {
-                Log.d("TAG", "fail: " + message);
-            }
-        };
         int count = albumQuery.getAlbumCount();
         if (count == 0) {
-            albumQuery.insertAlbum(new Album("Favorites"), onCreateAlbum);
-            albumQuery.insertAlbum(new Album("Hidden"), onCreateAlbum);
+            albumQuery.insertAlbum(new Album("Favorites"));
+            albumQuery.insertAlbum(new Album("Hidden"));
         }
     }
 

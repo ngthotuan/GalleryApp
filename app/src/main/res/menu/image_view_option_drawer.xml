@@ -6,6 +6,9 @@
             android:id="@+id/imgAddAlbum"
             android:title="@string/add_to_album" />
         <item
+                android:id="@+id/imgAddFavorite"
+                android:title="@string/add_to_favorites" />
+        <item
             android:id="@+id/imgEdit"
             android:title="@string/edit" />
         <item

@@ -93,6 +93,7 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
         inflater.inflate(R.menu.image_view_option_drawer, menu);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -128,52 +129,59 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
                 addImageToAlbum();
                 break;
             }
+            case R.id.imgAddFavorite: {
+                addToFavorite();
+                break;
+            }
         }
         return super.onOptionsItemSelected(item);
 
     }
 
+    private void addToFavorite() {
+        QueryContract.AlbumQuery albumQuery = new AlbumQueryImplementation();
+        Album album = albumQuery.getAlbumFavorite();
+        if (album == null) {
+            Toast.makeText(getContext(), "No favorite album", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        List<Picture> pictures = Arrays.asList(images.get(position));
+        QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
+        linkQuery.insertImagesToAlbums(pictures, album);
+    }
+
     private void addImageToAlbum() {
         QueryContract.AlbumQuery albumQuery = new AlbumQueryImplementation();
-        albumQuery.getAllAlbum(new DatabaseHelper.QueryResponse<List<Album>>() {
+        List<Album> data = albumQuery.getAllAlbum();
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(getResources().getString(R.string.choose_album));
+        String[] objects = data.stream().map(Album::getName)
+                .toArray(String[]::new);
+        boolean[] checkedItems = new boolean[data.size()];
+        Arrays.fill(checkedItems, Boolean.FALSE);
+        builder.setMultiChoiceItems(objects, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
-            public void onSuccess(List<Album> data) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle(getResources().getString(R.string.choose_album));
-                String[] objects = data.stream().map(Album::getName)
-                        .toArray(String[]::new);
-                boolean[] checkedItems = new boolean[data.size()];
-                Arrays.fill(checkedItems, Boolean.FALSE);
-                builder.setMultiChoiceItems(objects, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                        // The user checked or unchecked a box
-                        checkedItems[which] = isChecked;
-                    }
-                });
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // The user clicked OK
-                        for (int i = 0; i < checkedItems.length; i++) {
-                            if (checkedItems[i]) {
-                                List<Picture> pictures = Arrays.asList(images.get(position));
-                                QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
-                                linkQuery.insertImagesToAlbums(pictures, data.get(i));
-                            }
-                        }
-                    }
-                });
-                builder.setNegativeButton("Cancel", null);
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-
-            @Override
-            public void onFailure(String message) {
-
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                // The user checked or unchecked a box
+                checkedItems[which] = isChecked;
             }
         });
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // The user clicked OK
+                for (int i = 0; i < checkedItems.length; i++) {
+                    if (checkedItems[i]) {
+                        List<Picture> pictures = Arrays.asList(images.get(position));
+                        QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
+                        linkQuery.insertImagesToAlbums(pictures, data.get(i));
+                    }
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", null);
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void setWallpaper(Picture picture) {
