@@ -15,6 +15,7 @@ import com.example.galleryapp.model.Album;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class AlbumQueryImplementation implements QueryContract.AlbumQuery {
 
@@ -91,9 +92,10 @@ public class AlbumQueryImplementation implements QueryContract.AlbumQuery {
                 do {
                     int id = cursor.getInt(cursor.getColumnIndex(ALBUM_ID));
                     String name = cursor.getString(cursor.getColumnIndex(ALBUM_NAME));
-
-                    Album album = new Album(id, name);
-                    albumList.add(album);
+                    if(!Objects.equals(name, "Favorites") && !Objects.equals(name, "Hidden")) {
+                        Album album = new Album(id, name);
+                        albumList.add(album);
+                    }
                 } while (cursor.moveToNext());
 
             }

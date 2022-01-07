@@ -139,13 +139,9 @@ public class AlbumFragment extends Fragment implements OnItemClick<Album> {
 
             @Override
             public void onFailure(String message) {
-                Log.d("TAG", "onSuccess: " + message);
-
-
+                Log.d("TAG", "Fail: " + message);
             }
         });
-
-        Toast.makeText(getContext(), item.getName(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
