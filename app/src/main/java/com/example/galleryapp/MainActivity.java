@@ -74,23 +74,11 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("TAG", "fail: " + message);
             }
         };
-        albumQuery.getAllAlbum(new DatabaseHelper.QueryResponse<List<Album>>() {
-            @Override
-            public void onSuccess(List<Album> data) {
-                if (data != null && data.size() >= 2) {
-                } else {
-                    albumQuery.insertAlbum(new Album("Favorites"), onCreateAlbum);
-                    albumQuery.insertAlbum(new Album("Hidden"), onCreateAlbum);
-                }
-            }
-
-            @Override
-            public void onFailure(String message) {
-
-            }
-        });
-
-
+        int count = albumQuery.getAlbumCount();
+        if (count == 0) {
+            albumQuery.insertAlbum(new Album("Favorites"), onCreateAlbum);
+            albumQuery.insertAlbum(new Album("Hidden"), onCreateAlbum);
+        }
     }
 
     @Override

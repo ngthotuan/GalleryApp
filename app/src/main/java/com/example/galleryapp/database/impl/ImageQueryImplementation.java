@@ -17,6 +17,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
+import android.util.Log;
 import com.example.galleryapp.database.DatabaseHelper;
 import com.example.galleryapp.database.QueryContract;
 import com.example.galleryapp.model.Picture;
@@ -31,7 +32,7 @@ public class ImageQueryImplementation implements QueryContract.ImageQuery {
     private final DatabaseHelper databaseHelper = DatabaseHelper.getInstance();
 
     @Override
-    public void insertPicture(Picture picture, DatabaseHelper.QueryResponse<Boolean> response) {
+    public void insertPicture(Picture picture, DatabaseHelper.QueryResponse<Long> response) {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
 
         ContentValues contentValues = getContentValuesForPicture(picture);
@@ -40,8 +41,7 @@ public class ImageQueryImplementation implements QueryContract.ImageQuery {
             long id = sqLiteDatabase.insertOrThrow(TABLE_IMAGE, null, contentValues);
 
             if (id > 0) {
-                response.onSuccess(true);
-                picture.setId((int) id);
+                response.onSuccess(id);
             } else {
                 response.onFailure("Insert picture to database failed");
             }

@@ -111,6 +111,17 @@ public class AlbumQueryImplementation implements QueryContract.AlbumQuery {
     }
 
     @Override
+    public int getAlbumCount() {
+        SQLiteDatabase sqLiteDatabase = databaseHelper.getReadableDatabase();
+
+        Cursor mCount= sqLiteDatabase.rawQuery("select count(*) from " + TABLE_ALBUM, null);
+        mCount.moveToFirst();
+        int count= mCount.getInt(0);
+        mCount.close();
+        return count;
+    }
+
+    @Override
     public void deleteAlbum(int albumID, DatabaseHelper.QueryResponse<Boolean> response) {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
 

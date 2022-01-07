@@ -36,14 +36,14 @@ public class LinkQueryImplementation implements QueryContract.LinkQuery {
     public void insertImagesToAlbums(List<Picture> pictures, Album album) {
         pictures.forEach(picture -> {
             QueryContract.ImageQuery imageQuery = new ImageQueryImplementation();
-            imageQuery.insertPicture(picture, new DatabaseHelper.QueryResponse<Boolean>() {
+            imageQuery.insertPicture(picture, new DatabaseHelper.QueryResponse<Long>() {
                 @Override
-                public void onSuccess(Boolean data) {
+                public void onSuccess(Long imageId) {
                     QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
-                    linkQuery.insertLink(picture.getId(), album.getId(), new DatabaseHelper.QueryResponse<Boolean>() {
+                    linkQuery.insertLink(imageId.intValue(), album.getId(), new DatabaseHelper.QueryResponse<Boolean>() {
                         @Override
                         public void onSuccess(Boolean data) {
-                            Log.d("TAG", "onSuccess: insert imagealbum " + picture.getId()+ album.getId());
+                            Log.d("TAG", "onSuccess: insert image to album " + picture.getId()+ album.getId());
                         }
 
                         @Override

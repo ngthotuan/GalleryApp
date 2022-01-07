@@ -7,7 +7,7 @@ import java.util.List;
 
 public class QueryContract {
     public interface ImageQuery {
-        void insertPicture(Picture picture, DatabaseHelper.QueryResponse<Boolean> response);
+        void insertPicture(Picture picture, DatabaseHelper.QueryResponse<Long> response);
 
         void getPictureByID(int imageID, DatabaseHelper.QueryResponse<Picture> response);
 
@@ -24,6 +24,8 @@ public class QueryContract {
         void getAlbumByID(int albumID, DatabaseHelper.QueryResponse<Album> response);
 
         void getAllAlbum(DatabaseHelper.QueryResponse<List<Album>> response);
+
+        int getAlbumCount();
 
         void deleteAlbum(int albumID, DatabaseHelper.QueryResponse<Boolean> response);
     }
