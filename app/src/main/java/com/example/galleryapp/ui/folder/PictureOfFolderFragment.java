@@ -110,7 +110,7 @@ public class PictureOfFolderFragment extends Fragment implements OnItemClick<Pic
         PictureShowFragment browser = PictureShowFragment.newInstance(pictures, position);
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .addSharedElement(holder.picture, holder.picName.getText().toString())
+//                .addSharedElement(holder.picture, holder.picName.getText().toString())
                 .replace(R.id.nav_host_fragment_content_main, browser)
                 .commit();
     }

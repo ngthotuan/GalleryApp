@@ -160,6 +160,7 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
                                 List<Picture> pictures = Arrays.asList(images.get(position));
                                 QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
                                 linkQuery.insertImagesToAlbums(pictures, data.get(i));
+                                Log.e("TAG", "onClick: " + data.get(i) );
                             }
                         }
                     }
