@@ -12,7 +12,7 @@
 
         <item
             android:id="@+id/nav_folder"
-            android:icon="@drawable/create_folder_white_icon"
+            android:icon="@drawable/folder"
             android:title="@string/folders" />
 
         <item
@@ -27,7 +27,7 @@
 
         <item
             android:id="@+id/nav_favourites"
-            android:icon="@drawable/ic_baseline_favorite_24"
+            android:icon="@drawable/star"
             android:title="@string/favourites" />
     </group>
     <group android:id="@+id/main_nav_group_special"
@@ -39,14 +39,14 @@
 
         <item
             android:id="@+id/nav_locked"
-            android:icon="@drawable/ic_baseline_lock_24"
+            android:icon="@drawable/lock"
             android:title="@string/locked"/>
     </group>
     <group android:id="@+id/main_nav_group_other"
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_baseline_settings_24"
+            android:icon="@drawable/settings"
             android:title="@string/settings"/>
     </group>
 </menu>
