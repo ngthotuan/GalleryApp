@@ -21,7 +21,6 @@
     <style name="Theme.GalleryApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
     <style name="NavigationViewStyle">
         <item name="android:textSize">18sp</item>
-        <item name="android:fontWeight">300</item>
-        <item name="android:listPreferredItemHeightSmall">40dp</item>
+        <item name="android:listPreferredItemHeightSmall">45dp</item>
     </style>
 </resources>
