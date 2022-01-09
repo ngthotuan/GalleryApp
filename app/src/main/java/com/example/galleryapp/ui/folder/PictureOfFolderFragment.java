@@ -100,10 +100,7 @@ public class PictureOfFolderFragment extends Fragment implements OnItemClick<Pic
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-        FragmentManager fm = this.getActivity().getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.nav_host_fragment_content_main, new EmptyFragment());
-        ft.commit();
+
     }
 
     @Override
