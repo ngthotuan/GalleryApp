@@ -1,5 +1,7 @@
 package com.example.galleryapp.database;
 
+import android.net.Uri;
+
 import com.example.galleryapp.model.Album;
 import com.example.galleryapp.model.Picture;
 
@@ -50,5 +52,6 @@ public class QueryContract {
 
         boolean deleteLink(int imageID, int albumID);
         long countImage(int albumId);
+        Uri getFirstImage(int albumId);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.galleryapp.adapter;
 
 import android.annotation.SuppressLint;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,16 +53,18 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumHolder>
 
         QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
         long number = linkQuery.countImage(album.getId());
+        Uri uriFirstImage = linkQuery.getFirstImage(album.getId());
+
 
         Picasso.get()
-                .load(R.drawable.album)
+                .load(uriFirstImage)
                 .resize(50, 50)
                 .centerCrop()
                 .into(holder.img);
 
         holder.albumName.setText(album.getName());
 
-        holder.albumSize.setText(number + "");
+        holder.albumSize.setText(number + " Media");
 
 
         holder.folderItemLayoutId.setOnClickListener(new View.OnClickListener() {

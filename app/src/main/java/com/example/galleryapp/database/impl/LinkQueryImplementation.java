@@ -140,6 +140,28 @@ public class LinkQueryImplementation implements QueryContract.LinkQuery {
 
     }
 
+    @Override
+    public Uri getFirstImage(int albumId) {
+        SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
+        Cursor cursor = null;
+        Uri uri = null;
+        int idImage ;
+        try {
+            cursor = sqLiteDatabase.rawQuery(" SELECT * FROM " + TABLE_LINK + " WHERE " +ALBUM_ID_FK +" =? ",new String[]{String.valueOf(albumId)});
+            if(cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                idImage = cursor.getInt(cursor.getColumnIndex(IMAGE_ID_FK));
+                QueryContract.ImageQuery imageQuery = new ImageQueryImplementation();
+                Picture picture = imageQuery.getPictureByID(idImage);
+                uri = picture.getUri();
+            }
+            return uri;
+        }finally {
+            cursor.close();
+        }
+    }
+
+
     private Picture getPictureFromCursor(Cursor cursor) {
         int id = cursor.getInt(cursor.getColumnIndex(IMAGE_ID));
         String name = cursor.getString(cursor.getColumnIndex(IMAGE_NAME));
