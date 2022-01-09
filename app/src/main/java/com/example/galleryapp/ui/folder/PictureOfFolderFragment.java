@@ -18,6 +18,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,6 +28,7 @@ import com.example.galleryapp.adapter.PictureAdapter;
 import com.example.galleryapp.databinding.FragmentPictureOfFolderBinding;
 import com.example.galleryapp.listener.OnItemClick;
 import com.example.galleryapp.model.Picture;
+import com.example.galleryapp.ui.empty.EmptyFragment;
 import com.example.galleryapp.ui.showImage.PictureShowFragment;
 
 import java.util.ArrayList;
@@ -97,6 +100,10 @@ public class PictureOfFolderFragment extends Fragment implements OnItemClick<Pic
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        FragmentManager fm = this.getActivity().getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.nav_host_fragment_content_main, new EmptyFragment());
+        ft.commit();
     }
 
     @Override

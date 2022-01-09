@@ -29,6 +29,7 @@ import com.example.galleryapp.databinding.FragmentAlbumBinding;
 import com.example.galleryapp.listener.OnItemClick;
 import com.example.galleryapp.model.Album;
 import com.example.galleryapp.model.Picture;
+import com.example.galleryapp.ui.empty.EmptyFragment;
 import com.example.galleryapp.ui.folder.PictureOfFolderFragment;
 
 import java.io.Serializable;
@@ -102,6 +103,10 @@ public class AlbumFragment extends Fragment implements OnItemClick<Album> {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        FragmentManager fm = this.getActivity().getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.nav_host_fragment_content_main, new EmptyFragment());
+        ft.commit();
     }
 
     @Override

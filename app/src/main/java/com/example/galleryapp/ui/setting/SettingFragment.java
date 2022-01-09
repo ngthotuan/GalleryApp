@@ -7,8 +7,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.example.galleryapp.R;
 import com.example.galleryapp.databinding.FragmentSettingBinding;
+import com.example.galleryapp.ui.empty.EmptyFragment;
 
 public class SettingFragment extends Fragment {
     FragmentSettingBinding binding;
@@ -27,5 +31,9 @@ public class SettingFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        FragmentManager fm = this.getActivity().getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.nav_host_fragment_content_main, new EmptyFragment());
+        ft.commit();
     }
 }

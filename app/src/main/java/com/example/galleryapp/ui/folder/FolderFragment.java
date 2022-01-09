@@ -20,6 +20,7 @@ import com.example.galleryapp.databinding.FragmentFolderBinding;
 import com.example.galleryapp.listener.OnItemClick;
 import com.example.galleryapp.model.Picture;
 import com.example.galleryapp.model.PictureFolder;
+import com.example.galleryapp.ui.empty.EmptyFragment;
 import com.example.galleryapp.utils.PictureUtil;
 
 import java.util.ArrayList;

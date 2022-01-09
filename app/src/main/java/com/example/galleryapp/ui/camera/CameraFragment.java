@@ -22,10 +22,14 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.dsphotoeditor.sdk.activity.DsPhotoEditorActivity;
 import com.dsphotoeditor.sdk.utils.DsPhotoEditorConstants;
+import com.example.galleryapp.R;
 import com.example.galleryapp.databinding.FragmentCameraBinding;
+import com.example.galleryapp.ui.empty.EmptyFragment;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -127,6 +131,10 @@ public class CameraFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        FragmentManager fm = this.getActivity().getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.nav_host_fragment_content_main, new EmptyFragment());
+        ft.commit();
     }
 
 
