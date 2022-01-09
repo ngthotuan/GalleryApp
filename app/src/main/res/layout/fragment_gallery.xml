@@ -49,8 +49,10 @@
         android:id="@+id/imgAnimation"
         android:layout_width="match_parent"
         android:paddingVertical="10dp"
-        android:layout_height="300dp"
-        android:layout_gravity="center_horizontal" />
+        android:layout_height="150dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPictures"
