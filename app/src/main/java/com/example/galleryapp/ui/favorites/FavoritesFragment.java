@@ -18,6 +18,7 @@ import com.example.galleryapp.databinding.FragmentFavoritesBinding;
 import com.example.galleryapp.listener.OnItemClick;
 import com.example.galleryapp.model.Album;
 import com.example.galleryapp.model.Picture;
+import com.example.galleryapp.ui.showImage.PictureShowFragment;
 
 import java.util.List;
 
@@ -64,7 +65,12 @@ public class FavoritesFragment extends Fragment implements OnItemClick<Picture> 
     }
 
     @Override
-    public void onPicClicked(PictureAdapter.PictureHolder holder, int position, List<Picture> pics) {
-
+    public void onPicClicked(PictureAdapter.PictureHolder holder, int position, List<Picture> pictures) {
+        PictureShowFragment browser = PictureShowFragment.newInstance(pictures, position);
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+//                .addSharedElement(holder.picture, holder.picName.getText().toString())
+                .replace(R.id.nav_host_fragment_content_main, browser)
+                .commit();
     }
 }
