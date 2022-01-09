@@ -62,7 +62,6 @@ public class PictureOfFolderFragment extends Fragment implements OnItemClick<Pic
 
         imageRecycler.setAdapter(pictureAdapter);
         imageRecycler.setLayoutManager(new GridLayoutManager(getContext(), 4));
-
         return root;
     }
 

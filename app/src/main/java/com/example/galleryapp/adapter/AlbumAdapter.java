@@ -1,6 +1,7 @@
 package com.example.galleryapp.adapter;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.galleryapp.R;
+import com.example.galleryapp.database.QueryContract;
+import com.example.galleryapp.database.impl.LinkQueryImplementation;
 import com.example.galleryapp.listener.OnItemClick;
 import com.example.galleryapp.model.Album;
+import com.example.galleryapp.model.Picture;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -46,6 +50,9 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumHolder>
     public void onBindViewHolder(@NonNull AlbumHolder holder, @SuppressLint("RecyclerView") int position) {
         Album album = albums.get(position);
 
+        QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
+        long number = linkQuery.countImage(album.getId());
+
         Picasso.get()
                 .load(R.drawable.album)
                 .resize(50, 50)
@@ -53,7 +60,9 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumHolder>
                 .into(holder.img);
 
         holder.albumName.setText(album.getName());
-        holder.albumSize.setText(album.getSize() + "");
+
+        holder.albumSize.setText(number + "");
+
 
         holder.folderItemLayoutId.setOnClickListener(new View.OnClickListener() {
             @Override

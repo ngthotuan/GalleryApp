@@ -49,5 +49,6 @@ public class QueryContract {
         List<Picture> getAllPictureInAlbum(int albumID);
 
         boolean deleteLink(int imageID, int albumID);
+        long countImage(int albumId);
     }
 }

@@ -16,6 +16,7 @@ import static com.example.galleryapp.database.util.Config.TABLE_LINK;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -129,6 +130,14 @@ public class LinkQueryImplementation implements QueryContract.LinkQuery {
         }
 
         return false;
+    }
+
+    @Override
+    public long countImage(int albumId) {
+        SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
+        return DatabaseUtils.queryNumEntries(sqLiteDatabase, TABLE_LINK,
+                ALBUM_ID_FK +" =? ", new String[] {String.valueOf(albumId)});
+
     }
 
     private Picture getPictureFromCursor(Cursor cursor) {
