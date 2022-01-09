@@ -7,7 +7,7 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_baseline_photo_library_24"
+            android:icon="@drawable/gallery"
             android:title="@string/gallery" />
 
         <item
@@ -17,12 +17,12 @@
 
         <item
             android:id="@+id/nav_album"
-            android:icon="@drawable/ic_baseline_photo_album_24"
+            android:icon="@drawable/album"
             android:title="@string/album" />
 
         <item
             android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_baseline_photo_camera_24"
+            android:icon="@drawable/camera"
             android:title="@string/camera" />
 
         <item
