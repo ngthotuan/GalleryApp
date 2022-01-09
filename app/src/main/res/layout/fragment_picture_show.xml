@@ -11,23 +11,56 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/imagePager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="500dp"
+        android:scaleType="fitCenter">
 
     </androidx.viewpager.widget.ViewPager>
 
-    <!--android:scaleType="centerCrop"-->
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="bottom">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/indicatorRecycler"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="50dp"
-        android:clickable="true"
-        android:visibility="gone"
-        android:focusable="true">
+        <LinearLayout android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@color/semi_transparent_black">
 
-    </androidx.recyclerview.widget.RecyclerView>
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/edit_white"
+                android:layout_margin="10dp"/>
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/white_outline_favourite"
+                android:layout_margin="10dp"/>
+            <ImageView
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:src="@drawable/share_white"
+                android:layout_margin="10dp"/>
+            <ImageView
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:src="@drawable/trash_white"
+                android:layout_margin="10dp"/>
+        </LinearLayout>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/indicatorRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="50dp"
+            android:clickable="true"
+            android:visibility="gone"
+            android:focusable="true">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
 
 </FrameLayout>

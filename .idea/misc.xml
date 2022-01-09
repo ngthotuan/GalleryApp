@@ -141,6 +141,8 @@
         <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/layout/test_crop_screen.xml" value="0.22" />
         <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/menu/activity_main_drawer.xml" value="0.12083333333333333" />
         <entry key="..\:/Users/zjack/Documents/GitHub/GalleryApp/app/src/main/res/menu/image_view_option_drawer.xml" value="0.25" />
+        <entry key="..\:/Users/zjack/source/AndroidStudio/GalleryApp/app/src/main/res/drawable/ic_baseline_arrow_circle_up_24.xml" value="0.2203125" />
+        <entry key="..\:/Users/zjack/source/AndroidStudio/GalleryApp/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.2203125" />
         <entry key="..\:/Users/zjack/source/AndroidStudio/GalleryApp/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/zjack/source/AndroidStudio/GalleryApp/app/src/main/res/layout/album_item.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/zjack/source/AndroidStudio/GalleryApp/app/src/main/res/layout/app_bar_main.xml" value="0.20416666666666666" />
@@ -153,6 +155,8 @@
         <entry key="..\:/Users/zjack/source/AndroidStudio/GalleryApp/app/src/main/res/layout/fragment_gallery.xml" value="0.18" />
         <entry key="..\:/Users/zjack/source/AndroidStudio/GalleryApp/app/src/main/res/layout/fragment_hidden.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/zjack/source/AndroidStudio/GalleryApp/app/src/main/res/layout/fragment_locked.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/zjack/source/AndroidStudio/GalleryApp/app/src/main/res/layout/fragment_picture_of_folder.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/zjack/source/AndroidStudio/GalleryApp/app/src/main/res/layout/fragment_picture_show.xml" value="0.448512585812357" />
         <entry key="..\:/Users/zjack/source/AndroidStudio/GalleryApp/app/src/main/res/layout/header_navigation.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/zjack/source/AndroidStudio/GalleryApp/app/src/main/res/layout/indicator_holder.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/zjack/source/AndroidStudio/GalleryApp/app/src/main/res/layout/picture_browser_pager.xml" value="0.20416666666666666" />
