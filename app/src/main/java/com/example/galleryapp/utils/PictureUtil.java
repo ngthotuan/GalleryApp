@@ -4,15 +4,14 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
-
 import androidx.core.content.FileProvider;
-
 import com.example.galleryapp.model.Picture;
 import com.example.galleryapp.model.PictureFolder;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class PictureUtil {
 
@@ -154,6 +153,17 @@ public class PictureUtil {
         }*/
 
         return picFolders;
+    }
+
+    public static List<Picture> updateFavorites(List<Picture> pictures, List<Picture> favorites) {
+        for (Picture picture : pictures) {
+            for (Picture favorite : favorites) {
+                if (picture.getPath().equals(favorite.getPath())) {
+                    picture.setFavourite(1);
+                }
+            }
+        }
+        return pictures;
     }
 
 }

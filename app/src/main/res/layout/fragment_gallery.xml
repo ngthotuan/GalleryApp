@@ -48,7 +48,6 @@
     <ImageSwitcher
         android:id="@+id/imgAnimation"
         android:layout_width="match_parent"
-        android:paddingVertical="10dp"
         android:layout_height="150dp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"

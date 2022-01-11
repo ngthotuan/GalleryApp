@@ -6,25 +6,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.transition.Fade;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageSwitcher;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.SearchView;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ViewSwitcher;
-
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -32,22 +17,21 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.galleryapp.R;
 import com.example.galleryapp.adapter.PictureAdapter;
+import com.example.galleryapp.database.QueryContract;
+import com.example.galleryapp.database.impl.AlbumQueryImplementation;
+import com.example.galleryapp.database.impl.LinkQueryImplementation;
 import com.example.galleryapp.databinding.FragmentGalleryBinding;
 import com.example.galleryapp.listener.OnItemClick;
+import com.example.galleryapp.model.Album;
 import com.example.galleryapp.model.Picture;
 import com.example.galleryapp.ui.empty.EmptyFragment;
 import com.example.galleryapp.ui.showImage.PictureShowFragment;
 import com.example.galleryapp.utils.DateUtil;
 import com.example.galleryapp.utils.PictureUtil;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
@@ -68,6 +52,13 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
     private boolean showFilter = false;
     private final List<Picture> listLongImage = new ArrayList<>();
 
+    private List<Picture> getAllFavourite() {
+        QueryContract.AlbumQuery albumQuery = new AlbumQueryImplementation();
+        Album album = albumQuery.getAlbumFavorite();
+        QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
+        return linkQuery.getAllPictureInAlbum(album.getId());
+    }
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -84,7 +75,9 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
         filters = binding.filters;
 
 
-        pictures = PictureUtil.getPictures(activity, null);
+        List<Picture> allPicture = PictureUtil.getPictures(activity, null);
+        pictures = allPicture;
+
         sortFields = getSortFields();
 
         setViewMode(isGridView);
@@ -122,7 +115,7 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
 
             public View makeView() {
                 ImageView imageView = new ImageView(getContext());
-                imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                imageView.setScaleType(ImageView.ScaleType.MATRIX);
                 imageView.setLayoutParams(new ImageSwitcher.LayoutParams(
                         LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT));
                 return imageView;
@@ -136,6 +129,14 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
         autoShowImageAnimation();
 
         return root;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        List<Picture> allFavourite = getAllFavourite();
+        PictureUtil.updateFavorites(pictures, allFavourite);
+        adapter.notifyDataSetChanged();
     }
 
     private PictureAdapter getPictureAdapter(boolean isGridView) {

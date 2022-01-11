@@ -1,19 +1,5 @@
 package com.example.galleryapp.database.impl;
 
-import static com.example.galleryapp.database.util.Config.ALBUM_ID_FK;
-import static com.example.galleryapp.database.util.Config.IMAGE_CREATED_DATE;
-import static com.example.galleryapp.database.util.Config.IMAGE_FAVOURITE;
-import static com.example.galleryapp.database.util.Config.IMAGE_ID;
-import static com.example.galleryapp.database.util.Config.IMAGE_ID_FK;
-import static com.example.galleryapp.database.util.Config.IMAGE_MODIFIED_DATE;
-import static com.example.galleryapp.database.util.Config.IMAGE_NAME;
-import static com.example.galleryapp.database.util.Config.IMAGE_PATH;
-import static com.example.galleryapp.database.util.Config.IMAGE_SIZE;
-import static com.example.galleryapp.database.util.Config.IMAGE_TYPE;
-import static com.example.galleryapp.database.util.Config.IMAGE_URI;
-import static com.example.galleryapp.database.util.Config.TABLE_IMAGE;
-import static com.example.galleryapp.database.util.Config.TABLE_LINK;
-
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
@@ -21,7 +7,6 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
-
 import com.example.galleryapp.database.DatabaseHelper;
 import com.example.galleryapp.database.QueryContract;
 import com.example.galleryapp.model.Album;
@@ -29,6 +14,8 @@ import com.example.galleryapp.model.Picture;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.galleryapp.database.util.Config.*;
 
 public class LinkQueryImplementation implements QueryContract.LinkQuery {
     private final DatabaseHelper databaseHelper = DatabaseHelper.getInstance();
@@ -116,11 +103,13 @@ public class LinkQueryImplementation implements QueryContract.LinkQuery {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
 
         try {
+            Log.d("TAG", "deleteLink " + imageID + " " + albumID);
             long rowAffected = sqLiteDatabase.delete(TABLE_LINK,
                     IMAGE_ID_FK + " =? AND " + ALBUM_ID_FK + " =? ",
                     new String[]{String.valueOf(imageID), String.valueOf(albumID)});
 
             if (rowAffected > 0) {
+                Log.d("TAG", "deleteLink OK");
                 return true;
             }
         } catch (Exception e) {

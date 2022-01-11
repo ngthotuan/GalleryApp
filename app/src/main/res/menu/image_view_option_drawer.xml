@@ -6,12 +6,6 @@
             android:id="@+id/imgAddAlbum"
             android:title="@string/add_to_album" />
         <item
-                android:id="@+id/imgAddFavorite"
-                android:title="@string/add_to_favorites" />
-        <item
-            android:id="@+id/imgEdit"
-            android:title="@string/edit" />
-        <item
             android:id="@+id/imgViewHide"
             android:title="@string/hide" />
         <item
@@ -20,12 +14,6 @@
         <item
             android:id="@+id/imgWallpaper"
             android:title="@string/set_wallpaper" />
-        <item
-            android:id="@+id/imgShare"
-            android:title="@string/share" />
-        <item
-            android:id="@+id/imgViewDelete"
-            android:title="@string/delete" />
         <item
             android:id="@+id/imgViewDetail"
             android:title="@string/details" />

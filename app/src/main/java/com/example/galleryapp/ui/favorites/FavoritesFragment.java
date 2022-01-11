@@ -45,7 +45,6 @@ public class FavoritesFragment extends Fragment implements OnItemClick<Picture> 
         rvPictures.setAdapter(adapter);
         rvPictures.setLayoutManager(layoutManager);
 
-
         return root;
     }
 
@@ -53,7 +52,7 @@ public class FavoritesFragment extends Fragment implements OnItemClick<Picture> 
         QueryContract.AlbumQuery albumQuery = new AlbumQueryImplementation();
         Album album = albumQuery.getAlbumFavorite();
         QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
-        pictures = linkQuery.getAllPictureInAlbum(album.getId());
+        pictures = linkQuery.getAllFavorites(album.getId());
     }
 
     @Override

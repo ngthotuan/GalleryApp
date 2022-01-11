@@ -2,7 +2,6 @@ package com.example.galleryapp.model;
 
 import android.annotation.SuppressLint;
 import android.net.Uri;
-
 import com.example.galleryapp.utils.DateUtil;
 
 import java.io.Serializable;
@@ -162,8 +161,7 @@ public class Picture implements Serializable {
                 "name='" + name + '\'' +
                 ", path='" + path + '\'' +
                 ", size=" + size +
-                ", type='" + type + '\'' +
-                ", uri=" + uri +
+                ", favourite=" + favourite +
                 ", selected=" + selected +
                 ", createdDate=" + DateUtil.getDate(createdDate) +
                 ", modifiedDate=" + DateUtil.getDate(modifiedDate) +

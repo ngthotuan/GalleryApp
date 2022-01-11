@@ -10,14 +10,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
+import android.widget.ImageView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -25,14 +20,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
-
 import com.dsphotoeditor.sdk.activity.DsPhotoEditorActivity;
 import com.dsphotoeditor.sdk.utils.DsPhotoEditorConstants;
 import com.example.galleryapp.R;
 import com.example.galleryapp.adapter.ImagesPagerAdapter;
 import com.example.galleryapp.adapter.PictureAdapter;
 import com.example.galleryapp.adapter.RecyclerViewPagerImageIndicator;
-import com.example.galleryapp.database.DatabaseHelper;
 import com.example.galleryapp.database.QueryContract;
 import com.example.galleryapp.database.impl.AlbumQueryImplementation;
 import com.example.galleryapp.database.impl.LinkQueryImplementation;
@@ -59,6 +52,7 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
     private ImagesPagerAdapter pagerAdapter;
     private int previousSelected = -1;
     private Context context = null;
+    private ImageView imgEdit, imgFavorite, imgShare, imgDelete;
 
     public PictureShowFragment() {
 
@@ -84,6 +78,61 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
         View root = binding.getRoot();
         indicatorRecycler = binding.indicatorRecycler;
         viewPager = binding.imagePager;
+        imgEdit = binding.imgEdit;
+        imgFavorite = binding.imgFavorite;
+        imgShare = binding.imgShare;
+        imgDelete = binding.imgDelete;
+
+        Picture picture = images.get(position);
+        imgFavorite.setImageResource(picture.getFavourite() == 1 ?
+                R.drawable.white_fill_favourite :
+                R.drawable.white_outline_favourite);
+
+        imgEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent editIntent = new Intent(getActivity(), DsPhotoEditorActivity.class);
+                editIntent.setData(images.get(position).getUri());
+                //set directory
+                editIntent.putExtra(DsPhotoEditorConstants.DS_PHOTO_EDITOR_OUTPUT_DIRECTORY, "edit");
+                editIntent.putExtra(DsPhotoEditorConstants.DS_TOOL_BAR_BACKGROUND_COLOR, Color.parseColor("#FF6200EE"));
+
+                editIntent.putExtra(DsPhotoEditorConstants.DS_MAIN_BACKGROUND_COLOR, Color.parseColor("#FFFFFF"));
+                editIntent.putExtra(DsPhotoEditorConstants.DS_PHOTO_EDITOR_TOOLS_TO_HIDE, new int[]{DsPhotoEditorActivity.TOOL_WARMTH, DsPhotoEditorActivity.TOOL_PIXELATE});
+                getActivity().startActivityForResult(editIntent, 201);
+            }
+        });
+
+        imgFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Picture picture = images.get(position);
+                Log.d("TAG", "onClick: " + picture);
+                if (picture.getFavourite() == 1) {
+                    imgFavorite.setImageResource(R.drawable.white_outline_favourite);
+                    removeFavorite();
+                } else {
+                    imgFavorite.setImageResource(R.drawable.white_fill_favourite);
+                    addToFavorite();
+                }
+            }
+        });
+
+        imgShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShareUtil.shareImage(getContext(), images.get(position));
+            }
+        });
+
+        imgDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                deleteImage();
+                Toast.makeText(context, "Not implement", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return root;
     }
 
@@ -97,28 +146,8 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.imgShare: {
-                ShareUtil.shareImage(getContext(), images.get(position));
-                break;
-            }
-            case R.id.imgEdit: {
-                Intent editIntent = new Intent(getActivity(), DsPhotoEditorActivity.class);
-                editIntent.setData(images.get(position).getUri());
-                //set directory
-                editIntent.putExtra(DsPhotoEditorConstants.DS_PHOTO_EDITOR_OUTPUT_DIRECTORY, "edit");
-                editIntent.putExtra(DsPhotoEditorConstants.DS_TOOL_BAR_BACKGROUND_COLOR, Color.parseColor("#FF6200EE"));
-
-                editIntent.putExtra(DsPhotoEditorConstants.DS_MAIN_BACKGROUND_COLOR, Color.parseColor("#FFFFFF"));
-                editIntent.putExtra(DsPhotoEditorConstants.DS_PHOTO_EDITOR_TOOLS_TO_HIDE, new int[]{DsPhotoEditorActivity.TOOL_WARMTH, DsPhotoEditorActivity.TOOL_PIXELATE});
-                getActivity().startActivityForResult(editIntent, 201);
-                break;
-            }
             case R.id.imgViewDetail: {
                 showDetails();
-                break;
-            }
-            case R.id.imgViewDelete: {
-                //deleteImage();
                 break;
             }
             case R.id.imgWallpaper: {
@@ -127,10 +156,6 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
             }
             case R.id.imgAddAlbum: {
                 addImageToAlbum();
-                break;
-            }
-            case R.id.imgAddFavorite: {
-                addToFavorite();
                 break;
             }
         }
@@ -145,9 +170,25 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
             Toast.makeText(getContext(), "No favorite album", Toast.LENGTH_SHORT).show();
             return;
         }
-        List<Picture> pictures = Arrays.asList(images.get(position));
+        Picture picture = images.get(position);
+        picture.setFavourite(1);
         QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
-        linkQuery.insertImagesToAlbums(pictures, album);
+        linkQuery.insertImagesToAlbums(Arrays.asList(picture), album);
+        Toast.makeText(getContext(), "Add to favorite", Toast.LENGTH_SHORT).show();
+    }
+
+    private void removeFavorite() {
+        QueryContract.AlbumQuery albumQuery = new AlbumQueryImplementation();
+        Album album = albumQuery.getAlbumFavorite();
+        if (album == null) {
+            Toast.makeText(getContext(), "No favorite album", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Picture picture = images.get(position);
+        picture.setFavourite(0);
+        QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
+        linkQuery.deleteLink(picture.getId(), album.getId());
+        Toast.makeText(getContext(), "Remove from favorite", Toast.LENGTH_SHORT).show();
     }
 
     private void addImageToAlbum() {

@@ -1,11 +1,11 @@
 package com.example.galleryapp.database;
 
 import android.net.Uri;
-
 import com.example.galleryapp.model.Album;
 import com.example.galleryapp.model.Picture;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class QueryContract {
     public interface ImageQuery {
@@ -50,8 +50,14 @@ public class QueryContract {
 
         List<Picture> getAllPictureInAlbum(int albumID);
 
+        default List<Picture> getAllFavorites(int albumID) {
+            return getAllPictureInAlbum(albumID).stream().peek(picture -> picture.setFavourite(1)).collect(Collectors.toList());
+        }
+
         boolean deleteLink(int imageID, int albumID);
+
         long countImage(int albumId);
+
         Uri getFirstImage(int albumId);
     }
 }
