@@ -115,7 +115,7 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
 
             public View makeView() {
                 ImageView imageView = new ImageView(getContext());
-                imageView.setScaleType(ImageView.ScaleType.MATRIX);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 imageView.setLayoutParams(new ImageSwitcher.LayoutParams(
                         LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT));
                 return imageView;

@@ -30,6 +30,7 @@
             android:icon="@drawable/star"
             android:title="@string/favourites" />
     </group>
+
     <group android:id="@+id/main_nav_group_special"
         android:checkableBehavior="single">
         <item
@@ -42,6 +43,7 @@
             android:icon="@drawable/lock"
             android:title="@string/locked"/>
     </group>
+
     <group android:id="@+id/main_nav_group_other"
         android:checkableBehavior="single">
         <item
