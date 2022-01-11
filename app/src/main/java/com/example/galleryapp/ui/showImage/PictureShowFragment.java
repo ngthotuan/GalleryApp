@@ -318,6 +318,8 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
                     images.get(position).setSelected(true);
                     indicatorRecycler.scrollToPosition(position);
                 }
+                imgFavorite.setImageResource(images.get(position).getFavourite() == 1 ?
+                        R.drawable.white_fill_favourite : R.drawable.white_outline_favourite);
                 indicatorRecycler.getAdapter().notifyDataSetChanged();
             }
 
