@@ -1,9 +1,16 @@
 package com.example.galleryapp.ui.gallery;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.transition.Fade;
 import android.util.Log;
 import android.view.*;
@@ -11,12 +18,17 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.*;
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.dsphotoeditor.sdk.activity.DsPhotoEditorActivity;
+import com.dsphotoeditor.sdk.utils.DsPhotoEditorConstants;
 import com.example.galleryapp.R;
 import com.example.galleryapp.adapter.PictureAdapter;
 import com.example.galleryapp.database.QueryContract;
@@ -30,7 +42,9 @@ import com.example.galleryapp.ui.empty.EmptyFragment;
 import com.example.galleryapp.ui.showImage.PictureShowFragment;
 import com.example.galleryapp.utils.DateUtil;
 import com.example.galleryapp.utils.PictureUtil;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.ByteArrayOutputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -51,7 +65,8 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
     private LinearLayout filters;
     private boolean showFilter = false;
     private final List<Picture> listLongImage = new ArrayList<>();
-
+    FloatingActionButton cameraButton;
+    static final int CAPTURE_IMAGE_REQUEST = 1;
     private List<Picture> getAllFavourite() {
         QueryContract.AlbumQuery albumQuery = new AlbumQueryImplementation();
         Album album = albumQuery.getAlbumFavorite();
@@ -80,7 +95,7 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
         spSort = binding.spSort;
         imgAnimation = binding.imgAnimation;
         filters = binding.filters;
-
+        cameraButton= binding.camera;
 
         List<Picture> allPicture = PictureUtil.getPictures(activity, null);
         pictures = allPicture;
@@ -132,10 +147,46 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
         Animation out = AnimationUtils.loadAnimation(getContext(), android.R.anim.slide_out_right);
         imgAnimation.setInAnimation(in);
         imgAnimation.setOutAnimation(out);
-
         autoShowImageAnimation();
-
+        cameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                captureImage();
+            }
+        });
         return root;
+    }
+
+    private void captureImage() {
+        if (ContextCompat.checkSelfPermission(cameraButton.getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions((Activity) cameraButton.getContext(), new String[]{Manifest.permission.CAMERA, Manifest.permission
+                    .WRITE_EXTERNAL_STORAGE}, 0);
+        } else {
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(takePictureIntent, CAPTURE_IMAGE_REQUEST);
+        }
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Bundle extras = data.getExtras();
+        Bitmap imageBitmap = (Bitmap) extras.get("data");
+//        imageView.setImageBitmap(imageBitmap);
+//        Uri uri = data.getData();
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(getContext().getContentResolver(), imageBitmap, "Title", null);
+
+        Intent editIntent = new Intent(getActivity(), DsPhotoEditorActivity.class);
+
+        editIntent.setData(Uri.parse(path));
+        //set directory
+        editIntent.putExtra(DsPhotoEditorConstants.DS_PHOTO_EDITOR_OUTPUT_DIRECTORY, "edit");
+        editIntent.putExtra(DsPhotoEditorConstants.DS_TOOL_BAR_BACKGROUND_COLOR, Color.parseColor("#FF6200EE"));
+
+        editIntent.putExtra(DsPhotoEditorConstants.DS_MAIN_BACKGROUND_COLOR, Color.parseColor("#FFFFFF"));
+        editIntent.putExtra(DsPhotoEditorConstants.DS_PHOTO_EDITOR_TOOLS_TO_HIDE, new int[]{DsPhotoEditorActivity.TOOL_WARMTH, DsPhotoEditorActivity.TOOL_PIXELATE});
+        getActivity().startActivityForResult(editIntent, 201);
+//        break;
     }
 
     @Override

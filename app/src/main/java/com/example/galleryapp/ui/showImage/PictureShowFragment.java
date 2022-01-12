@@ -53,7 +53,7 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
     private ImagesPagerAdapter pagerAdapter;
     private int previousSelected = -1;
     private Context context = null;
-    private ImageView imgEdit, imgFavorite, imgHidden, imgShare, imgDelete;
+    private ImageView imgEdit, imgFavorite, imgHidden, imgShare, imgLock;
 
     public PictureShowFragment() {
 
@@ -82,7 +82,7 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
         imgEdit = binding.imgEdit;
         imgFavorite = binding.imgFavorite;
         imgShare = binding.imgShare;
-        imgDelete = binding.imgDelete;
+        imgLock = binding.imgLock;
         imgHidden = binding.imgHidden;
 
         Picture picture = images.get(position);
@@ -142,10 +142,10 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
             }
         });
 
-        imgDelete.setOnClickListener(new View.OnClickListener() {
+        imgLock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteImage();
+                lockImage();
 //                Toast.makeText(context, "Not implement", Toast.LENGTH_SHORT).show();
             }
         });
@@ -153,11 +153,11 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
         return root;
     }
 
-    private void deleteImage() {
+    private void lockImage() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-        alertDialog.setTitle(getResources().getString(R.string.image_delete));
+        alertDialog.setTitle(getResources().getString(R.string.lock_image));
         alertDialog.setIcon(R.drawable.ic_baseline_warning_24);
-        alertDialog.setMessage("Do you want to delete image ?");
+        alertDialog.setMessage("Do you want to lock image ?");
         alertDialog.setNegativeButton(getResources().getString(R.string.Yes), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

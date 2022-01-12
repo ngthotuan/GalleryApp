@@ -3,6 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudio/project final/GalleryApp/app/src/main/res/layout/fragment_folder.xml" value="0.1" />
+        <entry key="..\:/AndroidStudio/project final/GalleryApp/app/src/main/res/layout/fragment_gallery.xml" value="0.1" />
+        <entry key="..\:/AndroidStudio/project final/GalleryApp/app/src/main/res/layout/fragment_picture_of_folder.xml" value="0.1" />
+        <entry key="..\:/AndroidStudio/project final/GalleryApp/app/src/main/res/layout/fragment_picture_show.xml" value="0.1" />
+        <entry key="..\:/AndroidStudio/project final/GalleryApp/app/src/main/res/menu/activity_main_drawer.xml" value="0.1625" />
         <entry key="..\:/AndroidStudio/project1/GalleryApp/app/src/main/res/drawable-v24/ic_baseline_add_photo_alternate_24.xml" value="0.14635416666666667" />
         <entry key="..\:/AndroidStudio/project1/GalleryApp/app/src/main/res/drawable/ic_baseline_add_photo_alternate_24.xml" value="0.2351851851851852" />
         <entry key="..\:/AndroidStudio/project1/GalleryApp/app/src/main/res/layout/activity_dowload_image.xml" value="0.13020833333333334" />
