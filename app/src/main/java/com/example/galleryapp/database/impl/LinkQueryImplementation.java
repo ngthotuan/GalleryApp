@@ -33,6 +33,18 @@ public class LinkQueryImplementation implements QueryContract.LinkQuery {
         });
     }
 
+    @Override
+    public long insertPictureToAlbum(Picture picture, Album album) {
+        QueryContract.ImageQuery imageQuery = new ImageQueryImplementation();
+        QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
+
+        long id = imageQuery.insertPicture(picture);
+        if (id > 0) {
+            linkQuery.insertLink((int) id, album.getId());
+        }
+        return id;
+    }
+
 
     @Override
     public long insertLink(int imageID, int albumID) {

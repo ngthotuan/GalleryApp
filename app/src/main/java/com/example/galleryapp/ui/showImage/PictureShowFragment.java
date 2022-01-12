@@ -85,7 +85,6 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
         imgHidden = binding.imgHidden;
 
         Picture picture = images.get(position);
-        System.out.println(picture);
         imgFavorite.setImageResource(picture.getFavourite() == 1 ?
                 R.drawable.white_fill_favourite :
                 R.drawable.white_outline_favourite);
@@ -206,7 +205,11 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
         Picture picture = images.get(position);
         picture.setFavourite(1);
         QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
-        linkQuery.insertImagesToAlbums(Arrays.asList(picture), album);
+        long id = linkQuery.insertPictureToAlbum(picture, album);
+        if (id == -1) {
+            Toast.makeText(getContext(), "Add to favorite failed", Toast.LENGTH_SHORT).show();
+        }
+        picture.setId((int) id);
         Toast.makeText(getContext(), "Add to favorite", Toast.LENGTH_SHORT).show();
     }
 
@@ -240,7 +243,12 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
             Toast.makeText(getContext(), "Unhidden image", Toast.LENGTH_SHORT).show();
         } else {
             picture.setHidden(true);
-            linkQuery.insertImagesToAlbums(Arrays.asList(picture), album);
+            long id = linkQuery.insertPictureToAlbum(picture, album);
+            if (id == -1) {
+                Toast.makeText(getContext(), "Can't hidden image", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            picture.setId((int) id);
             Toast.makeText(getContext(), "Hidden image", Toast.LENGTH_SHORT).show();
         }
     }

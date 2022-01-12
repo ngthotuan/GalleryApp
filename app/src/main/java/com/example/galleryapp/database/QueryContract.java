@@ -48,6 +48,8 @@ public class QueryContract {
     public interface LinkQuery {
         void insertImagesToAlbums(List<Picture> pictures, Album album);
 
+        long insertPictureToAlbum(Picture picture, Album album);
+
         long insertLink(int imageID, int albumID);
 
         List<Picture> getAllPictureInAlbum(int albumID);
