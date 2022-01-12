@@ -23,7 +23,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center"
-            android:gravity="center">
+            android:gravity="center"
+            android:background="@color/semi_transparent_black">
 
             <ImageView
                 android:layout_width="35dp"
