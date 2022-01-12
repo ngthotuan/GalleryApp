@@ -67,6 +67,7 @@
         <entry key="..\:/AndroidStudio/project1/New folder/GalleryApp/app/src/main/res/menu/image_view_option_drawer.xml" value="0.2" />
         <entry key="..\:/Source Code/GalleryApp/app/src/main/res/layout/content_main.xml" value="0.20416666666666666" />
         <entry key="..\:/Source Code/GalleryApp/app/src/main/res/layout/folder_item.xml" value="0.20416666666666666" />
+        <entry key="..\:/Source Code/GalleryApp/app/src/main/res/layout/fragment_album.xml" value="0.17074275362318841" />
         <entry key="..\:/Source Code/GalleryApp/app/src/main/res/layout/fragment_gallery.xml" value="0.20416666666666666" />
         <entry key="..\:/Source Code/GalleryApp/app/src/main/res/layout/fragment_locked.xml" value="0.20416666666666666" />
         <entry key="..\:/Source Code/GalleryApp/app/src/main/res/layout/fragment_picture_of_folder.xml" value="0.20416666666666666" />
@@ -78,6 +79,8 @@
         <entry key="..\:/Source Code/GalleryApp/app/src/main/res/layout/picture_item_gird.xml" value="0.20416666666666666" />
         <entry key="..\:/Source Code/GalleryApp/app/src/main/res/layout/picture_item_list.xml" value="0.17074275362318841" />
         <entry key="..\:/Source Code/GalleryApp/app/src/main/res/menu/activity_main_drawer.xml" value="0.21875" />
+        <entry key="..\:/Source Code/GalleryApp/app/src/main/res/menu/album_menu.xml" value="0.21875" />
+        <entry key="..\:/Source Code/GalleryApp/app/src/main/res/menu/gallery_menu.xml" value="0.21875" />
         <entry key="..\:/Source Code/GalleryApp/app/src/main/res/menu/image_view_option_drawer.xml" value="0.21875" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2203125" />
         <entry key="..\:/Users/nttuan/AndroidStudioProjects/GalleryApp/app/src/main/res/drawable-v24/selector_crop_button.xml" value="0.11770833333333333" />

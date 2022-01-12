@@ -6,9 +6,6 @@
             android:id="@+id/imgAddAlbum"
             android:title="@string/add_to_album" />
         <item
-            android:id="@+id/imgViewHide"
-            android:title="@string/hide" />
-        <item
             android:id="@+id/imgViewLock"
             android:title="@string/lock" />
         <item
