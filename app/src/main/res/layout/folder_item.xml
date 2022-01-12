@@ -26,26 +26,28 @@
 
             <TextView
                 android:id="@+id/folderName"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:ellipsize="end"
                 android:gravity="left"
-                android:paddingLeft="15dp"
+                android:layout_marginLeft="15dp"
                 android:maxLines="1"
                 android:text="folder name"
                 android:textColor="@color/white"
+                android:background="@color/semi_transparent_black"
                 android:textSize="23sp" />
 
             <TextView
                 android:id="@+id/folderSize"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:gravity="left"
                 android:maxLines="1"
-                android:paddingLeft="15dp"
+                android:layout_marginLeft="15dp"
                 android:text="folder name"
+                android:background="@color/semi_transparent_black"
                 android:layout_below="@id/folderName"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
