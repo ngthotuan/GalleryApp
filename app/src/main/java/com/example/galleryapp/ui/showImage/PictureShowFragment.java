@@ -35,6 +35,7 @@ import com.example.galleryapp.model.Album;
 import com.example.galleryapp.model.Picture;
 import com.example.galleryapp.utils.DateUtil;
 import com.example.galleryapp.utils.ShareUtil;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -172,6 +173,17 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.image_view_option_drawer, menu);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(@NonNull @NotNull Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        MenuItem search = menu.findItem(R.id.mnuSearchPicture);
+        search.setVisible(false);
+        MenuItem grid = menu.findItem(R.id.mnuSwitch);
+        grid.setVisible(false);
+        MenuItem filter = menu.findItem(R.id.mnuFilter);
+        filter.setVisible(false);
     }
 
     @SuppressLint("NonConstantResourceId")
