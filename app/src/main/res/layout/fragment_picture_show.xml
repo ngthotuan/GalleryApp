@@ -3,7 +3,7 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              xmlns:tools="http://schemas.android.com/tools"
-             android:background="@color/black"
+             android:background="@color/yellow_dark"
              android:animateLayoutChanges="true"
              tools:context=".ui.showImage.PictureShowFragment">
 
@@ -23,9 +23,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center"
-            android:gravity="center"
-
-            android:background="@color/semi_transparent_black">
+            android:gravity="center">
 
             <ImageView
                 android:layout_width="35dp"
