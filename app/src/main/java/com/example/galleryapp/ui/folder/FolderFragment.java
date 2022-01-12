@@ -41,7 +41,7 @@ public class FolderFragment extends Fragment implements OnItemClick<PictureFolde
         imageRecycler.hasFixedSize();
         List<PictureFolder> pictures = PictureUtil.getPictureFolders(activity);
         imageRecycler.setAdapter(new PictureFolderAdapter(pictures, R.layout.folder_item, this));
-        imageRecycler.setLayoutManager(new GridLayoutManager(getContext(), 4));
+        imageRecycler.setLayoutManager(new GridLayoutManager(getContext(), 1));
         return root;
     }
 

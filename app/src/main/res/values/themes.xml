@@ -20,7 +20,7 @@
     <style name="Theme.GalleryApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="Theme.GalleryApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
     <style name="NavigationViewStyle">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:listPreferredItemHeightSmall">45dp</item>
     </style>
 </resources>
