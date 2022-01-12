@@ -19,24 +19,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="bottom">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/indicatorRecycler"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_gravity="bottom"
-
-            android:clickable="true"
-            android:visibility="gone"
-            android:focusable="true">
-
-        </androidx.recyclerview.widget.RecyclerView>
         <LinearLayout android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center"
             android:gravity="center"
-            android:layout_marginBottom="20dp"
+
             android:background="@color/semi_transparent_black">
 
             <ImageView
@@ -58,12 +46,30 @@
                 android:layout_marginLeft="50dp"
                 android:id="@+id/imgShare"/>
             <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_baseline_hidden_24"
+                android:layout_marginLeft="50dp"
+                android:id="@+id/imgHidden"/>
+            <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@drawable/trash_white"
                 android:layout_marginLeft="50dp"
                 android:id="@+id/imgDelete"/>
         </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/indicatorRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="40dp"
+            android:clickable="true"
+            android:visibility="gone"
+            android:focusable="true">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
     </LinearLayout>
 
 </FrameLayout>
