@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.galleryapp.R;
@@ -58,7 +59,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumHolder>
 
         Picasso.get()
                 .load(uriFirstImage)
-                .resize(50, 50)
+                .resize(1000, 320)
                 .centerCrop()
                 .into(holder.img);
 
@@ -87,12 +88,14 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumHolder>
         public ImageView img;
         public TextView albumName, albumSize;
         RelativeLayout folderItemLayoutId;
+        CardView albumCard;
 
         public AlbumHolder(@NonNull View itemView) {
             super(itemView);
             img = itemView.findViewById(R.id.folderPic);
             albumName = itemView.findViewById(R.id.folderName);
             albumSize = itemView.findViewById(R.id.folderSize);
+            albumCard = itemView.findViewById(R.id.folderCard);
             folderItemLayoutId = itemView.findViewById(R.id.folderItemLayoutId);
         }
     }

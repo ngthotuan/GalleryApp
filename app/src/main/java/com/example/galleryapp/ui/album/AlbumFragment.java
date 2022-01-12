@@ -56,7 +56,7 @@ public class AlbumFragment extends Fragment implements OnItemClick<Album> {
 
         AlbumAdapter albumAdapter = new AlbumAdapter(albums, this);
         rvAlbum.setAdapter(albumAdapter);
-        rvAlbum.setLayoutManager(new GridLayoutManager(getContext(), 4));
+        rvAlbum.setLayoutManager(new GridLayoutManager(getContext(), 1));
 
 
         btnCreate.setOnClickListener(new View.OnClickListener() {
