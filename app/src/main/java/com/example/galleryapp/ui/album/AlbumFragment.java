@@ -50,7 +50,7 @@ public class AlbumFragment extends Fragment implements OnItemClick<Album> {
 
         albumAdapter = new AlbumAdapter(albums, this);
         rvAlbum.setAdapter(albumAdapter);
-        rvAlbum.setLayoutManager(new GridLayoutManager(getContext(), 4));
+        rvAlbum.setLayoutManager(new GridLayoutManager(getContext(), 1));
 
         return root;
     }
