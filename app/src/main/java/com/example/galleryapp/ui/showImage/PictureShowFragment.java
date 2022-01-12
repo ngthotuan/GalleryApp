@@ -35,7 +35,6 @@ import com.example.galleryapp.model.Album;
 import com.example.galleryapp.model.Picture;
 import com.example.galleryapp.utils.DateUtil;
 import com.example.galleryapp.utils.ShareUtil;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,7 +52,7 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
     private ImagesPagerAdapter pagerAdapter;
     private int previousSelected = -1;
     private Context context = null;
-    private ImageView imgEdit, imgFavorite, imgShare, imgDelete;
+    private ImageView imgEdit, imgFavorite, imgHidden, imgShare, imgDelete;
 
     public PictureShowFragment() {
 
@@ -83,11 +82,16 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
         imgFavorite = binding.imgFavorite;
         imgShare = binding.imgShare;
         imgDelete = binding.imgDelete;
+        imgHidden = binding.imgHidden;
 
         Picture picture = images.get(position);
+        System.out.println(picture);
         imgFavorite.setImageResource(picture.getFavourite() == 1 ?
                 R.drawable.white_fill_favourite :
                 R.drawable.white_outline_favourite);
+        imgHidden.setImageResource(picture.isHidden() ?
+                R.drawable.hidden :
+                R.drawable.ic_baseline_hidden_24);
 
         imgEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,7 +112,6 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
             @Override
             public void onClick(View v) {
                 Picture picture = images.get(position);
-                Log.d("TAG", "onClick: " + picture);
                 if (picture.getFavourite() == 1) {
                     imgFavorite.setImageResource(R.drawable.white_outline_favourite);
                     removeFavorite();
@@ -116,6 +119,19 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
                     imgFavorite.setImageResource(R.drawable.white_fill_favourite);
                     addToFavorite();
                 }
+            }
+        });
+
+        imgHidden.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Picture picture = images.get(position);
+                if (picture.isHidden()) {
+                    imgHidden.setImageResource(R.drawable.ic_baseline_hidden_24);
+                } else {
+                    imgHidden.setImageResource(R.drawable.hidden);
+                }
+                hideImage();
             }
         });
 
@@ -206,6 +222,27 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
         QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
         linkQuery.deleteLink(picture.getId(), album.getId());
         Toast.makeText(getContext(), "Remove from favorite", Toast.LENGTH_SHORT).show();
+    }
+
+    private void hideImage() {
+        QueryContract.AlbumQuery albumQuery = new AlbumQueryImplementation();
+        Album album = albumQuery.getAlbumHidden();
+        if (album == null) {
+            Toast.makeText(getContext(), "No hidden album", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Picture picture = images.get(position);
+        QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
+
+        if (picture.isHidden()) {
+            picture.setHidden(false);
+            linkQuery.deleteLink(picture.getId(), album.getId());
+            Toast.makeText(getContext(), "Unhidden image", Toast.LENGTH_SHORT).show();
+        } else {
+            picture.setHidden(true);
+            linkQuery.insertImagesToAlbums(Arrays.asList(picture), album);
+            Toast.makeText(getContext(), "Hidden image", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void addImageToAlbum() {
@@ -335,8 +372,12 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
                     images.get(position).setSelected(true);
                     indicatorRecycler.scrollToPosition(position);
                 }
-                imgFavorite.setImageResource(images.get(position).getFavourite() == 1 ?
+                Picture picture = images.get(position);
+                imgFavorite.setImageResource(picture.getFavourite() == 1 ?
                         R.drawable.white_fill_favourite : R.drawable.white_outline_favourite);
+                imgHidden.setImageResource(picture.isHidden() ?
+                        R.drawable.hidden :
+                        R.drawable.ic_baseline_hidden_24);
                 indicatorRecycler.getAdapter().notifyDataSetChanged();
             }
 

@@ -4,27 +4,56 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.example.galleryapp.R;
+import com.example.galleryapp.adapter.PictureAdapter;
+import com.example.galleryapp.database.QueryContract;
+import com.example.galleryapp.database.impl.AlbumQueryImplementation;
+import com.example.galleryapp.database.impl.LinkQueryImplementation;
 import com.example.galleryapp.databinding.FragmentHiddenBinding;
+import com.example.galleryapp.listener.OnItemClick;
+import com.example.galleryapp.model.Album;
+import com.example.galleryapp.model.Picture;
 import com.example.galleryapp.ui.empty.EmptyFragment;
+import com.example.galleryapp.ui.showImage.PictureShowFragment;
 
-public class HiddenFragment extends Fragment {
+import java.util.List;
+
+public class HiddenFragment extends Fragment implements OnItemClick<Picture> {
     FragmentHiddenBinding binding;
+    private RecyclerView rvPictures;
+    private RecyclerView.LayoutManager layoutManager;
+    private PictureAdapter adapter;
+    private List<Picture> pictures;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHiddenBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        // do something here
+        rvPictures = binding.rvPictures;
+        rvPictures.hasFixedSize();
+        getAllHidden();
+
+        layoutManager = new GridLayoutManager(getContext(), 4);
+        adapter = new PictureAdapter(R.layout.picture_item_gird, pictures, this, null);
+        rvPictures.setAdapter(adapter);
+        rvPictures.setLayoutManager(layoutManager);
 
         return root;
+    }
+
+    private void getAllHidden() {
+        QueryContract.AlbumQuery albumQuery = new AlbumQueryImplementation();
+        Album album = albumQuery.getAlbumHidden();
+        QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
+        pictures = linkQuery.getAllHidden(album.getId());
     }
 
     @Override
@@ -35,5 +64,19 @@ public class HiddenFragment extends Fragment {
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.nav_host_fragment_content_main, new EmptyFragment());
         ft.commit();
+    }
+
+    @Override
+    public void onClick(Picture item, int pos) {
+        Toast.makeText(getContext(), "Clicked", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onPicClicked(PictureAdapter.PictureHolder holder, int position, List<Picture> pictures) {
+        PictureShowFragment browser = PictureShowFragment.newInstance(pictures, position);
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.nav_host_fragment_content_main, browser)
+                .commit();
     }
 }

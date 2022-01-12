@@ -160,6 +160,19 @@ public class PictureUtil {
             for (Picture favorite : favorites) {
                 if (picture.getPath().equals(favorite.getPath())) {
                     picture.setFavourite(1);
+                    break;
+                }
+            }
+        }
+        return pictures;
+    }
+
+    public static List<Picture> updateHidden(List<Picture> pictures, List<Picture> hidden) {
+        for (Picture picture : pictures) {
+            for (Picture h : hidden) {
+                if (picture.getPath().equals(h.getPath())) {
+                    picture.setHidden(true);
+                    break;
                 }
             }
         }

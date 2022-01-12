@@ -17,6 +17,7 @@ public class Picture implements Serializable {
     private long createdDate;
     private long modifiedDate;
     private int favourite;
+    private boolean hidden;
 
     public Picture() {
 
@@ -129,6 +130,14 @@ public class Picture implements Serializable {
         return id;
     }
 
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
+    }
+
     @SuppressLint("DefaultLocale")
     public String getSizeStr() {
         long kilo = 1024;
@@ -162,6 +171,7 @@ public class Picture implements Serializable {
                 ", path='" + path + '\'' +
                 ", size=" + size +
                 ", favourite=" + favourite +
+                ", hidden=" + hidden +
                 ", selected=" + selected +
                 ", createdDate=" + DateUtil.getDate(createdDate) +
                 ", modifiedDate=" + DateUtil.getDate(modifiedDate) +

@@ -56,6 +56,10 @@ public class QueryContract {
             return getAllPictureInAlbum(albumID).stream().peek(picture -> picture.setFavourite(1)).collect(Collectors.toList());
         }
 
+        default List<Picture> getAllHidden(int albumID) {
+            return getAllPictureInAlbum(albumID).stream().peek(picture -> picture.setHidden(true)).collect(Collectors.toList());
+        }
+
         boolean deleteLink(int imageID, int albumID);
 
         long countImage(int albumId);

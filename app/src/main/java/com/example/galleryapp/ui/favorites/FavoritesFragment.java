@@ -75,7 +75,6 @@ public class FavoritesFragment extends Fragment implements OnItemClick<Picture> 
         PictureShowFragment browser = PictureShowFragment.newInstance(pictures, position);
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
-//                .addSharedElement(holder.picture, holder.picName.getText().toString())
                 .replace(R.id.nav_host_fragment_content_main, browser)
                 .commit();
     }

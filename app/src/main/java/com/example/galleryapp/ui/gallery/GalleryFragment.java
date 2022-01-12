@@ -59,6 +59,13 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
         return linkQuery.getAllPictureInAlbum(album.getId());
     }
 
+    private List<Picture> getAllHidden() {
+        QueryContract.AlbumQuery albumQuery = new AlbumQueryImplementation();
+        Album album = albumQuery.getAlbumHidden();
+        QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
+        return linkQuery.getAllPictureInAlbum(album.getId());
+    }
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -135,7 +142,11 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
     public void onStart() {
         super.onStart();
         List<Picture> allFavourite = getAllFavourite();
+        List<Picture> allHidden = getAllHidden();
         PictureUtil.updateFavorites(pictures, allFavourite);
+        PictureUtil.updateHidden(pictures, allHidden);
+        pictures = pictures.stream().filter(p -> !p.isHidden()).collect(Collectors.toList());
+        adapter.setPictures(pictures);
         adapter.notifyDataSetChanged();
     }
 
