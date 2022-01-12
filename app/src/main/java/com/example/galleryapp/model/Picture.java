@@ -18,6 +18,7 @@ public class Picture implements Serializable {
     private long modifiedDate;
     private int favourite;
     private boolean hidden;
+    private boolean locked;
 
     public Picture() {
 
@@ -44,6 +45,14 @@ public class Picture implements Serializable {
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
         this.favourite = favourite;
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
     }
 
     public String getType() {

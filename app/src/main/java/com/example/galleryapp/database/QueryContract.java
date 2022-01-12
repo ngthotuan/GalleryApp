@@ -40,6 +40,9 @@ public class QueryContract {
         default Album getAlbumHidden() {
             return getAlbumByName("Hidden");
         }
+        default Album getAlbumLocked() {
+            return getAlbumByName("Locked");
+        }
 
 
         boolean deleteAlbum(int albumID);

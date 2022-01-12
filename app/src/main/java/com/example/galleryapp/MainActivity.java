@@ -1,11 +1,17 @@
 package com.example.galleryapp;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -28,6 +34,15 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+    // Storing data into SharedPreferences
+
+
+// Storing the key and its value as the data fetched from edittext
+
+
+// Once the changes have been made,
+// we need to commit to apply those changes made,
+// otherwise, it will throw an error
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +56,10 @@ public class MainActivity extends AppCompatActivity {
         if (!checkPermissionForCamera()) {
             requestPermissionForCamera();
         }
+
+
+
+        // Creating an Editor object to edit(write to the file)
 
         setSupportActionBar(binding.appBarMain.toolbar);
 
@@ -65,12 +84,91 @@ public class MainActivity extends AppCompatActivity {
         mContext.context = getApplicationContext();
         QueryContract.AlbumQuery albumQuery = new AlbumQueryImplementation();
         int count = albumQuery.getAlbumCount();
+        EditText editText = new EditText(this);
+        this.createLayoutPassword(editText);
         if (count == 0) {
+
             albumQuery.insertAlbum(new Album("Favorites"));
             albumQuery.insertAlbum(new Album("Hidden"));
+            albumQuery.insertAlbum(new Album("Locked"));
         }
     }
 
+    public void createLayoutPassword(EditText editText){
+
+//        while(true) {
+            try {
+                SharedPreferences sharedPreferences = getSharedPreferences("myRef", Context.MODE_PRIVATE);
+                SharedPreferences.Editor myEdit = sharedPreferences.edit();
+
+
+                new AlertDialog.Builder(this)
+                        .setTitle("Please! Enter your password")
+//                .setMessage("Are you sure you want to delete this entry?")
+                        .setView(editText)
+                        // Specifying a listener allows you to take an action before dismissing the dialog.
+                        // The dialog is automatically dismissed when a dialog button is clicked.
+
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Continue with delete operation
+
+                                if (!editText.getText().equals("")) {
+                                  myEdit.putString("password", editText.getText().toString());
+                                  myEdit.commit();
+                                  return;
+
+                                }
+
+                            }
+                        })
+
+                        // A null listener allows the button to dismiss the dialog and take no further action.
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+//                            Toast.makeText(getContext(), "no", Toast.LENGTH_SHORT).show()
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            } catch (Exception e) {
+//            Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_LONG);
+//            }
+        }
+//        if(sharedPreferences.getString("password","").equals(""))
+//        new AlertDialog.Builder(getContext())
+//                .setTitle("Please! Enter your password")
+////                .setMessage("Are you sure you want to delete this entry?")
+//                .setView(editText)
+//                // Specifying a listener allows you to take an action before dismissing the dialog.
+//                // The dialog is automatically dismissed when a dialog button is clicked.
+//
+//                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        // Continue with delete operation
+//
+//                        if(password.equals(editText.getText())){
+//                            Toast.makeText(getContext(),"equal",Toast.LENGTH_LONG);
+//                        }
+//                        else {
+//                            Toast.makeText(getContext(), "not Equal "+  password, Toast.LENGTH_SHORT).show();
+//                        }
+//
+//                    }
+//                })
+//
+//                // A null listener allows the button to dismiss the dialog and take no further action.
+//                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        Toast.makeText(getContext(), "no", Toast.LENGTH_SHORT).show();
+//                    }
+//                })
+//                .setIcon(android.R.drawable.ic_dialog_alert)
+//                .show();
+
+    }
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this,
@@ -102,6 +200,47 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+//    private void showDialogCreateMessage(){
+//        EditText editText = new EditText(this);
+//        final Boolean[] loop = {true};
+//        // TEXTVIEW
+//        if(this.getParent() != null) {
+//            ((ViewGroup)tv.getParent()).removeView(tv); // <- fix
+//        }
+//        layout.addView(tv)
+//        while(true){
+//            new AlertDialog.Builder(this)
+//                    .setTitle("Please! Enter your password")
+////                .setMessage("Are you sure you want to delete this entry?")
+//                    .setView(editText)
+//                    // Specifying a listener allows you to take an action before dismissing the dialog.
+//                    // The dialog is automatically dismissed when a dialog button is clicked.
+//
+//                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            // Continue with delete operation
+//                            SharedPreferences sharedPreferences = getSharedPreferences("myRef", MODE_PRIVATE);
+//                            SharedPreferences.Editor myEdit = sharedPreferences.edit();
+//                            if(!editText.getText().equals("")){
+//                                myEdit.putString("password",editText.getText().toString());
+//                                return;
+//                            }
+//
+//                        }
+//                    })
+//
+//                    // A null listener allows the button to dismiss the dialog and take no further action.
+//                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialogInterface, int i) {
+////                        Toast.makeText(this, "no", Toast.LENGTH_SHORT).show();
+//                            finish();
+//                        }
+//                    })
+//                    .setIcon(android.R.drawable.ic_dialog_alert)
+//                    .show();
+//        }
+//    }
     public void requestPermissionForCamera() {
         try {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST_CODE);

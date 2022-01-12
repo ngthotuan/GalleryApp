@@ -181,6 +181,7 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
         switch (item.getItemId()) {
             case R.id.imgViewDetail: {
                 showDetails();
+                addToLocked();
                 break;
             }
             case R.id.imgWallpaper: {
@@ -196,6 +197,19 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
 
     }
 
+    private void addToLocked(){
+        QueryContract.AlbumQuery albumQuery = new AlbumQueryImplementation();
+        Album album = albumQuery.getAlbumLocked();
+        if (album == null) {
+            Toast.makeText(getContext(), "No favorite album", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Picture picture = images.get(position);
+        picture.setLocked(true);
+        QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
+        linkQuery.insertImagesToAlbums(Arrays.asList(picture), album);
+        Toast.makeText(getContext(), "Add to locked", Toast.LENGTH_SHORT).show();
+    }
     private void addToFavorite() {
         QueryContract.AlbumQuery albumQuery = new AlbumQueryImplementation();
         Album album = albumQuery.getAlbumFavorite();
