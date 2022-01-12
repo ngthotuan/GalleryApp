@@ -46,7 +46,7 @@ public class PictureFolderAdapter extends RecyclerView.Adapter<PictureFolderAdap
 
         Picasso.get()
                 .load(folder.getFirstPicture())
-                .resize(1000, 200)
+                .resize(1000, 320)
                 .centerCrop()
                 .into(holder.folderPic);
 

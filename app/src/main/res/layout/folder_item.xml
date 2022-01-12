@@ -17,47 +17,39 @@
         android:layout_marginTop="1dp"
         app:cardCornerRadius="1dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:background="@color/yellow"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
+        <RelativeLayout android:layout_height="match_parent"
+            android:layout_width="match_parent">
             <ImageView
                 android:id="@+id/folderPic"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="8"
-                />
+                android:layout_height="match_parent" />
 
             <TextView
                 android:id="@+id/folderName"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:ellipsize="end"
-                android:gravity="center"
+                android:gravity="left"
+                android:paddingLeft="15dp"
                 android:maxLines="1"
                 android:text="folder name"
                 android:textColor="@color/white"
-                android:textSize="15sp" />
+                android:textSize="23sp" />
 
             <TextView
                 android:id="@+id/folderSize"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
+                android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:gravity="center"
+                android:gravity="left"
                 android:maxLines="1"
+                android:paddingLeft="15dp"
                 android:text="folder name"
+                android:layout_below="@id/folderName"
                 android:textColor="@color/white"
-                android:textSize="15sp" />
-
-
-
-
-        </LinearLayout>
+                android:textSize="18sp" />
+        </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
 </RelativeLayout>
