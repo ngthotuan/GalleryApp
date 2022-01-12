@@ -84,10 +84,10 @@ public class MainActivity extends AppCompatActivity {
         mContext.context = getApplicationContext();
         QueryContract.AlbumQuery albumQuery = new AlbumQueryImplementation();
         int count = albumQuery.getAlbumCount();
-        EditText editText = new EditText(this);
-        this.createLayoutPassword(editText);
-        if (count == 0) {
 
+        if (count == 0) {
+            EditText editText = new EditText(this);
+            this.createLayoutPassword(editText);
             albumQuery.insertAlbum(new Album("Favorites"));
             albumQuery.insertAlbum(new Album("Hidden"));
             albumQuery.insertAlbum(new Album("Locked"));

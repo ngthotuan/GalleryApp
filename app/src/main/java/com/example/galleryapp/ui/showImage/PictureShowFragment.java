@@ -35,6 +35,7 @@ import com.example.galleryapp.model.Album;
 import com.example.galleryapp.model.Picture;
 import com.example.galleryapp.utils.DateUtil;
 import com.example.galleryapp.utils.ShareUtil;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -85,13 +86,16 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
         imgHidden = binding.imgHidden;
 
         Picture picture = images.get(position);
-        System.out.println(picture);
         imgFavorite.setImageResource(picture.getFavourite() == 1 ?
                 R.drawable.white_fill_favourite :
                 R.drawable.white_outline_favourite);
         imgHidden.setImageResource(picture.isHidden() ?
                 R.drawable.hidden :
                 R.drawable.ic_baseline_hidden_24);
+
+        imgDelete.setImageResource(picture.isLocked() ?
+                R.drawable.unlocked_white :
+                R.drawable.locked_white);
 
         imgEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,8 +149,15 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
         imgDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteImage();
-//                Toast.makeText(context, "Not implement", Toast.LENGTH_SHORT).show();
+
+                Picture picture = images.get(position);
+                Log.e("TAG", "onClick: "+ picture.toString() );
+                if (picture.isLocked()) {
+                    imgDelete.setImageResource(R.drawable.locked_white);
+                } else {
+                    imgDelete.setImageResource(R.drawable.unlocked_white);
+                }
+                lockedImage();
             }
         });
 
@@ -175,13 +186,23 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
         inflater.inflate(R.menu.image_view_option_drawer, menu);
     }
 
+//    @Override
+//    public void onPrepareOptionsMenu(@NonNull @NotNull Menu menu) {
+//        super.onPrepareOptionsMenu(menu);
+//        MenuItem search = menu.findItem(R.id.mnuSearchPicture);
+//        search.setVisible(false);
+//        MenuItem grid = menu.findItem(R.id.mnuSwitch);
+//        grid.setVisible(false);
+//        MenuItem filter = menu.findItem(R.id.mnuFilter);
+//        filter.setVisible(false);
+//    }
+
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.imgViewDetail: {
                 showDetails();
-                addToLocked();
                 break;
             }
             case R.id.imgWallpaper: {
@@ -197,18 +218,30 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
 
     }
 
-    private void addToLocked(){
+    private void lockedImage(){
         QueryContract.AlbumQuery albumQuery = new AlbumQueryImplementation();
         Album album = albumQuery.getAlbumLocked();
         if (album == null) {
-            Toast.makeText(getContext(), "No favorite album", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "No hidden album", Toast.LENGTH_SHORT).show();
             return;
         }
         Picture picture = images.get(position);
-        picture.setLocked(true);
+
         QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
-        linkQuery.insertImagesToAlbums(Arrays.asList(picture), album);
-        Toast.makeText(getContext(), "Add to locked", Toast.LENGTH_SHORT).show();
+
+        if (picture.isLocked()) {
+            picture.setLocked(false);
+            Log.e("TAG", "onClick: locked"+ picture.toString() );
+            linkQuery.deleteLink(picture.getId(), album.getId());
+        } else {
+            picture.setLocked(true);
+            Log.e("TAG", "onClick: unlocked"+ picture.toString() );
+            long id = linkQuery.insertPictureToAlbum(picture, album);
+            if (id == -1) {
+                return;
+            }
+            picture.setId((int) id);
+        }
     }
     private void addToFavorite() {
         QueryContract.AlbumQuery albumQuery = new AlbumQueryImplementation();
@@ -220,7 +253,11 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
         Picture picture = images.get(position);
         picture.setFavourite(1);
         QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
-        linkQuery.insertImagesToAlbums(Arrays.asList(picture), album);
+        long id = linkQuery.insertPictureToAlbum(picture, album);
+        if (id == -1) {
+            Toast.makeText(getContext(), "Add to favorite failed", Toast.LENGTH_SHORT).show();
+        }
+        picture.setId((int) id);
         Toast.makeText(getContext(), "Add to favorite", Toast.LENGTH_SHORT).show();
     }
 
@@ -254,7 +291,12 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
             Toast.makeText(getContext(), "Unhidden image", Toast.LENGTH_SHORT).show();
         } else {
             picture.setHidden(true);
-            linkQuery.insertImagesToAlbums(Arrays.asList(picture), album);
+            long id = linkQuery.insertPictureToAlbum(picture, album);
+            if (id == -1) {
+                Toast.makeText(getContext(), "Can't hidden image", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            picture.setId((int) id);
             Toast.makeText(getContext(), "Hidden image", Toast.LENGTH_SHORT).show();
         }
     }
@@ -392,6 +434,10 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
                 imgHidden.setImageResource(picture.isHidden() ?
                         R.drawable.hidden :
                         R.drawable.ic_baseline_hidden_24);
+                imgDelete.setImageResource(picture.isLocked() ?
+                        R.drawable.unlocked_white :
+                        R.drawable.locked_white);
+
                 indicatorRecycler.getAdapter().notifyDataSetChanged();
             }
 

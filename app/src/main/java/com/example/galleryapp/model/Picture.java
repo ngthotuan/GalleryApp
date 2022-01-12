@@ -24,6 +24,24 @@ public class Picture implements Serializable {
 
     }
 
+    @Override
+    public String toString() {
+        return "Picture{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", path='" + path + '\'' +
+                ", size=" + size +
+                ", type='" + type + '\'' +
+                ", uri=" + uri +
+                ", selected=" + selected +
+                ", createdDate=" + createdDate +
+                ", modifiedDate=" + modifiedDate +
+                ", favourite=" + favourite +
+                ", hidden=" + hidden +
+                ", locked=" + locked +
+                '}';
+    }
+
     public Picture(int id,
                    String name,
                    String path,
@@ -173,17 +191,4 @@ public class Picture implements Serializable {
     }
 
 
-    @Override
-    public String toString() {
-        return "Picture{" +
-                "name='" + name + '\'' +
-                ", path='" + path + '\'' +
-                ", size=" + size +
-                ", favourite=" + favourite +
-                ", hidden=" + hidden +
-                ", selected=" + selected +
-                ", createdDate=" + DateUtil.getDate(createdDate) +
-                ", modifiedDate=" + DateUtil.getDate(modifiedDate) +
-                '}';
-    }
 }

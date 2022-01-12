@@ -178,5 +178,16 @@ public class PictureUtil {
         }
         return pictures;
     }
+    public static List<Picture> updateLocked(List<Picture> pictures, List<Picture> locked) {
+        for (Picture picture : pictures) {
+            for (Picture h : locked) {
+                if (picture.getPath().equals(h.getPath())) {
+                    picture.setLocked(true);
+                    break;
+                }
+            }
+        }
+        return pictures;
+    }
 
 }

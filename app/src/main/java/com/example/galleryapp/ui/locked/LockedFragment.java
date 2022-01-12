@@ -51,16 +51,14 @@ public class LockedFragment extends Fragment  implements OnItemClick<Picture> {
         View root = binding.getRoot();
         recyclerView = binding.rvLockPictures;
         layoutManager = new GridLayoutManager(getContext(), 4);
-        ConstraintLayout constraintLayout = binding.layoutLock;
-//        constraintLayout.setBackgroundColor(R.color.cardview_shadow_end_color);
         final EditText editText = new EditText(getContext());
-        createLayoutPassword(editText,constraintLayout);
+        createLayoutPassword(editText);
 
 
         return root;
     }
 
-    public void createLayoutPassword(EditText editText, ConstraintLayout c){
+    public void createLayoutPassword(EditText editText){
 
         try {
             SharedPreferences sharedPreferences = getContext().getSharedPreferences("myRef", Context.MODE_PRIVATE);
@@ -112,7 +110,7 @@ public class LockedFragment extends Fragment  implements OnItemClick<Picture> {
         QueryContract.AlbumQuery albumQuery = new AlbumQueryImplementation();
         Album album = albumQuery.getAlbumLocked();
         QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
-        pictures = linkQuery.getAllHidden(album.getId());
+        pictures = linkQuery.getAllLocked(album.getId());
     }
 
     @Override

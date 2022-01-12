@@ -66,6 +66,13 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
         return linkQuery.getAllPictureInAlbum(album.getId());
     }
 
+    private List<Picture> getAllLocked() {
+        QueryContract.AlbumQuery albumQuery = new AlbumQueryImplementation();
+        Album album = albumQuery.getAlbumLocked();
+        QueryContract.LinkQuery linkQuery = new LinkQueryImplementation();
+        return linkQuery.getAllPictureInAlbum(album.getId());
+    }
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -143,9 +150,11 @@ public class GalleryFragment extends Fragment implements OnItemClick<Picture> {
         super.onStart();
         List<Picture> allFavourite = getAllFavourite();
         List<Picture> allHidden = getAllHidden();
+        List<Picture> allLocked = getAllLocked();
         PictureUtil.updateFavorites(pictures, allFavourite);
         PictureUtil.updateHidden(pictures, allHidden);
-        pictures = pictures.stream().filter(p -> !p.isHidden()).collect(Collectors.toList());
+        PictureUtil.updateLocked(pictures,allLocked);
+        pictures = pictures.stream().filter(p -> !p.isHidden()&&!p.isLocked()).collect(Collectors.toList());
         adapter.setPictures(pictures);
         adapter.notifyDataSetChanged();
     }

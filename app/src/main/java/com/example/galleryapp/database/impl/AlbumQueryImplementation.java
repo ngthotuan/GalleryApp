@@ -90,7 +90,7 @@ public class AlbumQueryImplementation implements QueryContract.AlbumQuery {
                 do {
                     int id = cursor.getInt(cursor.getColumnIndex(ALBUM_ID));
                     String name = cursor.getString(cursor.getColumnIndex(ALBUM_NAME));
-                    if(!Objects.equals(name, "Favorites") && !Objects.equals(name, "Hidden")) {
+                    if(!Objects.equals(name, "Favorites") &&!Objects.equals(name, "Locked")&& !Objects.equals(name, "Hidden")) {
                         Album album = new Album(id, name);
                         albumList.add(album);
                     }

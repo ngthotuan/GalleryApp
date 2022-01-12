@@ -51,6 +51,8 @@ public class QueryContract {
     public interface LinkQuery {
         void insertImagesToAlbums(List<Picture> pictures, Album album);
 
+        long insertPictureToAlbum(Picture picture, Album album);
+
         long insertLink(int imageID, int albumID);
 
         List<Picture> getAllPictureInAlbum(int albumID);
@@ -61,6 +63,9 @@ public class QueryContract {
 
         default List<Picture> getAllHidden(int albumID) {
             return getAllPictureInAlbum(albumID).stream().peek(picture -> picture.setHidden(true)).collect(Collectors.toList());
+        }
+        default List<Picture> getAllLocked(int albumID) {
+            return getAllPictureInAlbum(albumID).stream().peek(picture -> picture.setLocked(true)).collect(Collectors.toList());
         }
 
         boolean deleteLink(int imageID, int albumID);

@@ -4,15 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/yellow_dark"
+    android:background="@color/light_gray"
     tools:context=".ui.album.AlbumFragment">
-
-
-    <Button
-        android:id="@+id/btnCreateAlbum"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/create_new_album" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvAlbum"
