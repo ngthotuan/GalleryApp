@@ -34,7 +34,9 @@ public class QueryContract {
         default Album getAlbumFavorite() {
             return getAlbumByName("Favorites");
         }
-
+        default Album getAlbumDelete() {
+            return getAlbumByName("Deleted");
+        }
         default Album getAlbumHidden() {
             return getAlbumByName("Hidden");
         }

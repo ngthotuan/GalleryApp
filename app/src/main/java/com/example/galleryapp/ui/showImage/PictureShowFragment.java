@@ -35,6 +35,7 @@ import com.example.galleryapp.model.Album;
 import com.example.galleryapp.model.Picture;
 import com.example.galleryapp.utils.DateUtil;
 import com.example.galleryapp.utils.ShareUtil;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -128,12 +129,28 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
         imgDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                deleteImage();
-                Toast.makeText(context, "Not implement", Toast.LENGTH_SHORT).show();
+                deleteImage();
+//                Toast.makeText(context, "Not implement", Toast.LENGTH_SHORT).show();
             }
         });
 
         return root;
+    }
+
+    private void deleteImage() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+        alertDialog.setTitle(getResources().getString(R.string.image_delete));
+        alertDialog.setIcon(R.drawable.ic_baseline_warning_24);
+        alertDialog.setMessage("Do you want to delete image ?");
+        alertDialog.setNegativeButton(getResources().getString(R.string.Yes), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        alertDialog.setPositiveButton(getResources().getString(R.string.close), null);
+        alertDialog.show();
     }
 
     @Override
