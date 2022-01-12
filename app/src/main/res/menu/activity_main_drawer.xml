@@ -19,20 +19,14 @@
             android:id="@+id/nav_album"
             android:icon="@drawable/album"
             android:title="@string/album" />
-
-        <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/camera"
-            android:title="@string/camera" />
-
-        <item
-            android:id="@+id/nav_favourites"
-            android:icon="@drawable/star"
-            android:title="@string/favourites" />
     </group>
 
     <group android:id="@+id/main_nav_group_special"
         android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_favourites"
+            android:icon="@drawable/star"
+            android:title="@string/favourites" />
         <item
             android:id="@+id/nav_hidden"
             android:icon="@drawable/hidden"
@@ -44,12 +38,12 @@
             android:title="@string/locked"/>
     </group>
 
-    <group android:id="@+id/main_nav_group_other"
-        android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/settings"
-            android:title="@string/settings"/>
-    </group>
+<!--    <group android:id="@+id/main_nav_group_other"-->
+<!--        android:checkableBehavior="single">-->
+<!--        <item-->
+<!--            android:id="@+id/nav_settings"-->
+<!--            android:icon="@drawable/settings"-->
+<!--            android:title="@string/settings"/>-->
+<!--    </group>-->
 </menu>
 

@@ -52,15 +52,33 @@
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
         />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvPictures"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/light_gray"
-        android:columnWidth="90dp"
-        android:layout_marginTop="10dp">
+        android:layout_height="match_parent">
 
-    </androidx.recyclerview.widget.RecyclerView>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPictures"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/light_gray"
+            android:columnWidth="90dp"
+            android:layout_marginTop="10dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="21dp"
+            android:onClick="openCamera"
+            android:src="@drawable/ic_baseline_photo_camera_24"
+            android:tooltipText="Take a picture" />
+    </RelativeLayout>
 </LinearLayout>

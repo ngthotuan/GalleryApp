@@ -53,7 +53,7 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
     private ImagesPagerAdapter pagerAdapter;
     private int previousSelected = -1;
     private Context context = null;
-    private ImageView imgEdit, imgFavorite, imgHidden, imgShare, imgDelete;
+    private ImageView imgEdit, imgFavorite, imgHidden, imgShare, imgLock;
 
     public PictureShowFragment() {
 
@@ -82,7 +82,7 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
         imgEdit = binding.imgEdit;
         imgFavorite = binding.imgFavorite;
         imgShare = binding.imgShare;
-        imgDelete = binding.imgDelete;
+        imgLock = binding.imgLock;
         imgHidden = binding.imgHidden;
 
         Picture picture = images.get(position);
@@ -93,7 +93,7 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
                 R.drawable.hidden :
                 R.drawable.ic_baseline_hidden_24);
 
-        imgDelete.setImageResource(picture.isLocked() ?
+        imgLock.setImageResource(picture.isLocked() ?
                 R.drawable.unlocked_white :
                 R.drawable.locked_white);
 
@@ -146,16 +146,16 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
             }
         });
 
-        imgDelete.setOnClickListener(new View.OnClickListener() {
+        imgLock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Picture picture = images.get(position);
                 Log.e("TAG", "onClick: "+ picture.toString() );
                 if (picture.isLocked()) {
-                    imgDelete.setImageResource(R.drawable.locked_white);
+                    imgLock.setImageResource(R.drawable.locked_white);
                 } else {
-                    imgDelete.setImageResource(R.drawable.unlocked_white);
+                    imgLock.setImageResource(R.drawable.unlocked_white);
                 }
                 lockedImage();
             }
@@ -164,11 +164,11 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
         return root;
     }
 
-    private void deleteImage() {
+    private void lockImage() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-        alertDialog.setTitle(getResources().getString(R.string.image_delete));
+        alertDialog.setTitle(getResources().getString(R.string.lock_image));
         alertDialog.setIcon(R.drawable.ic_baseline_warning_24);
-        alertDialog.setMessage("Do you want to delete image ?");
+        alertDialog.setMessage("Do you want to lock image ?");
         alertDialog.setNegativeButton(getResources().getString(R.string.Yes), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -434,7 +434,7 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
                 imgHidden.setImageResource(picture.isHidden() ?
                         R.drawable.hidden :
                         R.drawable.ic_baseline_hidden_24);
-                imgDelete.setImageResource(picture.isLocked() ?
+                imgLock.setImageResource(picture.isLocked() ?
                         R.drawable.unlocked_white :
                         R.drawable.locked_white);
 
