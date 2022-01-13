@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -20,7 +19,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.galleryapp.database.DatabaseHelper;
 import com.example.galleryapp.database.QueryContract;
 import com.example.galleryapp.database.impl.AlbumQueryImplementation;
 import com.example.galleryapp.database.util.mContext;
@@ -28,12 +26,10 @@ import com.example.galleryapp.databinding.ActivityMainBinding;
 import com.example.galleryapp.model.Album;
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
 
-    private AppBarConfiguration mAppBarConfiguration;
-    private ActivityMainBinding binding;
+    private static final int READ_STORAGE_PERMISSION_REQUEST_CODE = 41;
+    private static final int CAMERA_PERMISSION_REQUEST_CODE = 40;
     // Storing data into SharedPreferences
 
 
@@ -43,10 +39,16 @@ public class MainActivity extends AppCompatActivity {
 // Once the changes have been made,
 // we need to commit to apply those changes made,
 // otherwise, it will throw an error
+    private AppBarConfiguration mAppBarConfiguration;
+    private ActivityMainBinding binding;
+    SharedPreferences sharedPreferences ;
+    SharedPreferences.Editor myEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPreferences = getSharedPreferences("myRef", Context.MODE_PRIVATE);
+        myEdit = sharedPreferences.edit();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -56,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
         if (!checkPermissionForCamera()) {
             requestPermissionForCamera();
         }
-
 
 
         // Creating an Editor object to edit(write to the file)
@@ -85,90 +86,57 @@ public class MainActivity extends AppCompatActivity {
         QueryContract.AlbumQuery albumQuery = new AlbumQueryImplementation();
         int count = albumQuery.getAlbumCount();
 
+
+
         if (count == 0) {
-            EditText editText = new EditText(this);
-            this.createLayoutPassword(editText);
+
+            this.createLayoutPassword();
             albumQuery.insertAlbum(new Album("Favorites"));
             albumQuery.insertAlbum(new Album("Hidden"));
             albumQuery.insertAlbum(new Album("Locked"));
         }
     }
 
-    public void createLayoutPassword(EditText editText){
+    public void createLayoutPassword() {
+        EditText editText = new EditText(this);
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Please! Enter your password");
+        alert.setMessage("Password to access your Images Locked");
 
-//        while(true) {
-            try {
-                SharedPreferences sharedPreferences = getSharedPreferences("myRef", Context.MODE_PRIVATE);
-                SharedPreferences.Editor myEdit = sharedPreferences.edit();
+        alert.setView(editText);
+
+        alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Continue with delete operation
+
+                if (!editText.getText().toString().equals("")) {
+                    myEdit.putString("password", editText.getText().toString());
+                    myEdit.commit();
+                    return;
 
 
-                new AlertDialog.Builder(this)
-                        .setTitle("Please! Enter your password")
-//                .setMessage("Are you sure you want to delete this entry?")
-                        .setView(editText)
-                        // Specifying a listener allows you to take an action before dismissing the dialog.
-                        // The dialog is automatically dismissed when a dialog button is clicked.
+                }
+                else {
+                    Toast.makeText(MainActivity.this, "Please! Input your password", Toast.LENGTH_SHORT).show();
+                    createLayoutPassword();
+                }
 
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Continue with delete operation
+            }
+        });
 
-                                if (!editText.getText().equals("")) {
-                                  myEdit.putString("password", editText.getText().toString());
-                                  myEdit.commit();
-                                  return;
-
-                                }
-
-                            }
-                        })
-
-                        // A null listener allows the button to dismiss the dialog and take no further action.
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-//                            Toast.makeText(getContext(), "no", Toast.LENGTH_SHORT).show()
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
-            } catch (Exception e) {
-//            Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_LONG);
-//            }
-        }
-//        if(sharedPreferences.getString("password","").equals(""))
-//        new AlertDialog.Builder(getContext())
-//                .setTitle("Please! Enter your password")
-////                .setMessage("Are you sure you want to delete this entry?")
-//                .setView(editText)
-//                // Specifying a listener allows you to take an action before dismissing the dialog.
-//                // The dialog is automatically dismissed when a dialog button is clicked.
-//
-//                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        // Continue with delete operation
-//
-//                        if(password.equals(editText.getText())){
-//                            Toast.makeText(getContext(),"equal",Toast.LENGTH_LONG);
-//                        }
-//                        else {
-//                            Toast.makeText(getContext(), "not Equal "+  password, Toast.LENGTH_SHORT).show();
-//                        }
-//
-//                    }
-//                })
-//
-//                // A null listener allows the button to dismiss the dialog and take no further action.
-//                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        Toast.makeText(getContext(), "no", Toast.LENGTH_SHORT).show();
-//                    }
-//                })
-//                .setIcon(android.R.drawable.ic_dialog_alert)
-//                .show();
+        // A null listener allows the button to dismiss the dialog and take no further action.
+        alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(MainActivity.this, "Please! Input your password", Toast.LENGTH_SHORT).show();
+                createLayoutPassword();
+            }
+        });
+        alert.setIcon(android.R.drawable.ic_dialog_alert);
+        alert.show();
 
     }
+
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this,
@@ -176,9 +144,6 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
-    private static final int READ_STORAGE_PERMISSION_REQUEST_CODE = 41;
-    private static final int CAMERA_PERMISSION_REQUEST_CODE = 40;
 
     public boolean checkPermissionForReadExternalStorage() {
         int result = this.checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE);
@@ -200,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    private void showDialogCreateMessage(){
+    //    private void showDialogCreateMessage(){
 //        EditText editText = new EditText(this);
 //        final Boolean[] loop = {true};
 //        // TEXTVIEW
