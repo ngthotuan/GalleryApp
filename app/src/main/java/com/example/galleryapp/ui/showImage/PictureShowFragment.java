@@ -186,16 +186,16 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
         inflater.inflate(R.menu.image_view_option_drawer, menu);
     }
 
-//    @Override
-//    public void onPrepareOptionsMenu(@NonNull @NotNull Menu menu) {
-//        super.onPrepareOptionsMenu(menu);
-//        MenuItem search = menu.findItem(R.id.mnuSearchPicture);
-//        search.setVisible(false);
-//        MenuItem grid = menu.findItem(R.id.mnuSwitch);
-//        grid.setVisible(false);
-//        MenuItem filter = menu.findItem(R.id.mnuFilter);
-//        filter.setVisible(false);
-//    }
+    @Override
+    public void onPrepareOptionsMenu(@NonNull @NotNull Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        MenuItem search = menu.findItem(R.id.mnuSearchPicture);
+        search.setVisible(false);
+        MenuItem grid = menu.findItem(R.id.mnuSwitch);
+        grid.setVisible(false);
+        MenuItem filter = menu.findItem(R.id.mnuFilter);
+        filter.setVisible(false);
+    }
 
     @SuppressLint("NonConstantResourceId")
     @Override
