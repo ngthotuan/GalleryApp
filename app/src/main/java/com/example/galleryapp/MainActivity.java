@@ -88,9 +88,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        if(sharedPreferences.getString("password",null)==null){
+            this.createLayoutPassword();
+        }
         if (count == 0) {
 
-            this.createLayoutPassword();
+
             albumQuery.insertAlbum(new Album("Favorites"));
             albumQuery.insertAlbum(new Album("Hidden"));
             albumQuery.insertAlbum(new Album("Locked"));

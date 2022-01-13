@@ -189,12 +189,16 @@ public class PictureShowFragment extends Fragment implements OnItemClick<Picture
     @Override
     public void onPrepareOptionsMenu(@NonNull @NotNull Menu menu) {
         super.onPrepareOptionsMenu(menu);
+
         MenuItem search = menu.findItem(R.id.mnuSearchPicture);
-        search.setVisible(false);
+        if(search!=null)
+            search.setVisible(false);
         MenuItem grid = menu.findItem(R.id.mnuSwitch);
-        grid.setVisible(false);
+        if(search!=null)
+            grid.setVisible(false);
         MenuItem filter = menu.findItem(R.id.mnuFilter);
-        filter.setVisible(false);
+        if(search!=null)
+            filter.setVisible(false);
     }
 
     @SuppressLint("NonConstantResourceId")
